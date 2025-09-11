@@ -33,7 +33,7 @@
 \titulacion{Máster Universitario en Inteligencia Artificial}
 \author{Jorge Elicer Lambraño Arroyo}
 \date{11 de Septiembre de 2025}
-\director{ }
+\director{Gabriel Mauricio Ramírez Villegas}
 \nombreciudad{Bogotá (Colombia)}
 
 %---------------------------
@@ -118,9 +118,263 @@ Predictive maintenance; Data preprocessing.
 % \item Estructura del trabajo
 % \end{itemize}
 
+En el presente trabajo se propone el desarrollo de un sistema de detección de anomalías
+basado en técnicas de aprendizaje automático, aplicado al análisis de datos operativos
+del sector industrial. A lo largo de este documento, el lector encontrará una 
+contextualización para abordar el problema de la detección de anomalías, un estudio del
+estado del arte en técnicas de detección de anomalías, un análisis detallado de los 
+datos industriales utilizados, el diseño e implementación de diferentes modelos de 
+aprendizaje automático, así como una comparación rigurosa de su rendimiento frente a 
+soluciones existentes.
 
 
+En el sector industrial, las anomalías se consideran como aquellos datos atípicos por 
+fuera de los rangos operativos de los equipos, y en muchos casos están relacionadas con 
+fallas, necesidad de mantenimiento o deficiencias en el funcionamiento. Usualmente, en 
+el contexto industrial, los fallos están relacionados con valores atípicos. Antes que 
+ocurra un fallo, suelen presentarse valores anómalos.  
 
+
+La detección de estas anomalías, es una herramienta para la prevención de fallos. Una 
+implementación de detección temprana de anomalías, puede prevenir fallos, reducir el 
+riesgo de daños a la infraestructura y costos adicionales por reparaciones de equipos.
+Como resultado, se obtienen como beneficios un aumento en la vida útil de los equipos 
+gracias al mantenimiento preventivo, mejores condiciones de seguridad, optimización de
+recursos y se reduce el riesgo de que los procesos productivos se detengan por fallos.  
+
+
+Debido a la amplia gama de beneficios que ofrece la detección de anomalías para la 
+prevención de fallos, ésta se ha convertido en un foco de estudio e investigación en 
+muchos campos de la ingeniería, la estadística, la ciencia de datos y la informática.
+En el presente trabajo se expone cómo se ha abordado este tema y se propone el 
+desarrollo de una solución para detección de anomalías en operaciones industriales.
+El enfoque de la solución está orientado a modelos estadísticos y de aprendizaje
+automático. 
+
+
+\section{Planteamiento del problema}
+
+La detección de anomalías se ha convertido en un proceso clave, puesto que permite
+identificar datos atípicos que podrían resultar en fallos o riesgos importantes en el
+funcionamiento de muchas industrias. Las anomalías, aunque poco frecuentes, pueden 
+representar eventos críticos que comprometen la integridad de procesos, generan 
+pérdidas económicas, o incluso ponen en riesgo vidas humanas. 
+
+
+Un alto porcentaje de las fallas que se presentan en maquinaria industrial pueden ser
+detectadas gracias a anomalías que ocurren antes de éstas. Como resultado, una detección
+temprana de anomalías permite la identificación de futuros fallos y realizar algún tipo 
+de mantenimiento preventivo o acción correctiva con el fin de evitarlo. Como 
+consecuencia, se obtiene un aumento de la vida útil de los equipos y disminución en el
+número y costo de reparaciones. 
+
+
+La detección de anomalías no se limita solamente al sector industrial. Existen casos de
+uso donde se aplican conceptos de visión por computadora y deep learning para la 
+detección de anomalías en imágenes médicas,\cite{zhou2021proxy}, \cite{guo2024encoder}, 
+\cite{lu2024heterogeneous} \& \cite{zhong2022video}.
+Del mismo modo, existen aplicaciones en el campo de la videovigilancia que combinan la 
+visión por computadora y la detección de anomalías. \cite{zhong2022video}, 
+\cite{zeng2021graph} \& \cite{zhang2022influence}. 
+Estas soluciones identifican comportamientos inusuales en imágenes y videos que podrían
+pasar desapercibidos ante la observación humana.
+
+
+En los sectores financieros y de ciberseguridad, la detección de  anomalías es aplicada
+para facilitar la tarea de detección de fraudes. Estos sistemas permiten identificar
+transacciones inusuales o patrones de comportamiento sospechosos en tiempo real, lo que
+resulta crucial para prevenir pérdidas económicas y violaciones de seguridad. Para este
+caso de uso, los datos de entrada del sistema de detección son diferentes al anterior,
+es decir, en lugar de requerir videos o imágenes como datos de entrada, se requiere
+información de las transacciones. Por este gran espectro de aplicaciones la detección de
+anomalías se ha convertido en una foco de estudio de la informática. Actualmente, se 
+investigan modelos cada vez más precisos y escalables que puedan adaptarse a entornos 
+dinámicos y con grandes volúmenes de datos. 
+
+
+La gran diversidad de formatos que pueden tener los datos de entrada supone un reto para
+la detección de anomalías. Cada uno de éstos requiere técnicas específicas de 
+procesamiento, que pueden ser más o menos complejos dependiendo del tipo de formato. 
+Algunos ejemplos de formatos de datos a los que se han diseñado detectores de anomalías 
+son: tendencias y mediciones con respecto al tiempo, para el caso de variables 
+industriales (presión, temperatura, humedad, flujo); señales de audio en el rango de 
+frecuencia audible o fuera del rango audible humano; imágenes y videos en el caso de 
+videoanalítica, y también textos, archivos y otros formatos no estructurados. 
+
+
+A pesar de esa gran variedad, existen muchos algoritmos que permiten extraer 
+características de los diferentes formatos de entrada. Esta etapa de extracción de 
+características transforma los datos crudos en vectores o representaciones que 
+pueden ser analizados de manera uniforme. Una vez obtenidas estas representaciones, 
+es posible aplicar estrategias comunes de detección de anomalías, como técnicas 
+estadísticas, modelos de aprendizaje automático supervisado o no supervisado, e 
+incluso enfoques basados en aprendizaje profundo. Esto permite unificar el tratamiento 
+de datos heterogéneos.
+
+
+Además de su amplia variedad, los datos industriales suelen presentar características 
+aumentan la complejidad de su procesamiento, como por ejemplo, ser multivariantes, tener
+una relación señal a ruido desfavorable, contener un alto porcentaje de valores 
+faltantes o nulos, estar organizados en series temporales, entre otras. Esto plantea un 
+desafío técnico para un sistema de monitoreo tradicional. En este contexto, surge la 
+siguiente necesidad: ¿Cómo se puede construir un sistema de detección de anomalías 
+altamente efectivo, preciso y flexible para poder adaptarse a situaciones complejas y 
+que permita identificar de manera confiable comportamientos atípicos en entornos 
+industriales reales?. 
+
+
+El presente trabajo se plantea como una respuesta a esta necesidad, mediante el 
+desarrollo de una solución de detección de anomalías, orientada al análisis de variables
+industriales. La solución buscará alcanzar un desempeño comparable o superior al de las
+técnicas existentes en el estado del arte. 
+
+
+\section{Motivación}
+
+Este proyecto surge de la necesidad de contar con soluciones inteligentes capaces de 
+prevenir eventos críticos mediante la detección de anomalías, el análisis de datos y el
+aprendizaje automático. 
+La  importancia de la detección temprana de anomalías como solución ante este problema 
+radica en que permite realizar acciones correctivas que eviten que se generen fallas en 
+los sistemas industriales, puesto que los fallos normalmente van precedidos de 
+comportamientos anómalos en las variables que se están censando.
+
+
+Tomar acciones correctivas antes que se presenten fallos tienen múltiples beneficios,
+puesto que los fallos pueden ocasionar que procesos industriales se detengan generando
+incumplimientos en la producción. Los efectos de los fallos son todavía más graves para
+aquellos procesos que funcionan continuamente, las interrupciones se convierten en 
+grandes pérdidas económicas e incumplimiento de las metas de producción. 
+De esta manera, la prevención de fallos supone grandes ahorros a las industrias y reduce
+el riesgo de que se generen interrupciones. De esta manera, por medio de la detección
+temprana, se mejora la confiabilidad operativa y se contribuye a la reducción de costos
+asociados con paradas no planificadas, daños a equipos y pérdidas en la producción.
+
+
+La detección de anomalías puede integrarse con otras tecnologías como los agentes 
+inteligentes. 
+La integración con éstos tiene un mayor impacto en la eficiencia de los sistemas 
+industriales. Esta integración permite que se acepte o se rechace los resultados de 
+los detectores de anomalías y que se tomen las diferentes decisiones 
+\cite{jidiga2014anomaly}.
+
+
+La necesidad de soluciones cada vez más automatizadas, con constante monitoreo y que 
+generen una gran cantidad de datos, hace que la detección de anomalías sea esencial 
+para garantizar la seguridad, confiabilidad y eficiencia de sistemas industriales y en 
+otras áreas. 
+La capacidad de identificar estos eventos de manera oportuna no solo permite prevenir 
+fallos o fraudes, sino que también habilita nuevos modelos de mantenimiento inteligente 
+y optimización de recursos y beneficios a largo plazo. Investigar y perfeccionar 
+técnicas de detección de anomalías representa un reto de gran relevancia para el 
+desarrollo de múltiples sectores industriales.
+
+
+\section{Plantamiento del trabajo}
+
+Tomando como punto de partida la necesidad de identificar anomalías en entornos 
+industriales con el fin de prevenir fallos y optimizar procesos, este trabajo propone 
+el desarrollo de una solución basada en aprendizaje automático que permita detectar 
+comportamientos atípicos a partir del análisis de variables operativas. El objetivo es 
+modelar el comportamiento normal del sistema y reconocer, de manera oportuna y precisa, 
+desviaciones significativas que puedan indicar fallas incipientes. 
+
+
+Para ello, se implementarán estrategias basadas en aprendizaje automático, que permitan 
+modelar el comportamiento normal del sistema y reconocer desviaciones significativas de 
+manera oportuna y precisa. 
+El desarrollo de esta solución requiere múltiples fases. 
+El primer paso es el análisis exploratorio de los datos de las variables de entrada con 
+el fin de entender la estructura,  calidad y distribución de las variables que 
+alimentarán el modelo. 
+En esta etapa se realiza una evaluación de la calidad de los datos, donde se mide el 
+porcentaje de datos faltantes, duplicados y valores atípicos. 
+Adicionalmente, se calculan los estadísticos más importantes y las correlaciones entre 
+las variables. 
+También se definen las transformaciones de las variables y todas las operaciones que 
+hacen parte del preprocesamiento de los datos.
+
+
+Basándose en los formatos de los datos de entrada y salida se construirá un modelo 
+de aprendizaje de máquina. 
+El modelo debe ser capaz de procesar los datos en el formato de entrada 
+(por ejemplo, series temporales, datos multivariantes) y generar una salida que permita
+identificar si los valores de entrada corresponden a una anomalía o no. 
+La solución será evaluada bajo criterios de precisión, sensibilidad, especificidad y 
+eficiencia computacional.
+
+
+Se espera que el modelo resultante de esta fase genere resultados con una calidad igual 
+o superior a los modelos que hoy en día se encuentran en estado del  arte. Con el fin de
+hacer una comparación entre los modelos del estado del arte y el modelo propuesto, se 
+miden métricas de rendimiento bajo condiciones experimentales homogéneas. 
+Asimismo, se discutirán las ventajas, limitaciones y oportunidades de mejora de la 
+solución propuesta, considerando su potencial implementación en entornos industriales
+reales.
+
+
+\section{Estructura de la memoria}
+
+
+El presente trabajo tiene la siguiente estructura:
+
+
+\textbf{Capítulo 1:} Se brinda una breve introducción del presente trabajo. 
+Se expone la motivación que ha impulsado este desarrollo y por qué es importante 
+profundizar en la detección de anomalías. 
+Además, se plantea con claridad el problema de investigación, formulado en términos 
+precisos. 
+Finalmente, se describe la estructura del presente documento, explicando de forma clara 
+cómo está dividido el contenido del estudio y qué se espera encontrar en cada capítulo.
+
+
+\textbf{Capítulo 2:} Se realiza una revisión exhaustiva del estado del arte, también se 
+realiza un barrido de las diferentes técnicas que están relacionadas con la detección 
+de anomalías. 
+En ella se examinan los enfoques más relevantes utilizados en la literatura, abarcando 
+desde una perspectiva tradicional así como enfoques más modernos basados en inteligencia 
+artificial y aprendizaje automático. 
+Asimismo, se analizan los resultados que han obtenido otros investigadores en este campo, 
+junto con las estrategias y métodos implementados.
+
+
+\textbf{Capítulo 3:} Se presentan los objetivos generales y específicos que guían cada 
+etapa de desarrollo del presente estudio. 
+El objetivo general enuncia de manera precisa la finalidad del estudio y su impacto 
+esperado. 
+Por otro lado, los objetivos específicos desglosan dicho propósito en metas alcanzables 
+y medibles que estructuran el camino metodológico a seguir. 
+Esta sección es fundamental, ya que permite al lector entender qué se espera lograr y 
+cómo se evaluará el cumplimiento de las metas.
+
+
+\textbf{Capítulo 4:} Se describe detalladamente la metodología adoptada para llevar a 
+cabo la investigación. 
+Se explican los pasos y procedimientos que se seguirán, desde la recolección de los 
+datos y su procesamiento, hasta la implementación de los modelos y técnicas 
+seleccionadas para la detección de anomalías. 
+Esta sección incluye el conjunto de herramientas y tecnologías utilizadas, así como los 
+criterios de validación y evaluación de los modelos a implementar. 
+La metodología constituye el puente entre los objetivos planteados y los resultados que
+se desean obtener.
+
+
+\textbf{Capítulo 5:} Se presentan los resultados obtenidos tras la aplicación de la 
+metodología previamente descrita. 
+Se analizan de forma crítica y detallada los datos generados, utilizando 
+representaciones visuales y métricas pertinentes que faciliten su comprensión. 
+Además, se comparan los resultados con estudios previos y se realizan las respectivas 
+interpretaciones, lo que permite identificar patrones, tendencias y posibles 
+explicaciones para los hallazgos obtenidos. 
+
+
+\textbf{Capítulo 6:} Se presentan conclusiones derivadas del estudio, las cuales 
+sintetizan los principales hallazgos y resultados obtenidos y su relevancia en el 
+contexto del problema investigado. 
+Se reflexiona sobre el cumplimiento de los objetivos y la metodología planteada. 
+Además, se identifican las oportunidades de mejora, reconociendo aquellos aspectos 
+que podrían explorarse con mayor profundidad, y dan espacio a diversas líneas de 
+investigación futura que permitan extender y enriquecer el presente trabajo.
 
 
 \chapter{Contexto y Estado del Arte}
