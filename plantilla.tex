@@ -101,43 +101,25 @@ Predictive maintenance; Data preprocessing.
 \mainmatter
 \chapter{Introducción}
 
-El primer capítulo es siempre una introducción. En la introducción se debe resumir de forma esquemática pero suficientemente clara lo esencial de cada una de las partes del trabajo. La lectura de este primer capítulo ha de dar una idea clara de lo que se pretendía, las conclusiones a las que se ha llegado y del procedimiento seguido.
+% El primer capítulo es siempre una introducción. En la introducción se debe resumir 
+% de forma esquemática % pero suficientemente clara lo esencial de cada una de las partes 
+% del trabajo. La lectura de este primer capítulo ha de dar una idea clara de lo que se 
+% pretendía, las conclusiones a las que se ha llegado y del procedimiento seguido.
 
-Como tal, es uno de los capítulos más importantes de la memoria. Las ideas principales a transmitir son la identificación del problema a tratar, la justificación de su importancia, los objetivos generales a grandes rasgos y un adelanto de la contribución que esperas hacer.
+% Como tal, es uno de los capítulos más importantes de la memoria. Las ideas principales
+% a transmitir son la identificación del problema a tratar, la justificación de su 
+% importancia, los objetivos generales a grandes rasgos y un adelanto de la contribución
+% que esperas hacer.
 
-Típicamente una introducción tiene tres apartados:
-\begin{itemize}
-\item Motivación / justificación del tema a tratar
-\item Planteamiento del trabajo
-\item Estructura del trabajo
-\end{itemize}
-
-
-El primer capítulo es siempre una introducción. En la introducción se debe resumir de forma esquemática pero suficientemente clara lo esencial de cada una de las partes del trabajo. La lectura de este primer capítulo ha de dar una idea clara de lo que se pretendía, las conclusiones a las que se ha llegado y del procedimiento seguido.
-
-Como tal, es uno de los capítulos más importantes de la memoria. Las ideas principales a transmitir son la identificación del problema a tratar, la justificación de su importancia, los objetivos generales a grandes rasgos y un adelanto de la contribución que esperas hacer.
-
-
-
-
-
-%hishidhdihihsihdish
-
-El primer capítulo es siempre una introducción. En la introducción se debe resumir de forma esquemática pero suficientemente clara lo esencial de cada una de las partes del trabajo. La lectura de este primer capítulo ha de dar una idea clara de lo que se pretendía, las conclusiones a las que se ha llegado y del procedimiento seguido.
-
-Como tal, es uno de los capítulos más importantes de la memoria. Las ideas principales a transmitir son la identificación del problema a tratar, la justificación de su importancia, los objetivos generales a grandes rasgos y un adelanto de la contribución que esperas hacer.
+% Típicamente una introducción tiene tres apartados:
+% \begin{itemize}
+% \item Motivación / justificación del tema a tratar
+% \item Planteamiento del trabajo
+% \item Estructura del trabajo
+% \end{itemize}
 
 
 
-El primer capítulo es siempre una introducción. En la introducción se debe resumir de forma esquemática pero suficientemente clara lo esencial de cada una de las partes del trabajo. La lectura de este primer capítulo ha de dar una idea clara de lo que se pretendía, las conclusiones a las que se ha llegado y del procedimiento seguido.
-
-Como tal, es uno de los capítulos más importantes de la memoria. Las ideas principales a transmitir son la identificación del problema a tratar, la justificación de su importancia, los objetivos generales a grandes rasgos y un adelanto de la contribución que esperas hacer.
-
-
-
-El primer capítulo es siempre una introducción. En la introducción se debe resumir de forma esquemática pero suficientemente clara lo esencial de cada una de las partes del trabajo. La lectura de este primer capítulo ha de dar una idea clara de lo que se pretendía, las conclusiones a las que se ha llegado y del procedimiento seguido.
-
-Como tal, es uno de los capítulos más importantes de la memoria. Las ideas principales a transmitir son la identificación del problema a tratar, la justificación de su importancia, los objetivos generales a grandes rasgos y un adelanto de la contribución que esperas hacer.
 
 
 
@@ -150,6 +132,54 @@ Como tal, es uno de los capítulos más importantes de la memoria. Las ideas pri
 \chapter{Desarrollo del trabajo}
 
 \chapter{Conclusiones y Trabajo Futuro}
+
+En el presente  trabajo se alcanzaron métricas superiores al 90\% en todos los modelos
+evaluados, superando el resultado esperado, lo cual refleja la solidez del enfoque 
+planteado para la detección de anomalías en entornos industriales. La etapa de 
+preprocesamiento de los datos fue un paso clave: la caracterización de las series de 
+tiempo, junto con un adecuado balanceo del dataset y la búsqueda de hiperparámetros, 
+permitió que los modelos pudieran generalizar mejor y mostraran robustez frente al 
+sobreajuste. Estos resultados confirman la efectividad del pipeline desarrollado para 
+transformar datos crudos en características discriminativas útiles para los modelos 
+de predicción.
+
+
+Debido al alto rendimiento alcanzado, todos los modelos evaluados podrían aplicarse en 
+una solución in-situ. No obstante, los que obtuvieron las mejores métricas fueron 
+XGBoost y LightGBM, confirmando su eficacia como algoritmos de referencia en problemas
+de clasificación complejos, y un buen referente para la detección de anomalías. Sin 
+embargo, si la implementación requiere simplicidad, interpretabilidad y bajo costo 
+computacional, los modelos clásicos como la regresión logística, los árboles de decisión
+o Naive Bayes resultan altamente recomendables, ya que ofrecen un equilibrio entre 
+eficiencia, precisión e interpretabilidad.
+
+
+Finalmente, gracias al uso de modelos con mayor interpretabilidad, se identificó que 
+variables como los valores pico (maximum), la desviación estándar (std), el valor RMS,
+la frecuencia fundamental (f0) y la distorsión armónica total (THD) son las que más 
+aportan a la clasificación de una observación como anomalía. Este hallazgo  además de 
+validar la calidad del modelo, proporciona información valiosa para la toma de 
+decisiones en el ámbito industrial, al permitir inferir cuáles son los factores físicos
+más determinantes en el diagnóstico temprano de fallos.
+
+
+Como línea de trabajo futuro, una posibilidad interesante es la integración de los 
+modelos desarrollados en un PLC (Controlador Lógico Programable) u otro dispositivo
+de cómputo industrial. Esto permitiría que la detección de anomalías se ejecute de 
+manera automática y en tiempo real dentro del propio entorno productivo. La adaptación
+de los algoritmos a este tipo de hardware representa un reto, especialmente en lo 
+relacionado con la optimización del uso de recursos computacionales, pero a la vez abre
+la puerta a aplicaciones industriales de gran impacto.
+
+
+Otra línea de investigación a considerar es el diseño de un algoritmo de clasificación
+que no solo detecte anomalías, sino que también identifique el tipo específico de falla:
+un clasificador multiclase.  Este enfoque aportaría un valor agregado, ya que permitiría
+pasar de un sistema de simple diagnóstico (anómalo/no anómalo) a un sistema de prognosis
+y clasificación de fallas, capaz de diferenciar entre problemas la gravedad del fallo y 
+el lugar donde se presenta. Con ello, las soluciones podrían evolucionar hacia un 
+mantenimiento predictivo más preciso y especializado.
+
 
 En la Ecuación \eqref{eq:eq1secCTF}
 
