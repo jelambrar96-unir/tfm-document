@@ -46,7 +46,8 @@
 %---------------------------
 %título del trabajo y autor
 %---------------------------
-\title{Reconocimiento de patrones en sistemas industriales para la detección de fallos mediante algoritmos de Aprendizaje Automático}
+\title{Reconocimiento de patrones en sistemas industriales para la detección de fallos 
+mediante algoritmos de Aprendizaje Automático}
 \titulacion{Máster Universitario en Inteligencia Artificial}
 \author{Jorge Elicer Lambraño Arroyo}
 \date{11 de Septiembre de 2025}
@@ -1073,6 +1074,20 @@ En la Figura~\ref{fig:figArchitecture}, se observa la arquitectura diseñada par
 \item \textbf{Almacenamiento de modelos}. Los modelos que alcanzan mejores métricas son almacenados en \textbf{MinIO}, un sistema de almacenamiento de objetos, lo cual facilita la gestión, acceso y despliegue futuro de los modelos seleccionados.
 
 \end{itemize}
+
+
+\subsection{Recursos propios}
+
+
+En el desarrollo de este proyecto, se implementan dos repositorios en GitHub que contienen el código fuente necesario para la generación de datos y el entrenamiento de los modelos:
+
+\begin{itemize}
+    \item \textbf{Generación del dataset}: \href{https://github.com/jelambrar96-unir/CWRU_Bearing_NumPy}{\underline{\textcolor{blue}{CWRU\_Bearing\_NumPy}}}. Este repositorio contiene los Notebooks para el procesamiento de las señales originales del \textit{CWRU Bearing Dataset}, con el fin de construir un conjunto de datos estructurado y apto para su posterior análisis y modelado.
+    
+    \item \textbf{Entrenamiento de modelos}: \href{https://github.com/jelambrar96-unir/tfm-deteccion-anomalias/tree/main/notebooks}{\underline{\textcolor{blue}{tfm-deteccion-anomalias}}}. Este repositorio contiene los notebooks utilizados para entrenar, evaluar,  comparar y publicar diferentes modelos de aprendizaje automático orientados a la detección de anomalías en rodamientos.
+\end{itemize}
+
+Se compararten los enlaces a los repositorios en lugar de incluir el código fuente como anexo en este documento, dado que la cantidad de archivos que conforman ambos repositorios es considerable, y que incluyen scripts, notebooks, datos procesados, manuales para reproducir los resultados y configuraciones adicionales, 
 
 
 \section{Exploración del dataset}
@@ -2309,8 +2324,7 @@ mantenimiento predictivo más preciso y especializado.
 \bibliographystyle{apacite}
 \bibliography{bibliografia}
 
-\appendix
-\chapter{Apendices}
+
 
 \end{document}
 
