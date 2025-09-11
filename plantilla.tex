@@ -23,18 +23,20 @@
 %\renewcommand\p@figure{\thechapter..\arabic{figure}}
 %\makeatother
 
+\usepackage{listings}
+\lstset{basicstyle=\ttfamily}
 
 
 %---------------------------
 %título del trabajo y autor
 %---------------------------
-\title{Reconocimiento de patrones en sistemas industriales para la detección de fallos
-		mediante algoritmos de Aprendizaje Automático}
+\title{Reconocimiento de patrones en sistemas industriales para la detección de fallos mediante algoritmos de Aprendizaje Automático}
 \titulacion{Máster Universitario en Inteligencia Artificial}
 \author{Jorge Elicer Lambraño Arroyo}
 \date{11 de Septiembre de 2025}
 \director{Gabriel Mauricio Ramírez Villegas}
 \nombreciudad{Bogotá (Colombia)}
+
 
 %---------------------------
 %marges
@@ -421,7 +423,6 @@ En el caso de las condiciones normales (sin fallas), los archivos se nombran sim
 Cada archivo \texttt{.npz} puede contener una o varias series temporales, organizadas en claves llamadas \texttt{DE}, \texttt{FE} o \texttt{BA}, que corresponden a los datos capturados en el drive end, fan end o base del motor, respectivamente \cite{rigas2024marine}.
 
 
-
 \section{Estado del arte}
 
 \subsection{Fundamentos de detección de anomalías}
@@ -693,7 +694,136 @@ Existen casos de detección de anomalías donde se busca que el modelo segmenta 
 
 \subsubsection{Isolation Forest}
 
+El algoritmo de Isolation Forest (IF) es usado y conocido popularmente para detección de anomalías, produce heat maps los cuales son mapas de puntuación de anomalías que presentan artefactos visuales, al ser un modelo robusto este permite que las puntuaciones de anomalía sean más estables, especialmente a lo largo de regiones con puntuaciones constantes dando como resultado una mejora en la precisión de puntuaciones y detección de anomalías, sin sacrificar eficiencia computacional. \cite{liu2021isoletionforest}.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{media/liu-isolation-forest.png}
+    \caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos normalmente distribuidos.  \protect\cite{liu2021isoletionforest} }
+    \label{fig:figIsolationForest}
+\end{figure}
+
+
+La Figura~\ref{figIsolationForest} revela que, aunque hay dos grupos normales claramente definidos, el Isolation Forest estándar introduce sesgos geométricos (como triángulos y grupos falsos) en el mapa de anomalía. Esto es lo que impulsa la propuesta del Extended Isolation Forest (EIF), que utiliza hiperplanos con pendientes aleatorias. \cite{liu2021isoletionforest}.
+
+
+\subsection{Enfoques basados en Deep Learning}
+
+En la búsqueda de este estado del arte se ha procurado buscar los modelos qué utilizan modelos clásicos por su interpretabilidad y fácil entrenamiento. Sin embargo, es posible que estos modelos no sean capaces de ofrecer buenos resultados y se deba escalar hacia el uso de algoritmos basados en aprendizaje profundo. El aprendizaje profundo utiliza redes neuronales para el modelamiento de los datos, con la ventaja que estos modelos son capaces de aprender patrones de forma jerárquica. \cite{raj2024bearing}, utilizó los datos del dataset CWRU y redes neuronales convolucionales en el entrenamiento, alcanzando precisiones mayores al 98\%.
+
+
+\subsubsection{Redes Neuronales}
+
+Las redes neuronales son modelos de aprendizaje automático inspirados en el cerebro humano. Estos modelos están formados por unidades simples llamadas neuronas artificiales conectadas entre sí, las cuales reciben señales de entrada, las procesa y pasa el resultado por una función que genera una salida. Este tipo de modelo suele variar su arquitectura dependiendo su aplicación, por ejemplo, redes de una capa (perceptrón simple), útil para problemas lineales y redes multicapa (MLP), capaces de resolver problemas no lineales mucho más complejos.
+
+
+Las redes neuronales se han convertido en uno de los modelos más populares en el ámbito del aprendizaje automático, gracias a su capacidad para alcanzar altos niveles de exactitud y obtener resultados sobresalientes en diversas métricas de desempeño. Se han aplicado para problemas de clasificación, predicción en campos como la visión artificial, el procesamiento digital de señales y la detección de fallos. 
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{media/neuona-artificial.png}
+    \caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos normalmente distribuidos.  \protect\cite{fernandez2013redes} }
+    \label{fig:figNauronaArtificial}
+\end{figure}
+
+
+En la Figura~\ref{fig:figNauronaArtificial} se ilustra una comparación entre una neurona biológica y una neurona artificial, en la cual resaltamos tres elementos funcionales: el primero serían las conexiones (sinapsis) con pesos que seria el peso que tiene cada conexión entre las neuronas, segundo el sumador que recibe las señales y calcula la suma total y por ultimo funcion de activacion que limita la amplitud de la señal de salida de la neurona. \cite{fernandez2013redes}.
+
+
+Según \cite{rivera2007redes}, la gran ventaja de las redes neuronales frente a otros modelos es su aprendizaje adaptativo, puesto que éstas son capaces de realizar una tarea (como regresión o clasificación) a partir de los datos de entrada, los cuales terminan siendo representados como entradas y pesos.  Además de su capacidad de auto-organizar la información, es decir, crea su propia representación de la información en el proceso de entrenamiento. 
+
+
+Adicionalmente, según \cite{varela2011redes}, una de las principales ventajas de las redes neuronales es la amplia diversidad de arquitecturas que pueden adoptarse, lo que les otorga gran flexibilidad para abordar distintos tipos de problemas. Sin embargo, uno de los principales retos en su diseño consiste en seleccionar la arquitectura más adecuada y acompañarla de un algoritmo de entrenamiento eficiente, de modo que el modelo logre identificar y discriminar patrones relevantes en los datos. 
+
+
+A pesar de sus grandes ventajas, las redes neuronales existen algunas consideraciones a la hora de implementar algoritmos de redes neuronales. Primero, las redes neuronales requieren un entrenamiento intensivo en tiempo y recursos, se necesita un conjunto de datos grande para evitar sobreajuste (overfitting) y, finalmente, el funcionamiento interno es difícil de interpretar. Pese a todo esto, las redes neuronales tienen mucha relevancia como un modelo fundamental y eficaz. \cite{larranaga2021redes}
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{media/sistema-neuronal.png}
+    \caption{Sistema global de proceso de una red neuronal.  \protect\cite{larranaga2021redes} }
+    \label{fig:figSistemaNeuronal}
+\end{figure}
+
+
+
+De forma general la jerarquía de procesamiento está definida de esa manera: Neurona, Capa, Red, Sistema neuronal. Desde la unidad más pequeña (neurona) hasta el sistema completo capaz de tomar decisiones o hacer predicciones, resaltando que la parte algorítmica es el corazón del sistema global, donde ocurre la propagación de señales y aprendizaje mediante ajuste de pesos. \cite{larranaga2021redes}
+
+
+Las redes neuronales están diseñadas en una arquitectura que distribuye la información entre las neuronas y las capas, de forma que esta cuenta con tres capas principales definidas de la siguiente manera manera: capa de entrada, la cual recibe y da entrada a los datos iniciales, por otro lado tenemos capas ocultas las cuales realizan el procesamiento aplicado de operaciones lógicas y de procesamiento y por último tenemos la capa de salida que entrega el resultado final como puede ser una predicción o clasificación. \cite{larranaga2021redes} 
+
+Aunque es cierto que existen diferentes tipos de de arquitecturas cada una se adapta según la tarea, un ejemplo de algunas de estas arquitecturas son: El perceptrón multicapa (MLP) esta es la forma más básica y simple donde todas las neuronas de una capa están conectadas con la siguiente, por otro lado tenemos las redes profundas (DNN) este modelo se caracteriza por tener muchas capas ocultas, lo que le permite ilustrarse con procesos más complejos, redes convolucionales (CNN), redes recurrentes (RNN), redes residuales (ResNet)
+
+
+\cite{Zamanzadeh_Darban_2024} escribe un artículo describiendo las diferentes técnicas de Deep Learning que se pueden encontrar en la literatura para detectar anomalías en series de tiempo y clasifica los modelos en dos grupos principales: Forecasting-based donde se encuentran modelos como CNN, y reconstruction-based como por ejemplo el modelo GAN. Además brinda una lista de dataset qué han sido utilizados en otras investigaciones como Benchmark para evaluar el rendimiento de la detección de anomalías.
+
+
+
+\subsubsection{Redes Neuronales Convolucionales CNN}
+
+
+Este enfoque de redes neuronales convolucionales (CNN) enfocado en la implementación de identificar y modelar sistemas que no se comportan de manera lineal, a diferencia de otros tipos de redes neuronales como el perceptrón, las redes neuronales convolucionales toleran más el ruido de los datos y eviten problemas surgidos a partir de eso. por otro lado tenemos que esta brinda una mayor precisión, robustez y capacidad de generalización en el modelado de sistemas no lineales. \cite{LopezPacheco2017}
+
+
+Este modelo ayuda a captar patrones sutiles que pueden señalar comportamientos no habituales, en muchos casos una forma común de mejorar el modelo es combinarlo con estrategias de muestreo, umbrales bien calibrados y, a veces, enfoques semisupervisados, previniendo así limitaciones en el balanceo de clases y la necesidad de validar con rigor para controlar falsos positivos. \cite{ameijeiras2021algoritmos}.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1.0\textwidth]{media/lenet-o5.png}
+    \caption{Architecture of LeNet-5  \protect\cite{Zhao2024review}}
+    \label{fig:figLenet}
+\end{figure}
+
+
+En la Figura~\ref{fig:figLenet} se observa la arquitectura de una CNN. En este caso se aplica una CNN clásica que procesa imágenes de entrada blanco y negro de 32×32 píxeles, primero se aplican filtros que detectan bordes y lineas, posteriormente la siguiente capa identifica características más complejas como formas y rasgos, despues toda esta información se convierte en un vector y pasa por capas que integrsan todo lo aprendido. \cite{Zhao2024review}
+
+
+
+
+
+\subsection{Aplicaciones en el contexto insdustrial} 
+
+El principal uso de la detección de anomalías en el contexto industrial es el pronóstico de fallas cuyo propósito es detectar a tiempo cuando se debe hacer mantenimiento predictivo. Esto permite anticiparse a posibles fallos en los procesos industriales, optimizando la eficacia, minimizando costos y reduciendo los tiempos de inactividad no planificados. Este mantenimiento predictivo se ve potenciado por los avances tecnológicos los cuales han demostrado mejorar la eficacia y eficiencia en muchas industrias ya que mejora la seguridad y confiabilidad de los procesos industriales y sus sistemas.
+
+
+Adicionalmente, \cite{worktrek2023predictive} estima que el mercado global de mantenimiento predictivo se valoró en 7.850 millones de dólares en 2022 y se proyecta que alcance los 60.130 millones de dólares para 2030 (CAGR 29,5\%), lo que evidencia una clara viabilidad y un notable incremento no solo evidencia el valor de este tipo de soluciones sino también denota el interés creciente del mercado por incorporar estas herramientas, en consideración, estas soluciones no solo tienen solo una  justificación técnica y económica sólida, sino que también responden a una necesidad global de transición hacia sistemas industriales más resilientes, inteligentes y sostenibles.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\textwidth]{media/worktrek.png}
+    \caption{Crecimiento del mercado de mantenimiento predictivo de 2022 a 2030  \protect\cite{worktrek2023predictive}}
+    \label{fig:figWorkTrek}
+\end{figure}
+
+
+Este panorama estimula a la industria a buscar sistemas más eficientes, inteligentes y autónomos capaces de anticiparse a un fallo con base en patrones, recalcamos que este a su vez ha cambiado los paradigmas tradicionales de mantenimiento correctivo y preventivo, exigiendo modelos más proactivos, precisos y adaptables.
+
+
+Resolver problemas no lineales, donde múltiples factores interactúan de manera compleja debido a la conexión de varios elementos, es un verdadero reto. Estas interacciones pueden dar lugar a comportamientos emergentes que son impredecibles y, a menudo, sorprendentes. En este sentido, hay pocos estudios que se centran en la detección de fallas utilizando técnicas de monitoreo y diagnóstico adaptadas específicamente a sistemas complejos como este \cite{zhang2017overview}. 
+
+
+Frente a esto, la inteligencia computacional ha ganado importancia como una herramienta clave para vigilar el estado de las máquinas. Su objetivo principal es identificar fallas y anomalías a través del análisis de datos históricos y en tiempo real. Estos algoritmos ayudan a entender mejor el estado operativo de los equipos mediante un monitoreo continuo. Para que esto funcione, un sistema de monitoreo efectivo debe incluir tres fases fundamentales: la extracción de características, el diagnóstico de fallas y la predicción de su evolución. Este enfoque no solo facilita la detección de condiciones anómalas, sino que también permite localizar con precisión las fallas y estimar su posible propagación \cite{randall2011vibration}.
+
+
+\cite{deloitte2022predictive} reportó que el mantenimiento predictivo aumenta el tiempo de funcionamiento del equipo entre un 10\% y un 20\%, al tiempo que reduce los costos generales de mantenimiento entre un 5\% y un 10\% y el tiempo de planificación del mantenimiento entre un 20\% y un 50\%, lo que refleja la importancia de este tipo de estudios en las industrias y se denota en factores cruciales como lo es el tiempo y los gastos, dado así que el mantenimiento debe ir mucho más allá de simplemente prevenir tiempos de inactividad de activos individuales. Predecir fallos mediante análisis avanzados puede aumentar el tiempo de actividad de los equipos hasta en un 20 \%.
+
+
+Muchos papers a la hora de evaluar algoritmos de detección de fallas utilizan datasets públicos para evaluar el rendimiento de múltiples modelos. Los aquí citados han utilizado datasets de motores, que es uno de los componentes industriales de mayor interés. El dataset CWRU es uno de los dataset qué aparecen citados en varios trabajos, como el de \cite{yu2025tkeo} \& \cite{raj2024bearing} que además también trabaja con el dataset MFPT.
+
+
+Hay otros trabajos qué además han propuesto una arquitectura de hardware sobre la que se desplegará el modelo de detección. Es el caso del trabajo de De las Morenas, \cite{delasmorenas2025bearing}, que proponen una infraestructura de Edge Computing donde se despliega un modelo de clasificación sobre una Raspberry Pi 3B qué está conectado a un motor, y se predicen 3 posibles estados.
+
+La publicación de \cite{davari2021} utiliza un modelo de redes neuronales para predecir cuando las unidades de aire de los trenes necesitan mantenimiento. De esta investigación se deriva el dataset MetroPT y también el trabajo de  \cite{veloso2022metrpt}, donde describe el dataset y por qué sería una buena opción para benchmarking de modelos de detección.
+
+
+Cómo paso previo antes de realizar un modelo de datos qué nos permita detectar anomalías. Es necesario analizar la naturaleza de los datos qué se van a analizar, con el fin de determinar si es pertinente hacer una tarea de limpieza o curado de los datos, así como alguna transformación de los datos. En el trabajo de \cite{yu2025tkeo}, se aplicó el operador TKEO sobre el dataset CWRU como técnica de preprocesamiento, antes de entrenar algún modelo supervisado. La decisión se debe a qué el Dataset corresponde  señales de motor, en el qué posibles anomalías se resaltan utilizando el operador.
+
+
+A partir de estos avances, \cite{jardine2006review} desarrolla un enfoque de mantenimiento basado en condición, el cual se apoya en la información obtenida a través de la monitorización continua. Este modelo se compone de tres elementos esenciales: la adquisición de datos, el procesamiento de la información recolectada y la toma de decisiones orientadas al mantenimiento. La integración de estos componentes permite generar diagnósticos y pronósticos más precisos, favoreciendo el análisis de los patrones y comportamientos presentes en los datos, y optimizando la gestión del ciclo de vida de los activos \cite{jardine2006review}
 
 
 \chapter{Identificación de Requisitos}
@@ -858,6 +988,200 @@ Este paso garantiza el cumplimiento del objetivo general.
 
 \chapter{Desarrollo del trabajo}
 
+Debido a que se han encontrado múltiples modelos de aprendizaje automático capaces de identificar si se presenta o no alguna anomalía, se plantea el desarrollo de una estrategia para realizar la comparación. El rendimiento de los modelos de aprendizaje automático en las tareas de clasificación de datos es muy bueno, se espera que las métricas al evaluar los modelos sean elevadas. 
+
+
+Para poder llevar a cabo esta comparativa se ha propuesto una serie de factores a tener en cuenta, cómo será configurado el experimento, qué preprocesamiento se le hará al dataset para garantizar buenos rendimientos en los modelos, qué métricas serán seleccionadas a la hora de comparar los modelos, qué modelos harán parte de esta comparativa, y con qué criterio se selecciona al mejor modelo. Finalmente, se hace una interpretación de algunos modelos seleccionados que serán de ayuda para una mejor interpretación del conjunto de datos. 
+
+
+\section{Configuración de experimentos}
+
+ En el presente proyecto se ha decidido simplificar el problema de detección de fallas por medio de la construcción de un modelo de clasificador binario cuyo objetivo es diferenciar entre datos anómalos y datos normales provenientes de las mediciones del CWRU Bearing Dataset. Este enfoque permite establecer una primera etapa de detección de fallas, en la que el modelo actúa como un sistema de alerta temprana al identificar desviaciones respecto al comportamiento esperado de los rodamientos bajo condiciones normales de operación.
+Para la construcción del clasificador binario, se organizaron los datos del CWRU Bearing Dataset en dos grandes grupos: Normales, que corresponden al funcionamiento sin fallas, y Anómalos,  que agrupan todos los registros asociados a fallas en la pista interna (\texttt{IR}), el elemento rodante (\texttt{B}) o la pista externa (\texttt{OR}), independientemente de su diámetro o ubicación.
+
+
+Esta estrategia de agrupación simplifica el problema de clasificación, permitiendo contar con un modelo que funcione como un sistema de detección temprana de anomalías. En lugar de distinguir entre múltiples tipos de fallas, el clasificador se centra en identificar si los datos corresponden a un estado saludable o defectuoso del rodamiento, lo que constituye un primer paso esencial antes de avanzar hacia modelos más especializados de clasificación multiclase.
+
+
+El dataset que se genere a partir del agrupamiento de los datos anómalos y no anómalos, se utilizará para entrenar todos los modelos de clasificación binaria. Adoptar esta estrategia garantiza que todos los modelos son evaluados bajo las mismas condiciones experimentales, lo que permite realizar comparaciones más justas de rendimiento. Además, usar un único dataset reduce la variabilidad introducida por particiones diferentes de los datos y se evitan sesgos en la comparación de modelos de aprendizaje.
+
+
+Por el contrario, si no se emplea el mismo dataset para todos los modelos, las métricas obtenidas podrían reflejar más las diferencias en los datos de entrada que en las capacidades reales de los algoritmos. Esto claramente, dificulta la tarea de identificar qué modelo es más robusto y podría conllevar a conclusiones poco confiables. En ese sentido, mantener un dataset unificado asegura que las diferencias observadas sean atribuídas directamente a las propiedades del modelo y no a variaciones accidentales en los datos utilizados para el entrenamiento y la validación.
+
+
+Para mejorar los resultados de entrenamiento, se aplicó la técnica de división del dataset en tres subconjuntos: entrenamiento, validación y evaluación (test). El conjunto de prueba se reserva exclusivamente para la comparación final de los modelos, de manera que no sean utilizados en ninguna etapa del entrenamiento. De esta manera se garantiza una evaluación objetiva y realista del rendimiento. 
+Adicionalmente, el dataset de validación se emplea durante la búsqueda de hiperparámetros, permitiendo optimizar parámetros clave de los modelos con el fin de obtener la configuración con las mejores métricas de desempeño. Como resultado, se asegura que el modelo seleccionado sea aquel que genere los mejores resultados, evitando tanto el sobreajuste como conclusiones sesgadas por un mal diseño experimental.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{media/arquitecura.png}
+    \caption{Arquitectura y componentes propuestos  }
+    \label{fig:figArchitecture}
+\end{figure}
+
+En la Figura~\ref{fig:figArchitecture}, se observa la arquitectura diseñada para la configuración de este experimento. Esta arquitectura permite implementar un flujo de trabajo organizado, reproducible y escalable, donde cada componente cumple un rol específico dentro del ciclo de vida del desarrollo de modelos de aprendizaje automático. La arquitectura se basa en un flujo de trabajo modular, apoyado en diferentes herramientas de ciencia de datos y gestión de modelos:
+
+\begin{itemize}
+
+\item \textbf{Generación del dataset}. Se utilizan notebooks en \textbf{Jupyter} que hacen uso de librerías como \textbf{NumPy} y \textbf{Pandas} (basadas en Python) para la carga, limpieza, transformación y construcción del dataset final. En esta etapa se preparan los datos en el formato adecuado para los experimentos de entrenamiento.
+
+
+\item \textbf{Entrenamiento de modelos}. En esta etapa, se desarrollan notebooks enfocados en el entrenamiento de modelos de machine learning mediante la librería \textbf{scikit-learn} (también basada en python). Aquí se incluyen técnicas de validación cruzada, búsqueda de hiperparámetros y evaluación de rendimiento con métricas de clasificación.
+
+
+\item \textbf{Gestión de experimentos y modelos}. Para asegurar el monitoreo y reproducibilidad, se integra \textbf{MLflow}, que permite llevar un registro sistemático de los experimentos, los hiperparámetros utilizados, las métricas obtenidas y las versiones de cada modelo entrenado.
+
+
+\item \textbf{Almacenamiento de metadatos}.  Toda la información relacionada con los experimentos, como configuraciones, métricas y resultados, se almacena en una base de datos \textbf{PostgreSQL}, que sirve como repositorio centralizado para la metadata del proyecto. Y allí se almacenan todos los metadatos que el servidor de MLflow genera. 
+
+
+\item \textbf{Almacenamiento de modelos}. Los modelos que alcanzan mejores métricas son almacenados en \textbf{MinIO}, un sistema de almacenamiento de objetos, lo cual facilita la gestión, acceso y despliegue futuro de los modelos seleccionados.
+
+\end{itemize}
+
+
+\section{Exploración del dataset}
+
+Como se ha mencionado anteriormente, se ha decidido trabajar con datos refinados del conjunto de datos de CWRU Bearing Dataset. El primer paso en la exploración de los datos consistió en listar los archivos disponibles en el dataset. El dataset se encuentra organizado en cuatro grandes grupos, cada uno asociado a un valor específico de revoluciones por minuto (RPM): 1797, 1772, 1750 y 1730. Dentro de cada uno de estos grupos solo existe un archivo de datos de condiciones normales, mientras que el resto de los archivos corresponden a condiciones de fallo en los rodamientos.
+
+
+De esta manera, se obtiene un total de 157 archivos correspondientes a fallos frente a únicamente 4 archivos de datos normales. Este resultado es inusual en los problemas de detección de anomalías, ya que lo más frecuente es encontrar una proporción mucho menor de registros anómalos respecto a los normales. Esto permite construir un dataset balanceado para el entrenamiento de modelos, reduciendo así la necesidad de aplicar técnicas adicionales de re-muestreo para equilibrar las clases.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{media/dataset/normal-series.png}
+    \caption{Gráfica de una submuestra de las series de tiempo que corresponden a datos en condiciones normales para RPM iguales a 1772 (superior) y 1730 (inferior). }
+    \label{fig:figNormalSeries}
+\end{figure}
+
+
+Con el fin de obtener una aproximación visual de las diferencias entre los patrones de vibración de entre los datos de condiciones normales y los datos de fallos en los rodamientos, el siguiente paso en la exploración de los datos consiste en la exploración de los datos consistió en visualizar gráficamente un segmento de las series de tiempo para ambos conjuntos de datos. La Figura~\ref{fig:figNormalSeries} y Figura~\ref{fig:figAnomalySeries}, muestran las señales en condiciones normales y en presencia de defectos respectivamente. 
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{media/dataset/anomaly-series.png}
+    \caption{Gráfica de una submuestra de la serie tiempo que corresponden a datos en condiciones anómalas a 1750 RPM con el rodamiento cargado en la condición B un defecto de 0.021 pulgadas en el lado del accionamiento (superior) y a 1772 RPM con el rodamiento cargado en la condición B un defecto de 0.014 pulgadas en el lado del accionamiento (inferior). }
+    \label{fig:figAnomalySeries}
+\end{figure}
+
+
+
+
+Cada archivo contiene mediciones de tres acelerómetros, dependiendo de las claves DE, FE o BA. Pero el número de llaves puede variar de un archivo a otros, algunos pueden contener sólo 1, mientras que otros pueden contener 3 \cite{rigas2024marine}. Al revisar detalladamente las llaves de los archivos de las series de tiempo en condiciones normales y en presencia de fallas  se obtiene el resultado de la Tabla 1. 
+
+
+Según la Tabla 1, los archivos que contienen series de tiempo en condiciones normales presentan datos de los acelerómetros DE y FE, sin embargo no presentan datos de los acelerómetros de tipo BA. Esta información es de mucha importancia a la hora de construir el dataset de entrenamiento de los modelos. Por otra parte, todos los archivos de datos anómalos presentan datos de los acelerómetros de tipo DE, pero datos faltantes en los acelerómetros de tipo FE, y en mayor medida BA. 
+
+
+A cada serie de tiempo se le calculan parámetros estadísticos básicos que permiten caracterizar su comportamiento y servir como insumo para la construcción de los modelos. Los parámetros a calcular son longitud de la serie, media, promedio, desviación estándar y los valores máximos y mínimos. Y se calcularon los estadísticos de estos valores, y se graficaron los histogramas de esos parámetros. La Tabla 2 muestra los resultados de los estadísticos de los parámetros calculados, donde cada fila contiene los estadísticos de los parámetros calculados. 
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{media/dataset/histogram-01.png}
+    \caption{Histograma de la distribución de cada uno de los parámetros calculados para cada serie. }
+    \label{fig:figHistogram01}
+\end{figure}
+
+
+La Figura~\ref{fig:figHistogram01} muestra los histogramas de cada uno de los parámetro de las series. Los histogramas de los parámetros máximo (b) y mínimo (a) son simétricos, lo cual es un indicio de una alta correlación. Los datos corresponden a series de tiempo es de esperarse que para estos tipos de datos la media esté concentrada en valores cercanos a cero, el histograma de distribución de la media (d) lo confirma. La longitud de las series (a) es un parámetro que no se tiene en cuenta a la hora de generar el dataset de entrenamiento porque es una característica propia de la medición. La distribución de rpm (f) muestra la cantidad de archivos por rpm medida.    
+
+
+Las distribuciones del promedio (d), el máximo (b), el mínimo (c) y la desviación estándar (e) presentan un marcado sesgo hacia cero. Para atenuar este efecto y aproximarse a una distribución más similar a la normal, se aplica una transformación logarítmica. La transformación trae como resultado las gráficas de la Figura XX. En general, se puede apreciar una mejoría en las distribuciones de desviación estándar (b), máximos (a) y mínimos(d). 
+
+Para analizar las relaciones existentes entre los distintos parámetros numéricos, se construyó la matriz de correlación entre las variables. Esta herramienta permite identificar el grado de asociación lineal entre cada par de variables, facilitando la detección de posibles dependencias o redundancias en los datos. La matriz resultante se observa en la Figura~\ref{fig:figCorrMat}. 
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{media/dataset/corr-mat.png}
+    \caption{Matriz de correlación de los parámetros calculados en la exploración de los datos. }
+    \label{fig:figCorrMat}
+\end{figure}
+
+
+\cite{Alvarez2023} definió una matriz de correlación como una tabla que muestra el grado de relación lineal entre un conjunto de variables. En forma de matriz cada fila y columna representa una variable, está a su vez facilita la visualización conjunta de múltiples variables, lo que facilita observar de forma más entendible la exploración de los datos de forma gráfica.
+
+
+En esta matriz se evidencia que los valores en la diagonal principal siempre serán 1 ya que se encuentran correlacionadas todas las variables, por otro lado tenemos que los valores fuera de la diagonal van de -1 a +1 lo que expresa que mientras más cercano sea el valor a +1 más mayor será la relación positiva, es decir, pueden directamente proporcionales, por otro lado un valor cercano a -1 indica que no existe una relación entre las variables, es decir, pueden ser inversamente proporcionales y un valor cercano a 0 indica que no existe una relación clara entre las variables. \cite{Alvarez2023}
+
+
+Entre muchas de sus ventajas se resaltan la detección de dependencias o redundancia de variables, lo cual es muy importante y prioritario en campos como análisis de datos y aprendizaje automático y por otro lado nos encontramos que por medio de la implementación de esta técnica se puede simplificar modelos eliminando variables muy correlacionadas que produzcan redundancia en la información. \cite{Alvarez2023}
+
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{media/dataset/corr-mat-target.png}
+    \caption{Correlación entre la variable objetivo y el resto de parámetros.}
+    \label{fig:figCorrMatTarget}
+\end{figure}
+
+
+
+Muchas variables tienen relaciones muy fuertes (positivas o negativas) entre sí. Por ejemplo,  maximum y minimum tiene una correlación muy cercana a -1. Debido a que las señales en el dataset corresponden a vibraciones, se espera que si se tiene una vibración con una alta amplitud en uno de los ejes positivos, también lo haga en el eje negativo. En el caso de las variables mean a las que se les realizó una transformación logarítmica se obtienen correlaciones altas entre las variables y su respectiva correlación. 
+
+
+Finalmente se analiza la relación de correlación entre cada parámetro y la categoría si pertenece o no a algún archivo de fallas. La Figura~\ref{fig:figCorrMatTarget} muestra la correlación entre cada parámetro y esa variable objetivo. No hay correlaciones fuertes (mayores a 0.3) entre ninguna variable y anomaly. 
+Esto significa que ninguna variable por sí sola explica bien la aparición de anomalías. 
+Las variables con mayor asociación, aunque débil, son: \lstinline|log_maximum| (+0.145) y \lstinline|log_std| (+0.112), \lstinline|log_minimum| (-0.152) y \lstinline|length| (-0.216).
+Variables como \lstinline|mean| y \lstinline|rpm| no aportan relación clara con la anomalía.
+
+
+
+\section{Preparación del dataset de entrenamiento}
+
+En esta etapa se estandarizan el conjunto de datos original con fin que los modelos sean capaces de utilizar los datos para su entrenamiento y predicción. La salida de esta etapa son el conjunto de características y etiquetas que utilizarán los modelos de aprendizaje supervisado para su entrenamiento y evaluación. Los pasos para la construcción del dataset de entrenamiento se visualizan en la Figura~\ref{fig:figGenerationDataset}.
+
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{media/generacion-dataset.drawio.png}
+    \caption{Etapas para la construcción del dataset de entrenamiento.}
+    \label{fig:figGenerationDataset}
+\end{figure}
+
+
+En primer lugar, cada archivo del conjunto de datos contiene mediciones de diferentes tipos de acelerómetros. Debido a que los archivos de series de tiempo de condiciones normales, no contienen datos del acelerómetros BA. Por esa razón, se ignoran los datos provenientes de los acelerómetros de tipo BA, puesto que solo están presente en los archivos con datos anómalos. Incluir estos datos genera ruido en el modelo, y en caso que se realice una medición en condiciones normales usando el acelerómetro de tipo BA, el modelo no sería capaz de clasificarlo correctamente.
+
+
+Adicionalmente, las series de tiempo de los diferentes archivos no tienen la misma longitud, y la cantidad de muestras de los archivos es muy alta. La serie más corta tiene más de 60.000 muestras. Con el fin de generar un conjunto de datos con un misma longitud y una cantidad mayor de registros, se ha decido tomar segmentos de 2048 muestras de cada serie.  De esta manera, de un mismo archivo se pueden obtener muchos segmentos, que se convertirán en una observación para el entrenamiento o evaluación del modelo. 
+
+
+Los segmentos son seleccionados de forma aleatoria, debido a que hay muchos más archivos que tienen datos de condiciones anómalas en comparación a los archivos de datos en condiciones normales, de éstos últimos se obtienen más observaciones por archivos que de los anteriores. En la salida se obtienen 8192 series de condiciones anómalas de 2048 muestras cada una y la misma cantidad de series para condiciones normales. 
+
+
+No es recomendable entrenar directamente un modelo con esos valores crudos de los segmentos sin calcular características. En primer lugar, esta alta dimensionalidad de los datos hace a los modelos muy grandes, y si la relación entre el número de observaciones a entrenar y el número de dimensiones de entrada es muy bajo, son más probable que ocurran  efectos negativos como sobreajuste y dificultad para generalizar. 
+
+
+Por otra parte las series de tiempo suelen tener datos ruidosos y con gran variabilidad local. Esto hace que el modelo se ajuste a patrones irrelevantes.  Además, ruido, un valor pico o un desplazamiento leve temporal puede tener grandes efectos en los resultados del modelo. Extraer features de la serie de tiempo reduce la dimensionalidad, mejora la robustez del modelo y facilita la interpretación de resultados. 
+
+
+Por lo anterior, una vez obtenidos los segmentos, se procede a la generación de las características de cada conjunto de muestras. Para esto, se calculan una serie de métricas estadísticas descriptivas para cada fila (serie temporal) de la matriz de datos. Estas métricas incluyen:
+
+
+Maximum: Valor máximo de la serie temporal.
+Mean: Media de la serie temporal.
+Std: Desviación estándar de la serie temporal.
+RMS: Raíz cuadrada del valor medio cuadrático de la serie temporal.
+Skewness: Asimetría de la serie temporal.
+Kurtosis: Curtosis de la serie temporal.
+Crest Factor: Relación entre el valor máximo y el RMS.
+Form Factor: Relación entre el RMS y el valor medio absoluto.
+
+
+Además, se calculan dos métricas adicionales basadas en el espectro en frecuencia de la señal:
+
+
+THD: Distorsión armónica total.
+f0: Frecuencia fundamental..
+
+
+Finalmente, se agrega información adicional a cada fila del DataFrame, como el RPM, el tipo de anomalía, el diámetro de la falla, el valor de muestreo y la etiqueta de muestreo, así como el nombre del acelerómetro. El resultado final es un DataFrame de Pandas que contiene todas las características extraídas de los segmentos de datos, listo para ser utilizado en tareas de aprendizaje automático.
+
+
 
 
 \chapter{Discusión y análisis de resultados}
@@ -1009,7 +1333,7 @@ En la siguiente Figura \ref{fig:fig1secCTF}
 \label{fig:fig1secCTF}
 \end{figure}
 
-\cite{PIMENTEL2016744} \cite{da_S_Bessa_2023}
+% \cite{PIMENTEL2016744} \cite{da_S_Bessa_2023}
 
 %\begin{thebibliography}{a}
 %\bibitem{etiqueta} \textsc{Autores},
