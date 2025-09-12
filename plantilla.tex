@@ -406,25 +406,54 @@ investigación futura que permitan extender y enriquecer el presente trabajo.
 
 \section{Contexto}
 
-Para el desarrollo de este proyecto se ha seleccionado el CWRU Bearing Dataset, proporcionado por el Case Western Reserve University Bearing Data Center. A nivel académico e industrial, este conjunto de datos es una de las principales referencias para el análisis del rendimiento de motores eléctricos y la detección temprana de fallas en rodamientos. Se ha convertido en uno de los recursos más confiables y estandarizados para el entrenamiento y comparación de modelos de detección de fallas basados en aprendizaje automático.
+Para el desarrollo de este proyecto se ha seleccionado el CWRU Bearing Dataset, 
+proporcionado por el Case Western Reserve University Bearing Data Center. 
+A nivel académico e industrial, este conjunto de datos es una de las principales 
+referencias para el análisis del rendimiento de motores eléctricos y la detección 
+temprana de fallas en rodamientos. Se ha convertido en uno de los recursos más 
+confiables y estandarizados para el entrenamiento y comparación de modelos de detección 
+de fallas basados en aprendizaje automático.
 
 
-Con la información contenida en este dataset se pueden construir modelos para clasificar la existencia o no de una falla, clasificar el tipo de falla y clasificar el nivel de gravedad de la falla. Por ser un recurso ideal para el estudio de datos en el análisis de vibraciones, ingeniería mecánica, diagnóstico de fallas y machine learning, ha sido seleccionado para el desarrollo de este proyecto. \cite{caseWesternBearingData}. 
+Con la información contenida en este dataset se pueden construir modelos para 
+clasificar la existencia o no de una falla, clasificar el tipo de falla y clasificar 
+el nivel de gravedad de la falla. Por ser un recurso ideal para el estudio de datos en 
+el análisis de vibraciones, ingeniería mecánica, diagnóstico de fallas y machine 
+learning, ha sido seleccionado para el desarrollo de este proyecto. 
+\cite{caseWesternBearingData}. 
 
 
-Este conjunto de datos se obtiene a partir de un banco de pruebas que incluye un motor de 2 HP, sensores de par, un dinamómetro y sistemas de control electrónico. El dataset contiene las señales de salida resultantes al realizar mediciones de vibración en los rodamientos del motor, las vibraciones se midieron a través de acelerómetros.  
+Este conjunto de datos se obtiene a partir de un banco de pruebas que incluye un motor 
+de 2 HP, sensores de par, un dinamómetro y sistemas de control electrónico. 
+El dataset contiene las señales de salida resultantes al realizar mediciones de 
+vibración en los rodamientos del motor, las vibraciones se midieron a través de 
+acelerómetros.  
 
 
-Los rodamientos del motor fueron sometidos a defectos inducidos de diferentes tamaños y ubicaciones (bola, pista interna y pista externa), con el fin de generar condiciones reales de fallo. Las mediciones fueron registradas mediante acelerómetros ubicados en tres posiciones clave (extremo de transmisión, extremo del ventilador y base), con una frecuencia de muestreo de 48kHz y 12kHz. 
+Los rodamientos del motor fueron sometidos a defectos inducidos de diferentes tamaños 
+y ubicaciones (bola, pista interna y pista externa), con el fin de generar condiciones 
+reales de fallo. Las mediciones fueron registradas mediante acelerómetros ubicados en 
+tres posiciones clave (extremo de transmisión, extremo del ventilador y base), con una 
+frecuencia de muestreo de 48kHz y 12kHz. 
 
 
-Se decidió trabajar con una versión corregida y simplificada del dataset CWRU desarrollada por \cite{rigas2024marine}. El CWRU Bearing Dataset original se encontraba en formato .mat, con algunos metadatos inconsistentes que no seguían un estándar uniforme y redundancias en algunos de sus archivos. El dataset se encuentra disponible en Github. 
+Se decidió trabajar con una versión corregida y simplificada del dataset CWRU 
+desarrollada por \cite{rigas2024marine}. El CWRU Bearing Dataset original se encontraba 
+en formato .mat, con algunos metadatos inconsistentes que no seguían un estándar 
+uniforme y redundancias en algunos de sus archivos. El dataset se encuentra disponible 
+en Github. 
 
 
-Para mejorar su usabilidad en proyectos de machine learning, los datos fueron convertidos a formato .npz, conservando únicamente las series temporales necesarias para el análisis. De esta manera, la nueva versión presenta un conjunto de datos más limpio, consistente y listo para ser cargado directamente en entornos Python, lo que facilita su aplicación en algoritmos de diagnóstico y detección de fallas.
+Para mejorar su usabilidad en proyectos de machine learning, los datos fueron 
+convertidos a formato .npz, conservando únicamente las series temporales necesarias 
+para el análisis. De esta manera, la nueva versión presenta un conjunto de datos más 
+limpio, consistente y listo para ser cargado directamente en entornos Python, lo que 
+facilita su aplicación en algoritmos de diagnóstico y detección de fallas.
 
 
-Los archivos del dataset siguen una convención de nombres que permite identificar fácilmente las condiciones de operación y el tipo de falla asociada a cada serie temporal. Para los datos con fallas, el esquema utilizado es:
+Los archivos del dataset siguen una convención de nombres que permite identificar 
+fácilmente las condiciones de operación y el tipo de falla asociada a cada serie temporal.
+Para los datos con fallas, el esquema utilizado es:
 
 
 \begin{verbatim}
@@ -435,15 +464,29 @@ RPM_Fault_Diameter_End
 Donde, 
 
 \begin{itemize}
-	\item \texttt{RPM}: Revoluciones por minuto del motor. (\texttt{1797}, \texttt{1772}, \texttt{1750} o \texttt{1730}). La reducción de la velocidad se debe a que se le agrega carga al motor.
-	\item \texttt{Fault}: Tipo de defecto introducido en el rodamiento (\texttt{IR} para pista interna, \texttt{B} para elemento rodante, \texttt{OR@6}, \texttt{OR@3} o \texttt{OR@12} para pista externa en distintas posiciones).
-	\item \texttt{Diameter}: Diámetro del defecto en milésimas de pulgada (\texttt{7}, \texttt{14}, \texttt{21} o \texttt{28}).
-	\item \texttt{End}: Ubicación del sensor y frecuencia de muestreo (\texttt{FE}, \texttt{DE12}, \texttt{DE48}).
+
+	\item \texttt{RPM}: Revoluciones por minuto del motor. 
+	(\texttt{1797}, \texttt{1772}, \texttt{1750} o \texttt{1730}).
+	La reducción de la velocidad se debe a que se le agrega carga al motor.
+
+	\item \texttt{Fault}: Tipo de defecto introducido en el rodamiento 
+	(\texttt{IR} para pista interna, \texttt{B} para elemento rodante, \texttt{OR@6}, 
+	\texttt{OR@3} o \texttt{OR@12} para pista externa en distintas posiciones).
+
+	\item \texttt{Diameter}: Diámetro del defecto en milésimas de pulgada 
+	(\texttt{7}, \texttt{14}, \texttt{21} o \texttt{28}).
+
+	\item \texttt{End}: Ubicación del sensor y frecuencia de muestreo (\texttt{FE}, 
+	\texttt{DE12}, \texttt{DE48}).
 \end{itemize}
 
 
-En el caso de las condiciones normales (sin fallas), los archivos se nombran simplemente como \texttt{RPM\_Normal}. 
-Cada archivo \texttt{.npz} puede contener una o varias series temporales, organizadas en claves llamadas \texttt{DE}, \texttt{FE} o \texttt{BA}, que corresponden a los datos capturados en el drive end, fan end o base del motor, respectivamente \cite{rigas2024marine}.
+En el caso de las condiciones normales (sin fallas), los archivos se nombran simplemente 
+como \texttt{RPM\_Normal}. 
+Cada archivo \texttt{.npz} puede contener una o varias series temporales, 
+organizadas en claves llamadas \texttt{DE}, \texttt{FE} o \texttt{BA}, que corresponden 
+a los datos capturados en el drive end, fan end o base del motor, respectivamente 
+\cite{rigas2024marine}.
 
 
 \section{Estado del arte}
@@ -544,13 +587,38 @@ detección son las siguientes:
 	\item Media Móvil con Ponderación Exponencial.
 \end{itemize}
 
-Shewhart Chart, también conocido como gráfico de control, según \cite{chen1998shewhart}, es una herramienta basada en estadística para monitorear la variabilidad a lo largo del tiempo. Consiste en comparar los datos de una serie univariada con límites de control, lo cual permite identificar cambios significativos en la variable u otras anomalías. Los valores de los límites de control superior e inferior se calculan basándose en la media y la desviación estándar. El intervalo entre los límites de control permite identificar si un rango de datos se encuentra dentro un rango aceptable. 
 
-\cite{lopezcano2023spc}, propone una metodología para construir un gráfico de control, la cual  se tienen en cuenta dos fases fundamentales: primero la determinación de los límites de control a partir de un proceso estadístico, y la segunda fase sería la determinación de la estrategia de muestreo, donde estos valores se monitorizan bajo el criterio de los límites fijados, observando así comportamientos y patrones que permitan sacar hipótesis. Lo que se logra con esto es controlar procesos mediante gráficos para comprobar visualmente que el proceso esté bajo control.
+Shewhart Chart, también conocido como gráfico de control, según \cite{chen1998shewhart}, 
+es una herramienta basada en estadística para monitorear la variabilidad a lo largo del tiempo. 
+Consiste en comparar los datos de una serie univariada con límites de control, 
+lo cual permite identificar cambios significativos en la variable u otras anomalías. 
+Los valores de los límites de control superior e inferior se calculan basándose en la 
+media y la desviación estándar. El intervalo entre los límites de control permite 
+identificar si un rango de datos se encuentra dentro un rango aceptable. 
 
-Además del diseño de gráficos de control,\cite{lopezcano2023spc}, propone una serie de patrones que pueden indicar que el proceso deja de estar bajo control: Muestras fuera de los intervalos de crecimiento, una serie de muestras seguidas creciendo o decreciendo, muestras alternadas por encima y debajo de la línea central LC, y una serie de muestras debajo o encima de la línea central. 
 
-Suma Acumulada, CumSum. \cite{contreras2024cusum}. CumSum ha sido una de las primeras estrategias para detectar cambios en series de tiempo, más específicamente para la detección de cambios en la media. De esta manera, la señal de entrada se divide en segmentos con diferentes valores medios. En la Figura~\ref{fig:figPuntosCambiosSegmentos} se aprecia los puntos de cambios calulados para una señal. 
+\cite{lopezcano2023spc}, propone una metodología para construir un gráfico de control, 
+la cual  se tienen en cuenta dos fases fundamentales: primero la determinación de los 
+límites de control a partir de un proceso estadístico, y la segunda fase sería la 
+determinación de la estrategia de muestreo, donde estos valores se monitorizan bajo el 
+criterio de los límites fijados, observando así comportamientos y patrones que permitan 
+sacar hipótesis. 
+Lo que se logra con esto es controlar procesos mediante gráficos para comprobar 
+visualmente que el proceso esté bajo control.
+
+
+Además del diseño de gráficos de control,\cite{lopezcano2023spc}, propone una serie de 
+patrones que pueden indicar que el proceso deja de estar bajo control: Muestras fuera 
+de los intervalos de crecimiento, una serie de muestras seguidas creciendo o decreciendo,
+muestras alternadas por encima y debajo de la línea central LC, y una serie de muestras
+debajo o encima de la línea central. 
+
+
+Suma Acumulada, CumSum. \cite{contreras2024cusum}. CumSum ha sido una de las primeras 
+estrategias para detectar cambios en series de tiempo, más específicamente para la 
+detección de cambios en la media. De esta manera, la señal de entrada se divide en 
+segmentos con diferentes valores medios. En la Figura~\ref{fig:figPuntosCambiosSegmentos}
+se aprecia los puntos de cambios calulados para una señal. 
 
 
 \begin{figure}[h]
@@ -561,30 +629,64 @@ Suma Acumulada, CumSum. \cite{contreras2024cusum}. CumSum ha sido una de las pri
 \end{figure}
 
 
-La Media Móvil con Ponderación Exponencial (Exponentially Weighted Moving Average, EWMA) \cite{fan1996ewma} se utiliza en la detección de anomalías al suavizar datos y resaltar cambios significativos. La EWMA da más peso a las observaciones recientes, permite identificar desviaciones de la norma, facilitando la detección de patrones inusuales en series temporales. Esta técnica es aplicada en trading de divisas. 
+La Media Móvil con Ponderación Exponencial (Exponentially Weighted Moving Average, EWMA) 
+\cite{fan1996ewma} se utiliza en la detección de anomalías al suavizar datos y resaltar 
+cambios significativos. La EWMA da más peso a las observaciones recientes, permite 
+identificar desviaciones de la norma, facilitando la detección de patrones inusuales en 
+series temporales. Esta técnica es aplicada en trading de divisas. 
 
 
 \subsection{Métodos basados en aprendizaje de máquina}
 
 
-Los sistemas industriales suelen ser complejos puesto que integran muchos componentes, y esto hace que la detección de anomalías sea una tarea bastante compleja porque técnicas univariadas para detección de anomalías no suelen ser suficientes. Muchas de las técnicas tradicionales de detección de anomalías, como las anteriormente mencionadas, fallan cuando los datos alcanzan una alta volumetría y también cuando se generan a muy alta velocidad y son multidimensionales \cite{thudumu2020survey}.
+Los sistemas industriales suelen ser complejos puesto que integran muchos componentes, y 
+esto hace que la detección de anomalías sea una tarea bastante compleja porque técnicas 
+univariadas para detección de anomalías no suelen ser suficientes. 
+Muchas de las técnicas tradicionales de detección de anomalías, como las anteriormente 
+mencionadas, fallan cuando los datos alcanzan una alta volumetría y también cuando se 
+generan a muy alta velocidad y son multidimensionales \cite{thudumu2020survey}.
 
 
-Para afrontar el problema de múltiples variables y sistemas más complejos, se implementa como alternativa los algoritmos de aprendizaje de máquina. Las ventajas de los algoritmos de aprendizaje de máquina sobre las estrategias basadas en reglas y estadísticas son múltiples. En primer lugar, mientras que los modelos de aprendizaje de máquina construyen las reglas que describen los patrones de los datos, en el modelamiento estadístico hay que formalizar las relaciones entre las variables a través de ecuaciones matemáticas, \cite{ij2018statvsml}. 
+Para afrontar el problema de múltiples variables y sistemas más complejos, se implementa
+como alternativa los algoritmos de aprendizaje de máquina. Las ventajas de los algoritmos
+de aprendizaje de máquina sobre las estrategias basadas en reglas y estadísticas son múltiples.
+En primer lugar, mientras que los modelos de aprendizaje de máquina construyen las reglas
+que describen los patrones de los datos, en el modelamiento estadístico hay que formalizar
+las relaciones entre las variables a través de ecuaciones matemáticas, \cite{ij2018statvsml}. 
 
 
-Otra ventaja de los algoritmos de aprendizaje de máquina sobre el modelado estadístico tradicional es que la capacidad de los modelos para aprender los patrones a partir de los datos proporcionados sin la necesidad de asumir una distribución específica de los datos. En el modelado estadístico normalmente se asume que los datos siguen alguna distribución, y es a partir de allí que se construyen las ecuaciones y reglas con que se modelan los datos. 
+Otra ventaja de los algoritmos de aprendizaje de máquina sobre el modelado estadístico
+tradicional es que la capacidad de los modelos para aprender los patrones a partir de 
+los datos proporcionados sin la necesidad de asumir una distribución específica de los datos.
+En el modelado estadístico normalmente se asume que los datos siguen alguna distribución,
+y es a partir de allí que se construyen las ecuaciones y reglas con que se modelan los datos. 
 
 
-Existe una gran variedad de modelos de aprendizaje de máquina, una gran diversidad de estos modelos han sido implementados en el problema de detección de anomalías. Se puede encontrar en la literatura el uso de modelos de aprendizaje supervisado para la detección de anomalías. 
+Existe una gran variedad de modelos de aprendizaje de máquina, una gran diversidad de 
+estos modelos han sido implementados en el problema de detección de anomalías.
+Se puede encontrar en la literatura el uso de modelos de aprendizaje supervisado para la
+detección de anomalías. 
 
 
-En el trabajo de \cite{baradaran2025predictivemaintenanceelectricmotors}, se  evaluaron varios modelos como Naive Bayes, SVM, Random Forest, k-NN, métodos de boosting, entre otros, para poder detectar alguno de los tres estados posibles de un motor: Saludable (Healthy), averiado (Broken), y necesita mantenimiento (Needs Preventive Maintenance). De este estrato se concluye que tiene sentido la aplicación de un modelo de clasificación de aprendizaje de máquina en ese caso de uso. Sin embargo, es importante la elección del modelo, puesto que se observan diferencias en las precisiones de los clasificadores.   
+En el trabajo de \cite{baradaran2025predictivemaintenanceelectricmotors}, se  evaluaron 
+varios modelos como Naive Bayes, SVM, Random Forest, k-NN, métodos de boosting, entre 
+otros, para poder detectar alguno de los tres estados posibles de un motor: Saludable 
+(Healthy), averiado (Broken), y necesita mantenimiento (Needs Preventive Maintenance).
+De este estrato se concluye que tiene sentido la aplicación de un modelo de clasificación
+de aprendizaje de máquina en ese caso de uso. Sin embargo, es importante la elección del
+modelo, puesto que se observan diferencias en las precisiones de los clasificadores.   
 
 
 \subsubsection{Naive Bayes}
 
-Naive Bayes es un algoritmo de aprendizaje automático que se basa en fundamentos estadísticos, principalmente en el teorema de Bayes el cual permite actualizar la probabilidad de una hipótesis a partir de nueva evidencia. Este teorema relaciona probabilidades de dos eventos A y B a través de la dependencia condicional, asumiendo independencia condicional, es decir, que los valores de una característica son independientes de la presencia o propiedades de las demás características. Según \cite{han2012datamining}, la Equación~\ref{eq:eq1NaiveBayes} describe al teorema de Bayes.
+Naive Bayes es un algoritmo de aprendizaje automático que se basa en fundamentos 
+estadísticos, principalmente en el teorema de Bayes el cual permite actualizar la 
+probabilidad de una hipótesis a partir de nueva evidencia. Este teorema relaciona 
+probabilidades de dos eventos A y B a través de la dependencia condicional, asumiendo 
+independencia condicional, es decir, que los valores de una característica son 
+independientes de la presencia o propiedades de las demás características. Según 
+\cite{han2012datamining}, la Equación~\ref{eq:eq1NaiveBayes} describe al teorema de 
+Bayes.
 
 
 \begin{equation}\label{eq:eq1NaiveBayes}
@@ -592,10 +694,20 @@ P(A \mid B) = \frac{P(B \mid A) P(A)}{P(B)}
 \end{equation}
 
 
-Donde $P(A \mid B)$ es la Probabilidad posterior de que ocurra el evento $A$, dado que ya ocurrió el evento $B$; $P(B \mid A)$ es la Probabilidad condicional de que ocurra B si sabemos que el evento $A$ ya ocurrió; $P(A)$ es Probabilidad a priori de que ocurra $A$, sin considerar ninguna información adicional y $P(B)$ es Probabilidad total de que ocurra $B$, considerando todos los casos posibles.
+Donde $P(A \mid B)$ es la Probabilidad posterior de que ocurra el evento $A$, dado que 
+ya ocurrió el evento $B$; $P(B \mid A)$ es la Probabilidad condicional de que ocurra B 
+si sabemos que el evento $A$ ya ocurrió; $P(A)$ es Probabilidad a priori de que ocurra 
+$A$, sin considerar ninguna información adicional y $P(B)$ es Probabilidad total de que 
+ocurra $B$, considerando todos los casos posibles.
 
 
-Los clasificadores basados en el algoritmo Naive Bayes utilizan las probabilidades a priori para estimar la probabilidad de ocurrencia del evento objetivo. Aplican de manera secuencial la fórmula del Teorema de Bayes, asumiendo independencia condicional entre las características con el fin de simplificar los cálculos del modelo. Como resultado del proceso anterior, se obtiene la Equación~\ref{eq:eq1NaiveBayesProd} matemática para calcular la probabilidad estimada de que el evento objetivo ocurra. \cite{salman2024rf}. 
+Los clasificadores basados en el algoritmo Naive Bayes utilizan las probabilidades a 
+priori para estimar la probabilidad de ocurrencia del evento objetivo. Aplican de 
+manera secuencial la fórmula del Teorema de Bayes, asumiendo independencia condicional 
+entre las características con el fin de simplificar los cálculos del modelo. 
+Como resultado del proceso anterior, se obtiene la Equación~\ref{eq:eq1NaiveBayesProd} 
+matemática para calcular la probabilidad estimada de que el evento objetivo ocurra. 
+\cite{salman2024rf}. 
 
 
 \begin{equation}\label{eq:eq1NaiveBayesProd}
@@ -603,46 +715,95 @@ P(C|x_1, x_2, ..., x_n) = P(C) \prod_{i = 0}^{n} P(x_i \mid C)
 \end{equation}
 
 
-A pesar de su simplicidad, el modelo de clasificación basado en Naive Bayes ofrece un rendimiento sorprendentemente eficaz en tareas de clasificación, y en muchos casos supera en precisión a métodos más complejos, especialmente cuando se trabaja con grandes volúmenes de datos y características independientes. Su eficiencia computacional lo convierte en una opción ideal para aplicaciones en tiempo real. Además, requiere una menor cantidad de datos para entrenamiento en comparación con otros algoritmos.
+A pesar de su simplicidad, el modelo de clasificación basado en Naive Bayes ofrece un 
+rendimiento sorprendentemente eficaz en tareas de clasificación, y en muchos casos 
+supera en precisión a métodos más complejos, especialmente cuando se trabaja con 
+grandes volúmenes de datos y características independientes. Su eficiencia computacional 
+lo convierte en una opción ideal para aplicaciones en tiempo real. Además, requiere una 
+menor cantidad de datos para entrenamiento en comparación con otros algoritmos.
 
 
-Otras investigaciones han encontrado qué el modelo de clasificación Naive-Bayes da buenos resultados de precisión. \cite{chen2016xgboost} entrenó dos modelos de clasificación para dos datasets diferentes, con Naive-Bayes. Los resultados fueron qué los modelos logran una precisión aproximada del 99.9\% y 99.65\%, respectivamente. Por otro lado, en múltiples trabajos, se encuentra qué el algoritmo qué mejor desempeño tiene a la hora de detectar anomalías es el random forest. Como por ejemplo el trabajo de \cite{sharma2022predictive} y \cite{yu2025tkeo}.
+Otras investigaciones han encontrado qué el modelo de clasificación Naive-Bayes da 
+buenos resultados de precisión. \cite{chen2016xgboost} entrenó dos modelos de 
+clasificación para dos datasets diferentes, con Naive-Bayes. Los resultados fueron qué 
+los modelos logran una precisión aproximada del 99.9\% y 99.65\%, respectivamente. 
+Por otro lado, en múltiples trabajos, se encuentra qué el algoritmo qué mejor desempeño 
+tiene a la hora de detectar anomalías es el random forest. Como por ejemplo el trabajo 
+de \cite{sharma2022predictive} y \cite{yu2025tkeo}.
 
 
 \subsubsection{Máquinas de soporte vectorial}
 
-Las Máquinas de Vectores Soporte, SVM en por sus siglas en inglés: Support Vector Machine, tienen su principio en la aplicación de trabajos que requieren teoría de aprendizaje estadístico, son usadas para resolver tareas de clasificación y regresión. Según \cite{amat2017maquinas}, el principio fundamental en una SVM es encontrar un hiperplano óptimo encargado de la clasificación de los datos, el cual maximiza el margen entre las clases, es decir, la distancia entre los puntos de datos más cercanos de cada clase (conocidos como vectores soporte) y el hiperplano. En la Figura~\ref{fig:figSVM} se observa cómo una Máquina de Vectores de Soporte clasifica datos en un hiperplano. 
+Las Máquinas de Vectores Soporte, SVM en por sus siglas en inglés: Support Vector 
+Machine, tienen su principio en la aplicación de trabajos que requieren teoría de 
+aprendizaje estadístico, son usadas para resolver tareas de clasificación y regresión. 
+Según \cite{amat2017maquinas}, el principio fundamental en una SVM es encontrar un 
+hiperplano óptimo encargado de la clasificación de los datos, el cual maximiza el 
+margen entre las clases, es decir, la distancia entre los puntos de datos más cercanos 
+de cada clase (conocidos como vectores soporte) y el hiperplano. En la 
+Figura~\ref{fig:figSVM} se observa cómo una Máquina de Vectores de Soporte clasifica 
+datos en un hiperplano. 
 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{media/svm-dm.png}
-    \caption{Clasificación de datos en un espacio bidimensional. En (a) se observan los datos separados a través de un hiperplano óptimo, mientras que en (b) se muestra los posibles hiperplanos que se pueden aplicar para la separación de los datos.  \protect\cite{suarez2014svm} }
+    \caption{Clasificación de datos en un espacio bidimensional. En (a) se observan 
+    los datos separados a través de un hiperplano óptimo, mientras que en (b) se muestra 
+    los posibles hiperplanos que se pueden aplicar para la separación de los datos.  
+    \protect\cite{suarez2014svm} }
     \label{fig:figSVM}
 \end{figure}
 
 
-Mientras que la mayoría de métodos de aprendizaje se centran en minimizar los errores empíricos, las SVMs radican la minimización del riesgo estructural, es decir, se busca minimizar los errores empíricos, pero al mismo tiempo, maximizar la capacidad del modelo para generalizar. Este enfoque no solo mejora la capacidad de generalización del modelo ante nuevos datos y lo hacen robusto frente al sobreajuste. Otra ventaja que tienen los modelos SVM es el uso de funciones núcleo (kernel functions) que transforman el espacio permitiendo manejar problemas no linealmente separables. 
+Mientras que la mayoría de métodos de aprendizaje se centran en minimizar los errores 
+empíricos, las SVMs radican la minimización del riesgo estructural, es decir, se busca 
+minimizar los errores empíricos, pero al mismo tiempo, maximizar la capacidad del modelo 
+para generalizar. Este enfoque no solo mejora la capacidad de generalización del modelo 
+ante nuevos datos y lo hacen robusto frente al sobreajuste. Otra ventaja que tienen los 
+modelos SVM es el uso de funciones núcleo (kernel functions) que transforman el espacio 
+permitiendo manejar problemas no linealmente separables. 
 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{media/svm-kun.png}
-    \caption{Detección de anomalías en datos de vuelo utilizando One-Class SVM.  \protect\cite{qin2022flight} }
+    \caption{Detección de anomalías en datos de vuelo utilizando One-Class SVM.  
+    \protect\cite{qin2022flight} }
     \label{fig:figSVMflight}
 \end{figure}
 
 
-Originalmente este sistema fue creado para problemas de clasificación binaria, pero puede ser aplicado en problemas de clasificación multiclase, y también en problemas de detección de anomalías. En la Figura~\ref{fig:figSVMflight}, propuesta por \cite{qin2022flight}, se presenta un estudio para identificar anomalías en datos reales de vuelo, usando como base el principio One-Class SVM. Se construyó un sistema para detectar eventos anómalos en tiempo real, en la aplicación de este estudio se logró que es un método muy viable para este tipo de escenarios obteniendo una alta capacidad de detección de anomalías y mantuvo una baja tasa de falsas alarmas lo cual es crítico para monitoreo de aeronaves.
+Originalmente este sistema fue creado para problemas de clasificación binaria, pero 
+puede ser aplicado en problemas de clasificación multiclase, y también en problemas de 
+detección de anomalías. En la Figura~\ref{fig:figSVMflight}, propuesta por 
+\cite{qin2022flight}, se presenta un estudio para identificar anomalías en datos reales 
+de vuelo, usando como base el principio One-Class SVM. Se construyó un sistema para 
+detectar eventos anómalos en tiempo real, en la aplicación de este estudio se logró que 
+es un método muy viable para este tipo de escenarios obteniendo una alta capacidad de 
+detección de anomalías y mantuvo una baja tasa de falsas alarmas lo cual es crítico para 
+monitoreo de aeronaves.
 
 
 \subsubsection{k-NN}
 
 
-K-Nearest-Neighbours (kNN) es quizás uno de los métodos más populares y sencillos para implementación de algoritmos de extracción y análisis de datos en una variedad de temas de investigación en informática. Los algoritmos KNN se han empleado de manera extensa en el ámbito de la investigación y se les reconoce como uno de los diez algoritmos más destacados en minería de datos \cite{witten2005data}. En este tiempo del Big Data, las metodologías KNN ofrecen una forma especialmente eficaz para reconocer patrones valiosos y crear algoritmos de razonamiento fundamentados en casos para la inteligencia artificial (IA). \cite{wu2008top}
+K-Nearest-Neighbours (kNN) es quizás uno de los métodos más populares y sencillos para 
+implementación de algoritmos de extracción y análisis de datos en una variedad de temas 
+de investigación en informática. Los algoritmos KNN se han empleado de manera extensa 
+en el ámbito de la investigación y se les reconoce como uno de los diez algoritmos más 
+destacados en minería de datos \cite{witten2005data}. En este tiempo del Big Data, 
+las metodologías KNN ofrecen una forma especialmente eficaz para reconocer patrones 
+valiosos y crear algoritmos de razonamiento fundamentados en casos para la inteligencia 
+artificial (IA). \cite{wu2008top}
 
 
-El estudio de la selección de vecinos más cercanos ha sido ampliamente investigada, observada y analizada con el fin de determinar la mediana de proximidad, se puede decir que lo que se desea obtener con todo esto es centralizar la construcción de funciones de distancia para medir la proximidad. Es esencial contar con una función a distancia que permita elegir los puntos de vecinos más cercanos, la cual pueda operar de manera efectiva con la gran parte de las muestras de entrenamiento. \cite{zhang2022influence}
+El estudio de la selección de vecinos más cercanos ha sido ampliamente investigada, 
+observada y analizada con el fin de determinar la mediana de proximidad, se puede decir 
+que lo que se desea obtener con todo esto es centralizar la construcción de funciones de 
+distancia para medir la proximidad. Es esencial contar con una función a distancia que 
+permita elegir los puntos de vecinos más cercanos, la cual pueda operar de manera 
+efectiva con la gran parte de las muestras de entrenamiento. \cite{zhang2022influence}
 
 \begin{figure}[h]
     \centering
@@ -652,115 +813,245 @@ El estudio de la selección de vecinos más cercanos ha sido ampliamente investi
 \end{figure}
 
 
-En el campo de la detección de fallos, se han aplicado métodos basados en KNN : FD (Feature-Dependent) y PC (Prototype Constrained), cada uno sirvió para el estudio del comportamiento en situaciones controladas, logrando identificar altas tasas de detección de fallos y bajas tasas de falsas alarmas, proveyendo una solución simple y efectiva para detección de fallos en sistemas complejos, ofreciendo así resultados sólidos en aplicaciones industriales reales, validando su aplicabilidad práctica.\cite{zhou2015faultdetection}.
+En el campo de la detección de fallos, se han aplicado métodos basados en KNN : FD 
+(Feature-Dependent) y PC (Prototype Constrained), cada uno sirvió para el estudio del 
+comportamiento en situaciones controladas, logrando identificar altas tasas de detección 
+de fallos y bajas tasas de falsas alarmas, proveyendo una solución simple y efectiva 
+para detección de fallos en sistemas complejos, ofreciendo así resultados sólidos en 
+aplicaciones industriales reales, validando su aplicabilidad práctica.
+\cite{zhou2015faultdetection}.
 
 
 \subsubsection{Random Forest}
 
 
-Los modelos basados en Random Forest son una de las herramientas más populares a la hora de construir modelos de predicción para clasificación, regresión y minería de datos \cite{rushall2013rf}. Consisten en un conjunto de árboles de decisiones entrenados con diferentes subconjuntos de datos aplicando estrategias como bagging y boosting. Los árboles de decisión dividen el hiperespacio en segmentos según los datos de prueba. Random Forest utiliza un conjunto de árboles de decisión para mejorar la capacidad de generalización.  
+Los modelos basados en Random Forest son una de las herramientas más populares a la 
+hora de construir modelos de predicción para clasificación, regresión y minería de 
+datos \cite{rushall2013rf}. Consisten en un conjunto de árboles de decisiones entrenados 
+con diferentes subconjuntos de datos aplicando estrategias como bagging y boosting. 
+Los árboles de decisión dividen el hiperespacio en segmentos según los datos de prueba. 
+Random Forest utiliza un conjunto de árboles de decisión para mejorar la capacidad de 
+generalización.  
 
 
-Según, \cite{salman2024rf}, una de las principales ventajas de los modelos basados en Random Forest es su versatilidad porque puede ser aplicado en regresión y clasificación,  además, tiene una buena tolerancia ante valores atípicos y el ruido, gracias a ésto han sido uno de los métodos de investigación más populares en el área de minería de datos. Adicionalmente, durante el entrenamiento de los árboles de decisión, las características más relevantes son ubicadas en la raíz del árbol de decisión, esto facilita la interpretación y búsqueda de patrones en los datos. 
+Según, \cite{salman2024rf}, una de las principales ventajas de los modelos basados en 
+Random Forest es su versatilidad porque puede ser aplicado en regresión y clasificación, 
+además, tiene una buena tolerancia ante valores atípicos y el ruido, gracias a ésto han 
+sido uno de los métodos de investigación más populares en el área de minería de datos. 
+Adicionalmente, durante el entrenamiento de los árboles de decisión, las características 
+más relevantes son ubicadas en la raíz del árbol de decisión, esto facilita la 
+interpretación y búsqueda de patrones en los datos. 
 
 
-Los modelos basados en algoritmos Random Forest, según \cite{canovas2017random}, tienen como una de sus principales ventajas que son simples de entrenar y al mismo tiempo pueden alcanzar un rendimiento similar al de otras técnicas más complejas, y también, son robustos ante un gran porcentaje de datos nulos. Por esta razón, esta técnica es ampliamente utilizada en la detección de fraudes bancarios y otros tipos de anomalías en los datos. 
+Los modelos basados en algoritmos Random Forest, según \cite{canovas2017random}, tienen 
+como una de sus principales ventajas que son simples de entrenar y al mismo tiempo 
+pueden alcanzar un rendimiento similar al de otras técnicas más complejas, y también, 
+son robustos ante un gran porcentaje de datos nulos. Por esta razón, esta técnica es 
+ampliamente utilizada en la detección de fraudes bancarios y otros tipos de anomalías 
+en los datos. 
 
 
-\cite{yu2025tkeo} compararon el rendimiento de los modelos de clasificación SVM  y Random Forest, aplicando el operador TKEO sobre el dataset CWRU como técnica de preprocesamiento para predecir alguno de 17 categorías relacionadas con la salud del motor. Ambos modelos tuvieron buenos resultados y demostraron qué bajo ciertas condiciones de cargas es viable utilizar el TKEO debido a su eficiencia con dataset grandes.
+\cite{yu2025tkeo} compararon el rendimiento de los modelos de clasificación SVM  y 
+Random Forest, aplicando el operador TKEO sobre el dataset CWRU como técnica de 
+preprocesamiento para predecir alguno de 17 categorías relacionadas con la salud del 
+motor. Ambos modelos tuvieron buenos resultados y demostraron qué bajo ciertas 
+condiciones de cargas es viable utilizar el TKEO debido a su eficiencia con dataset 
+grandes.
 
 
-\cite{sharma2022predictive} realiza la evaluación de cinco modelos de clasificación usando datasets diferentes para predecir el momento para mantenimiento. El objetivo es determinar cuál de los modelos funciona mejor. En este estudio curiosamente se vuelve a resaltar a Random Forest como el modelo con la mayor precisión.
+\cite{sharma2022predictive} realiza la evaluación de cinco modelos de clasificación 
+usando datasets diferentes para predecir el momento para mantenimiento. 
+El objetivo es determinar cuál de los modelos funciona mejor. En este estudio 
+curiosamente se vuelve a resaltar a Random Forest como el modelo con la mayor precisión.
 
 
 \subsubsection{XGBoost}
 
-El algoritmo XG Boost (Extreme Gradient Boosting) es una técnica de aprendizaje supervisado que se basa en árboles de decisión \cite{chen2016xgboost}.  Es una poderosa herramienta de aprendizaje automático que fusiona eficacia, adaptabilidad y excelente desempeño para solucionar problemas complicados de clasificación y regresión. 
+El algoritmo XG Boost (Extreme Gradient Boosting) es una técnica de aprendizaje 
+supervisado que se basa en árboles de decisión \cite{chen2016xgboost}. 
+Es una poderosa herramienta de aprendizaje automático que fusiona eficacia, 
+adaptabilidad y excelente desempeño para solucionar problemas complicados de 
+clasificación y regresión. 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{media/xgboost-salman.png}
-    \caption{Visualización del algoritmo XGBoost. Ensamble de árboles de decisión.  \protect\cite{salman2024rf} }
+    \caption{Visualización del algoritmo XGBoost. Ensamble de árboles de decisión. 
+    \protect\cite{salman2024rf} }
     \label{fig:figXGBoostSalman}
 \end{figure}
 
 
-Se basa principalmente en la implementación del algoritmo de boosting de árboles de decisión. XGBoost consiste en un ensamblaje secuencial de árboles de decisión. Los árboles se agregan secuencialmente a fin de aprender del resultado de los árboles previos y corregir el error producido por los mismos, hasta que ya no se pueda corregir más dicho error \cite{salman2024rf}.  En XGBoost, a esta técnica donde cada árbol recién construido busca rectificar los fallos realizados por los árboles previos con el objetivo de generar un modelo más robusto y exacto se le denomina “gradiente descendiente”. \cite{espinoza2020rf_xgboost}.
+Se basa principalmente en la implementación del algoritmo de boosting de árboles de 
+decisión. XGBoost consiste en un ensamblaje secuencial de árboles de decisión. 
+Los árboles se agregan secuencialmente a fin de aprender del resultado de los árboles 
+previos y corregir el error producido por los mismos, hasta que ya no se pueda corregir 
+más dicho error \cite{salman2024rf}.  En XGBoost, a esta técnica donde cada árbol recién 
+construido busca rectificar los fallos realizados por los árboles previos con el 
+objetivo de generar un modelo más robusto y exacto se le denomina “gradiente 
+descendiente”. \cite{espinoza2020rf_xgboost}.
+
 
 \subsubsection{CatBoost}
 
-CatBoost es otro algoritmo de Machine Learning basado en árboles de decisión, su principal ventaja es su eficiente capacidad de predicción para características de tipo categórico  \cite{ibrahim2020catboost}. A diferencia de otros modelos basados en Boosting, esta técnica no requiere aplicar técnicas de hot-encoding manualmente, puesto que es capaz de manejar las variables categóricas de forma nativa. CatBoost implementa gradient boosting, el cual hace uso de árboles de decisión binarios como base para sus predictores \cite{prokhorenkova2018catboost}.
+CatBoost es otro algoritmo de Machine Learning basado en árboles de decisión, su 
+principal ventaja es su eficiente capacidad de predicción para características de tipo 
+categórico  \cite{ibrahim2020catboost}. A diferencia de otros modelos basados en 
+Boosting, esta técnica no requiere aplicar técnicas de hot-encoding manualmente, 
+puesto que es capaz de manejar las variables categóricas de forma nativa. CatBoost 
+implementa gradient boosting, el cual hace uso de árboles de decisión binarios como 
+base para sus predictores \cite{prokhorenkova2018catboost}.
 
 
-CatBoost se ha implementado en la detección de robo de electricidad. Fue seleccionado este modelo por su eficiencia para manejar un gran porcentaje de características de datos de tipo categórico durante el entrenamiento del modelo como en su predicción, \cite{hussain2021catboost}. Asimismo, otra ventaja de este algoritmo es su interpretabilidad, en contraste con otras soluciones basadas en boosting. 
+CatBoost se ha implementado en la detección de robo de electricidad. Fue seleccionado 
+este modelo por su eficiencia para manejar un gran porcentaje de características de 
+datos de tipo categórico durante el entrenamiento del modelo como en su predicción, 
+\cite{hussain2021catboost}. Asimismo, otra ventaja de este algoritmo es su 
+interpretabilidad, en contraste con otras soluciones basadas en boosting. 
 
 
 \subsubsection{LightGBM}
 
 
-Este es uno de los algoritmos más populares de aprendizaje automático, es ampliamente implementado en soluciones que manejen grandes volúmenes de datos y de gran dimensionalidad. LightGBM usa estrategias claves, GOSS (Gradient-based One-Side Sampling) que consiste en usar las observaciones con mas gradientes grandes ya que son las instancias donde el modelo pierde exactitud en la predicción, y por otro lado EFB (Exclusive Feature Bundling) que agrupa las variables que usualmente toman valores nulos o iguales a cero. Estas variables son empaquetadas lo que reduce considerablemente la cantidad de variables a considerar.
+Este es uno de los algoritmos más populares de aprendizaje automático, es ampliamente 
+implementado en soluciones que manejen grandes volúmenes de datos y de gran 
+dimensionalidad. LightGBM usa estrategias claves, GOSS 
+(Gradient-based One-Side Sampling) que consiste en usar las observaciones con mas 
+gradientes grandes ya que son las instancias donde el modelo pierde exactitud en la 
+predicción, y por otro lado EFB (Exclusive Feature Bundling) que agrupa las variables 
+que usualmente toman valores nulos o iguales a cero. Estas variables son empaquetadas 
+lo que reduce considerablemente la cantidad de variables a considerar.
 
 
-Se estima que LightGBM logra entrenar mucho más rápido (hasta 20 veces), que otros modelos basados en árboles de decisión, lo que permite el procesamiento de grandes volúmenes de datos y un buen rendimiento en contextos donde la velocidad es crítica, como en sistemas en tiempo real, \cite{ke2017lightgbm}. En IoT, por ejemplo, se ha implementado LightGBM para la detección de anomalías en sistemas de enfriamiento. \cite{yanabe2020lightgbm}, y también se ha implementado este método para la detección de anomalías en el tráfico de una red. \cite{islam2020lightgbm}. 
+Se estima que LightGBM logra entrenar mucho más rápido (hasta 20 veces), que otros 
+modelos basados en árboles de decisión, lo que permite el procesamiento de grandes 
+volúmenes de datos y un buen rendimiento en contextos donde la velocidad es crítica, 
+como en sistemas en tiempo real, \cite{ke2017lightgbm}. En IoT, por ejemplo, se ha 
+implementado LightGBM para la detección de anomalías en sistemas de enfriamiento. 
+\cite{yanabe2020lightgbm}, y también se ha implementado este método para la detección 
+de anomalías en el tráfico de una red. \cite{islam2020lightgbm}. 
 
 
-\cite{delasmorenas2025bearing} probaron tres modelos de clasificación (XGBoost, CatBoost y LightGBM). Los 3 demostraron buenos resultados en precisión (98\% aprox.). Este estudio termina con la conclusión que para ese caso de uso el algoritmo de LightGBM obtiene los mejores resultados, y que se debe considerar como opción en casos de Edge Computing.
+\cite{delasmorenas2025bearing} probaron tres modelos de clasificación 
+(XGBoost, CatBoost y LightGBM). Los 3 demostraron buenos resultados en 
+precisión (98\% aprox.). Este estudio termina con la conclusión que para ese caso de 
+uso el algoritmo de LightGBM obtiene los mejores resultados, y que se debe considerar 
+como opción en casos de Edge Computing.
 
 
 \subsection{Métodos basados en aprendizaje no supervisado}
 
-En los anteriores trabajos se encuentra qué los dataset con los qué trabajaron eran dataset previamente etiquetados. Sin embargo esto puede ser una limitación en aplicaciones industriales o de negocio en las que el trabajo de etiquetado no se ha hecho.
+
+En los anteriores trabajos se encuentra qué los dataset con los qué trabajaron eran 
+dataset previamente etiquetados. Sin embargo esto puede ser una limitación en 
+aplicaciones industriales o de negocio en las que el trabajo de etiquetado no se ha 
+hecho.
 
 
-Existen casos de detección de anomalías donde se busca que el modelo segmenta un conjunto de datos no etiquetados previamente de manera que sea éste el que defina qué es una anomalía y que no. Esta técnica de segmentación en la que los conjuntos de datos no han sido previamente etiquetados se denomina aprendizaje no supervisado. Aplicando este enfoque,  \cite{Cao_2025} escribe un artículo hablando de distintas técnicas para la detección de anomalías a través de mecanismos de aislamiento. Se mencionan varias técnicas, pero de las más destacadas se encuentra la Insolation Forest.
+Existen casos de detección de anomalías donde se busca que el modelo segmenta un 
+conjunto de datos no etiquetados previamente de manera que sea éste el que defina qué 
+es una anomalía y que no. Esta técnica de segmentación en la que los conjuntos de datos 
+no han sido previamente etiquetados se denomina aprendizaje no supervisado. Aplicando 
+este enfoque,  \cite{Cao_2025} escribe un artículo hablando de distintas técnicas para 
+la detección de anomalías a través de mecanismos de aislamiento. Se mencionan varias 
+técnicas, pero de las más destacadas se encuentra la Insolation Forest.
 
 
 \subsubsection{Isolation Forest}
 
-El algoritmo de Isolation Forest (IF) es usado y conocido popularmente para detección de anomalías, produce heat maps los cuales son mapas de puntuación de anomalías que presentan artefactos visuales, al ser un modelo robusto este permite que las puntuaciones de anomalía sean más estables, especialmente a lo largo de regiones con puntuaciones constantes dando como resultado una mejora en la precisión de puntuaciones y detección de anomalías, sin sacrificar eficiencia computacional. \cite{liu2021isoletionforest}.
+El algoritmo de Isolation Forest (IF) es usado y conocido popularmente para detección de 
+anomalías, produce heat maps los cuales son mapas de puntuación de anomalías que 
+presentan artefactos visuales, al ser un modelo robusto este permite que las 
+puntuaciones de anomalía sean más estables, especialmente a lo largo de regiones con 
+puntuaciones constantes dando como resultado una mejora en la precisión de puntuaciones 
+y detección de anomalías, sin sacrificar eficiencia computacional. 
+\cite{liu2021isoletionforest}.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{media/liu-isolation-forest.png}
-    \caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos normalmente distribuidos.  \protect\cite{liu2021isoletionforest} }
+    \caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos 
+    normalmente distribuidos.  \protect\cite{liu2021isoletionforest} }
     \label{fig:figIsolationForest}
 \end{figure}
 
 
-La Figura~\ref{fig:figIsolationForest} revela que, aunque hay dos grupos normales claramente definidos, el Isolation Forest estándar introduce sesgos geométricos (como triángulos y grupos falsos) en el mapa de anomalía. Esto es lo que impulsa la propuesta del Extended Isolation Forest (EIF), que utiliza hiperplanos con pendientes aleatorias. \cite{liu2021isoletionforest}.
+La Figura~\ref{fig:figIsolationForest} revela que, aunque hay dos grupos normales 
+claramente definidos, el Isolation Forest estándar introduce sesgos geométricos 
+(como triángulos y grupos falsos) en el mapa de anomalía. Esto es lo que impulsa la 
+propuesta del Extended Isolation Forest (EIF), que utiliza hiperplanos con pendientes 
+aleatorias. \cite{liu2021isoletionforest}.
 
 
 \subsection{Enfoques basados en Deep Learning}
 
-En la búsqueda de este estado del arte se ha procurado buscar los modelos qué utilizan modelos clásicos por su interpretabilidad y fácil entrenamiento. Sin embargo, es posible que estos modelos no sean capaces de ofrecer buenos resultados y se deba escalar hacia el uso de algoritmos basados en aprendizaje profundo. El aprendizaje profundo utiliza redes neuronales para el modelamiento de los datos, con la ventaja que estos modelos son capaces de aprender patrones de forma jerárquica. \cite{raj2024bearing}, utilizó los datos del dataset CWRU y redes neuronales convolucionales en el entrenamiento, alcanzando precisiones mayores al 98\%.
+En la búsqueda de este estado del arte se ha procurado buscar los modelos qué utilizan 
+modelos clásicos por su interpretabilidad y fácil entrenamiento. Sin embargo, es posible 
+que estos modelos no sean capaces de ofrecer buenos resultados y se deba escalar hacia 
+el uso de algoritmos basados en aprendizaje profundo. El aprendizaje profundo utiliza 
+redes neuronales para el modelamiento de los datos, con la ventaja que estos modelos 
+son capaces de aprender patrones de forma jerárquica. \cite{raj2024bearing}, utilizó 
+los datos del dataset CWRU y redes neuronales convolucionales en el entrenamiento, 
+alcanzando precisiones mayores al 98\%.
 
 
 \subsubsection{Redes Neuronales}
 
-Las redes neuronales son modelos de aprendizaje automático inspirados en el cerebro humano. Estos modelos están formados por unidades simples llamadas neuronas artificiales conectadas entre sí, las cuales reciben señales de entrada, las procesa y pasa el resultado por una función que genera una salida. Este tipo de modelo suele variar su arquitectura dependiendo su aplicación, por ejemplo, redes de una capa (perceptrón simple), útil para problemas lineales y redes multicapa (MLP), capaces de resolver problemas no lineales mucho más complejos.
+Las redes neuronales son modelos de aprendizaje automático inspirados en el cerebro 
+humano. Estos modelos están formados por unidades simples llamadas neuronas artificiales 
+conectadas entre sí, las cuales reciben señales de entrada, las procesa y pasa el 
+resultado por una función que genera una salida. Este tipo de modelo suele variar su 
+arquitectura dependiendo su aplicación, por ejemplo, redes de una capa 
+(perceptrón simple), útil para problemas lineales y redes multicapa (MLP), capaces de 
+resolver problemas no lineales mucho más complejos.
 
 
-Las redes neuronales se han convertido en uno de los modelos más populares en el ámbito del aprendizaje automático, gracias a su capacidad para alcanzar altos niveles de exactitud y obtener resultados sobresalientes en diversas métricas de desempeño. Se han aplicado para problemas de clasificación, predicción en campos como la visión artificial, el procesamiento digital de señales y la detección de fallos. 
+Las redes neuronales se han convertido en uno de los modelos más populares en el ámbito 
+del aprendizaje automático, gracias a su capacidad para alcanzar altos niveles de 
+exactitud y obtener resultados sobresalientes en diversas métricas de desempeño. 
+Se han aplicado para problemas de clasificación, predicción en campos como la visión 
+artificial, el procesamiento digital de señales y la detección de fallos. 
 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=1.0\textwidth]{media/neuona-artificial.png}
-    \caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos normalmente distribuidos.  \protect\cite{fernandez2013redes} }
+    \caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos 
+    normalmente distribuidos.  \protect\cite{fernandez2013redes} }
     \label{fig:figNauronaArtificial}
 \end{figure}
 
 
-En la Figura~\ref{fig:figNauronaArtificial} se ilustra una comparación entre una neurona biológica y una neurona artificial, en la cual resaltamos tres elementos funcionales: el primero serían las conexiones (sinapsis) con pesos que seria el peso que tiene cada conexión entre las neuronas, segundo el sumador que recibe las señales y calcula la suma total y por ultimo funcion de activacion que limita la amplitud de la señal de salida de la neurona. \cite{fernandez2013redes}.
+En la Figura~\ref{fig:figNauronaArtificial} se ilustra una comparación entre una neurona 
+biológica y una neurona artificial, en la cual resaltamos tres elementos funcionales: 
+el primero serían las conexiones (sinapsis) con pesos que seria el peso que tiene cada 
+conexión entre las neuronas, segundo el sumador que recibe las señales y calcula la suma 
+total y por ultimo funcion de activacion que limita la amplitud de la señal de salida de 
+la neurona. \cite{fernandez2013redes}.
 
 
-Según \cite{rivera2007redes}, la gran ventaja de las redes neuronales frente a otros modelos es su aprendizaje adaptativo, puesto que éstas son capaces de realizar una tarea (como regresión o clasificación) a partir de los datos de entrada, los cuales terminan siendo representados como entradas y pesos.  Además de su capacidad de auto-organizar la información, es decir, crea su propia representación de la información en el proceso de entrenamiento. 
+Según \cite{rivera2007redes}, la gran ventaja de las redes neuronales frente a otros 
+modelos es su aprendizaje adaptativo, puesto que éstas son capaces de realizar una 
+tarea (como regresión o clasificación) a partir de los datos de entrada, los cuales 
+terminan siendo representados como entradas y pesos.  Además de su capacidad de 
+auto-organizar la información, es decir, crea su propia representación de la 
+información en el proceso de entrenamiento. 
 
 
-Adicionalmente, según \cite{varela2011redes}, una de las principales ventajas de las redes neuronales es la amplia diversidad de arquitecturas que pueden adoptarse, lo que les otorga gran flexibilidad para abordar distintos tipos de problemas. Sin embargo, uno de los principales retos en su diseño consiste en seleccionar la arquitectura más adecuada y acompañarla de un algoritmo de entrenamiento eficiente, de modo que el modelo logre identificar y discriminar patrones relevantes en los datos. 
+Adicionalmente, según \cite{varela2011redes}, una de las principales ventajas de las 
+redes neuronales es la amplia diversidad de arquitecturas que pueden adoptarse, lo que 
+les otorga gran flexibilidad para abordar distintos tipos de problemas. Sin embargo, 
+uno de los principales retos en su diseño consiste en seleccionar la arquitectura más 
+adecuada y acompañarla de un algoritmo de entrenamiento eficiente, de modo que el modelo 
+logre identificar y discriminar patrones relevantes en los datos. 
 
 
-A pesar de sus grandes ventajas, las redes neuronales existen algunas consideraciones a la hora de implementar algoritmos de redes neuronales. Primero, las redes neuronales requieren un entrenamiento intensivo en tiempo y recursos, se necesita un conjunto de datos grande para evitar sobreajuste (overfitting) y, finalmente, el funcionamiento interno es difícil de interpretar. Pese a todo esto, las redes neuronales tienen mucha relevancia como un modelo fundamental y eficaz. \cite{larranaga2021redes}
+A pesar de sus grandes ventajas, las redes neuronales existen algunas consideraciones a 
+la hora de implementar algoritmos de redes neuronales. Primero, las redes neuronales 
+requieren un entrenamiento intensivo en tiempo y recursos, se necesita un conjunto de 
+datos grande para evitar sobreajuste (overfitting) y, finalmente, el funcionamiento 
+interno es difícil de interpretar. Pese a todo esto, las redes neuronales tienen mucha 
+relevancia como un modelo fundamental y eficaz. \cite{larranaga2021redes}
 
 
 \begin{figure}[h]
@@ -772,25 +1063,58 @@ A pesar de sus grandes ventajas, las redes neuronales existen algunas considerac
 
 
 
-De forma general la jerarquía de procesamiento está definida de esa manera: Neurona, Capa, Red, Sistema neuronal. Desde la unidad más pequeña (neurona) hasta el sistema completo capaz de tomar decisiones o hacer predicciones, resaltando que la parte algorítmica es el corazón del sistema global, donde ocurre la propagación de señales y aprendizaje mediante ajuste de pesos. \cite{larranaga2021redes}
+De forma general la jerarquía de procesamiento está definida de esa manera: Neurona, Capa, 
+Red, Sistema neuronal. Desde la unidad más pequeña (neurona) hasta el sistema completo 
+capaz de tomar decisiones o hacer predicciones, resaltando que la parte algorítmica es 
+el corazón del sistema global, donde ocurre la propagación de señales y aprendizaje 
+mediante ajuste de pesos. \cite{larranaga2021redes}
 
 
-Las redes neuronales están diseñadas en una arquitectura que distribuye la información entre las neuronas y las capas, de forma que esta cuenta con tres capas principales definidas de la siguiente manera manera: capa de entrada, la cual recibe y da entrada a los datos iniciales, por otro lado tenemos capas ocultas las cuales realizan el procesamiento aplicado de operaciones lógicas y de procesamiento y por último tenemos la capa de salida que entrega el resultado final como puede ser una predicción o clasificación. \cite{larranaga2021redes} 
+Las redes neuronales están diseñadas en una arquitectura que distribuye la información 
+entre las neuronas y las capas, de forma que esta cuenta con tres capas principales 
+definidas de la siguiente manera manera: capa de entrada, la cual recibe y da entrada a 
+los datos iniciales, por otro lado tenemos capas ocultas las cuales realizan el 
+procesamiento aplicado de operaciones lógicas y de procesamiento y por último tenemos 
+la capa de salida que entrega el resultado final como puede ser una predicción o 
+clasificación. \cite{larranaga2021redes} 
 
-Aunque es cierto que existen diferentes tipos de de arquitecturas cada una se adapta según la tarea, un ejemplo de algunas de estas arquitecturas son: El perceptrón multicapa (MLP) esta es la forma más básica y simple donde todas las neuronas de una capa están conectadas con la siguiente, por otro lado tenemos las redes profundas (DNN) este modelo se caracteriza por tener muchas capas ocultas, lo que le permite ilustrarse con procesos más complejos, redes convolucionales (CNN), redes recurrentes (RNN), redes residuales (ResNet)
+
+Aunque es cierto que existen diferentes tipos de de arquitecturas cada una se adapta 
+según la tarea, un ejemplo de algunas de estas arquitecturas son: 
+El perceptrón multicapa (MLP) esta es la forma más básica y simple donde todas las 
+neuronas de una capa están conectadas con la siguiente, por otro lado tenemos las redes 
+profundas (DNN) este modelo se caracteriza por tener muchas capas ocultas, lo que le 
+permite ilustrarse con procesos más complejos, redes convolucionales (CNN), redes 
+recurrentes (RNN), redes residuales (ResNet)
 
 
-\cite{Zamanzadeh_Darban_2024} escribe un artículo describiendo las diferentes técnicas de Deep Learning que se pueden encontrar en la literatura para detectar anomalías en series de tiempo y clasifica los modelos en dos grupos principales: Forecasting-based donde se encuentran modelos como CNN, y reconstruction-based como por ejemplo el modelo GAN. Además brinda una lista de dataset qué han sido utilizados en otras investigaciones como Benchmark para evaluar el rendimiento de la detección de anomalías.
+\cite{Zamanzadeh_Darban_2024} escribe un artículo describiendo las diferentes técnicas 
+de Deep Learning que se pueden encontrar en la literatura para detectar anomalías en 
+series de tiempo y clasifica los modelos en dos grupos principales: 
+Forecasting-based donde se encuentran modelos como CNN, y reconstruction-based 
+como por ejemplo el modelo GAN. Además brinda una lista de dataset qué han sido 
+utilizados en otras investigaciones como Benchmark para evaluar el rendimiento de la 
+detección de anomalías.
 
 
 
 \subsubsection{Redes Neuronales Convolucionales CNN}
 
 
-Este enfoque de redes neuronales convolucionales (CNN) enfocado en la implementación de identificar y modelar sistemas que no se comportan de manera lineal, a diferencia de otros tipos de redes neuronales como el perceptrón, las redes neuronales convolucionales toleran más el ruido de los datos y eviten problemas surgidos a partir de eso. por otro lado tenemos que esta brinda una mayor precisión, robustez y capacidad de generalización en el modelado de sistemas no lineales. \cite{LopezPacheco2017}
+Este enfoque de redes neuronales convolucionales (CNN) enfocado en la implementación 
+de identificar y modelar sistemas que no se comportan de manera lineal, a diferencia 
+de otros tipos de redes neuronales como el perceptrón, las redes neuronales 
+convolucionales toleran más el ruido de los datos y eviten problemas surgidos a 
+partir de eso. por otro lado tenemos que esta brinda una mayor precisión, robustez y 
+capacidad de generalización en el modelado de sistemas no lineales. 
+\cite{LopezPacheco2017}
 
 
-Este modelo ayuda a captar patrones sutiles que pueden señalar comportamientos no habituales, en muchos casos una forma común de mejorar el modelo es combinarlo con estrategias de muestreo, umbrales bien calibrados y, a veces, enfoques semisupervisados, previniendo así limitaciones en el balanceo de clases y la necesidad de validar con rigor para controlar falsos positivos. \cite{ameijeiras2021algoritmos}.
+Este modelo ayuda a captar patrones sutiles que pueden señalar comportamientos no 
+habituales, en muchos casos una forma común de mejorar el modelo es combinarlo con 
+estrategias de muestreo, umbrales bien calibrados y, a veces, enfoques semisupervisados, 
+previniendo así limitaciones en el balanceo de clases y la necesidad de validar con 
+rigor para controlar falsos positivos. \cite{ameijeiras2021algoritmos}.
 
 
 \begin{figure}[h]
@@ -801,18 +1125,33 @@ Este modelo ayuda a captar patrones sutiles que pueden señalar comportamientos 
 \end{figure}
 
 
-En la Figura~\ref{fig:figLenet} se observa la arquitectura de una CNN. En este caso se aplica una CNN clásica que procesa imágenes de entrada blanco y negro de 32×32 píxeles, primero se aplican filtros que detectan bordes y lineas, posteriormente la siguiente capa identifica características más complejas como formas y rasgos, despues toda esta información se convierte en un vector y pasa por capas que integrsan todo lo aprendido. \cite{Zhao2024review}
-
-
-
+En la Figura~\ref{fig:figLenet} se observa la arquitectura de una CNN. En este caso se 
+aplica una CNN clásica que procesa imágenes de entrada blanco y negro de 32×32 píxeles, 
+primero se aplican filtros que detectan bordes y lineas, posteriormente la siguiente 
+capa identifica características más complejas como formas y rasgos, despues toda esta 
+información se convierte en un vector y pasa por capas que integrsan todo lo aprendido. 
+\cite{Zhao2024review}
 
 
 \subsection{Aplicaciones en el contexto insdustrial} 
 
-El principal uso de la detección de anomalías en el contexto industrial es el pronóstico de fallas cuyo propósito es detectar a tiempo cuando se debe hacer mantenimiento predictivo. Esto permite anticiparse a posibles fallos en los procesos industriales, optimizando la eficacia, minimizando costos y reduciendo los tiempos de inactividad no planificados. Este mantenimiento predictivo se ve potenciado por los avances tecnológicos los cuales han demostrado mejorar la eficacia y eficiencia en muchas industrias ya que mejora la seguridad y confiabilidad de los procesos industriales y sus sistemas.
+El principal uso de la detección de anomalías en el contexto industrial es el pronóstico 
+de fallas cuyo propósito es detectar a tiempo cuando se debe hacer mantenimiento 
+predictivo. Esto permite anticiparse a posibles fallos en los procesos industriales, 
+optimizando la eficacia, minimizando costos y reduciendo los tiempos de inactividad no 
+planificados. Este mantenimiento predictivo se ve potenciado por los avances tecnológicos 
+los cuales han demostrado mejorar la eficacia y eficiencia en muchas industrias ya que 
+mejora la seguridad y confiabilidad de los procesos industriales y sus sistemas.
 
 
-Adicionalmente, \cite{worktrek2023predictive} estima que el mercado global de mantenimiento predictivo se valoró en 7.850 millones de dólares en 2022 y se proyecta que alcance los 60.130 millones de dólares para 2030 (CAGR 29,5\%), lo que evidencia una clara viabilidad y un notable incremento no solo evidencia el valor de este tipo de soluciones sino también denota el interés creciente del mercado por incorporar estas herramientas, en consideración, estas soluciones no solo tienen solo una  justificación técnica y económica sólida, sino que también responden a una necesidad global de transición hacia sistemas industriales más resilientes, inteligentes y sostenibles.
+Adicionalmente, \cite{worktrek2023predictive} estima que el mercado global de 
+mantenimiento predictivo se valoró en 7.850 millones de dólares en 2022 y se proyecta 
+que alcance los 60.130 millones de dólares para 2030 (CAGR 29,5\%), lo que evidencia 
+una clara viabilidad y un notable incremento no solo evidencia el valor de este tipo de 
+soluciones sino también denota el interés creciente del mercado por incorporar estas 
+herramientas, en consideración, estas soluciones no solo tienen solo una  justificación 
+técnica y económica sólida, sino que también responden a una necesidad global de 
+transición hacia sistemas industriales más resilientes, inteligentes y sostenibles.
 
 
 \begin{figure}[h]
@@ -823,45 +1162,113 @@ Adicionalmente, \cite{worktrek2023predictive} estima que el mercado global de ma
 \end{figure}
 
 
-Este panorama estimula a la industria a buscar sistemas más eficientes, inteligentes y autónomos capaces de anticiparse a un fallo con base en patrones, recalcamos que este a su vez ha cambiado los paradigmas tradicionales de mantenimiento correctivo y preventivo, exigiendo modelos más proactivos, precisos y adaptables.
+Este panorama estimula a la industria a buscar sistemas más eficientes, inteligentes y 
+autónomos capaces de anticiparse a un fallo con base en patrones, recalcamos que este a 
+su vez ha cambiado los paradigmas tradicionales de mantenimiento correctivo y preventivo,
+exigiendo modelos más proactivos, precisos y adaptables.
 
 
-Resolver problemas no lineales, donde múltiples factores interactúan de manera compleja debido a la conexión de varios elementos, es un verdadero reto. Estas interacciones pueden dar lugar a comportamientos emergentes que son impredecibles y, a menudo, sorprendentes. En este sentido, hay pocos estudios que se centran en la detección de fallas utilizando técnicas de monitoreo y diagnóstico adaptadas específicamente a sistemas complejos como este \cite{zhang2017overview}. 
+Resolver problemas no lineales, donde múltiples factores interactúan de manera 
+compleja debido a la conexión de varios elementos, es un verdadero reto. 
+Estas interacciones pueden dar lugar a comportamientos emergentes que son impredecibles 
+y, a menudo, sorprendentes. En este sentido, hay pocos estudios que se centran en la 
+detección de fallas utilizando técnicas de monitoreo y diagnóstico adaptadas 
+específicamente a sistemas complejos como este \cite{zhang2017overview}. 
 
 
-Frente a esto, la inteligencia computacional ha ganado importancia como una herramienta clave para vigilar el estado de las máquinas. Su objetivo principal es identificar fallas y anomalías a través del análisis de datos históricos y en tiempo real. Estos algoritmos ayudan a entender mejor el estado operativo de los equipos mediante un monitoreo continuo. Para que esto funcione, un sistema de monitoreo efectivo debe incluir tres fases fundamentales: la extracción de características, el diagnóstico de fallas y la predicción de su evolución. Este enfoque no solo facilita la detección de condiciones anómalas, sino que también permite localizar con precisión las fallas y estimar su posible propagación \cite{randall2011vibration}.
+Frente a esto, la inteligencia computacional ha ganado importancia como una herramienta 
+clave para vigilar el estado de las máquinas. Su objetivo principal es identificar 
+fallas y anomalías a través del análisis de datos históricos y en tiempo real. 
+Estos algoritmos ayudan a entender mejor el estado operativo de los equipos mediante un 
+monitoreo continuo. Para que esto funcione, un sistema de monitoreo efectivo debe 
+incluir tres fases fundamentales: la extracción de características, el diagnóstico de 
+fallas y la predicción de su evolución. Este enfoque no solo facilita la detección de 
+condiciones anómalas, sino que también permite localizar con precisión las fallas y 
+estimar su posible propagación \cite{randall2011vibration}.
 
 
-\cite{deloitte2022predictive} reportó que el mantenimiento predictivo aumenta el tiempo de funcionamiento del equipo entre un 10\% y un 20\%, al tiempo que reduce los costos generales de mantenimiento entre un 5\% y un 10\% y el tiempo de planificación del mantenimiento entre un 20\% y un 50\%, lo que refleja la importancia de este tipo de estudios en las industrias y se denota en factores cruciales como lo es el tiempo y los gastos, dado así que el mantenimiento debe ir mucho más allá de simplemente prevenir tiempos de inactividad de activos individuales. Predecir fallos mediante análisis avanzados puede aumentar el tiempo de actividad de los equipos hasta en un 20 \%.
+\cite{deloitte2022predictive} reportó que el mantenimiento predictivo aumenta el 
+tiempo de funcionamiento del equipo entre un 10\% y un 20\%, al tiempo que reduce los 
+costos generales de mantenimiento entre un 5\% y un 10\% y el tiempo de planificación 
+del mantenimiento entre un 20\% y un 50\%, lo que refleja la importancia de este tipo 
+de estudios en las industrias y se denota en factores cruciales como lo es el tiempo y 
+los gastos, dado así que el mantenimiento debe ir mucho más allá de simplemente 
+prevenir tiempos de inactividad de activos individuales. Predecir fallos mediante 
+análisis avanzados puede aumentar el tiempo de actividad de los equipos hasta en un 
+20 \%.
 
 
-Muchos papers a la hora de evaluar algoritmos de detección de fallas utilizan datasets públicos para evaluar el rendimiento de múltiples modelos. Los aquí citados han utilizado datasets de motores, que es uno de los componentes industriales de mayor interés. El dataset CWRU es uno de los dataset qué aparecen citados en varios trabajos, como el de \cite{yu2025tkeo} \& \cite{raj2024bearing} que además también trabaja con el dataset MFPT.
+Muchos papers a la hora de evaluar algoritmos de detección de fallas utilizan datasets 
+públicos para evaluar el rendimiento de múltiples modelos. Los aquí citados han 
+utilizado datasets de motores, que es uno de los componentes industriales de mayor 
+interés. El dataset CWRU es uno de los dataset qué aparecen citados en varios trabajos, 
+como el de \cite{yu2025tkeo} \& \cite{raj2024bearing} que además también trabaja con el 
+dataset MFPT.
 
 
-Hay otros trabajos qué además han propuesto una arquitectura de hardware sobre la que se desplegará el modelo de detección. Es el caso del trabajo de De las Morenas, \cite{delasmorenas2025bearing}, que proponen una infraestructura de Edge Computing donde se despliega un modelo de clasificación sobre una Raspberry Pi 3B qué está conectado a un motor, y se predicen 3 posibles estados.
+Hay otros trabajos qué además han propuesto una arquitectura de hardware sobre la que se 
+desplegará el modelo de detección. Es el caso del trabajo de De las Morenas, 
+\cite{delasmorenas2025bearing}, que proponen una infraestructura de Edge Computing 
+donde se despliega un modelo de clasificación sobre una Raspberry Pi 3B qué está 
+conectado a un motor, y se predicen 3 posibles estados.
 
-La publicación de \cite{davari2021} utiliza un modelo de redes neuronales para predecir cuando las unidades de aire de los trenes necesitan mantenimiento. De esta investigación se deriva el dataset MetroPT y también el trabajo de  \cite{veloso2022metrpt}, donde describe el dataset y por qué sería una buena opción para benchmarking de modelos de detección.
+
+La publicación de \cite{davari2021} utiliza un modelo de redes neuronales para predecir 
+cuando las unidades de aire de los trenes necesitan mantenimiento. De esta investigación 
+se deriva el dataset MetroPT y también el trabajo de  \cite{veloso2022metrpt}, donde 
+describe el dataset y por qué sería una buena opción para benchmarking de modelos de 
+detección.
 
 
-Cómo paso previo antes de realizar un modelo de datos qué nos permita detectar anomalías. Es necesario analizar la naturaleza de los datos qué se van a analizar, con el fin de determinar si es pertinente hacer una tarea de limpieza o curado de los datos, así como alguna transformación de los datos. En el trabajo de \cite{yu2025tkeo}, se aplicó el operador TKEO sobre el dataset CWRU como técnica de preprocesamiento, antes de entrenar algún modelo supervisado. La decisión se debe a qué el Dataset corresponde  señales de motor, en el qué posibles anomalías se resaltan utilizando el operador.
+Cómo paso previo antes de realizar un modelo de datos qué nos permita detectar anomalías.
+Es necesario analizar la naturaleza de los datos qué se van a analizar, con el fin de 
+determinar si es pertinente hacer una tarea de limpieza o curado de los datos, así como 
+alguna transformación de los datos. En el trabajo de \cite{yu2025tkeo}, se aplicó el 
+operador TKEO sobre el dataset CWRU como técnica de preprocesamiento, antes de entrenar 
+algún modelo supervisado. La decisión se debe a qué el Dataset corresponde  señales de 
+motor, en el qué posibles anomalías se resaltan utilizando el operador.
 
 
-A partir de estos avances, \cite{jardine2006review} desarrolla un enfoque de mantenimiento basado en condición, el cual se apoya en la información obtenida a través de la monitorización continua. Este modelo se compone de tres elementos esenciales: la adquisición de datos, el procesamiento de la información recolectada y la toma de decisiones orientadas al mantenimiento. La integración de estos componentes permite generar diagnósticos y pronósticos más precisos, favoreciendo el análisis de los patrones y comportamientos presentes en los datos, y optimizando la gestión del ciclo de vida de los activos \cite{jardine2006review}
+A partir de estos avances, \cite{jardine2006review} desarrolla un enfoque de 
+mantenimiento basado en condición, el cual se apoya en la información obtenida a 
+través de la monitorización continua. Este modelo se compone de tres elementos 
+esenciales: la adquisición de datos, el procesamiento de la información recolectada y 
+la toma de decisiones orientadas al mantenimiento. La integración de estos componentes 
+permite generar diagnósticos y pronósticos más precisos, favoreciendo el análisis de 
+los patrones y comportamientos presentes en los datos, y optimizando la gestión del 
+ciclo de vida de los activos \cite{jardine2006review}
 
 
 \chapter{Identificación de Requisitos}
 
 
-Este proyecto parte de datos que fueron previamente capturados y almacenados, por lo que no es necesario definir requerimientos para la captura de datos. Por lo tanto, los requerimientos están enfocados en los procesos posteriores. 
+Este proyecto parte de datos que fueron previamente capturados y almacenados, por lo 
+que no es necesario definir requerimientos para la captura de datos. Por lo tanto, los 
+requerimientos están enfocados en los procesos posteriores. 
 
 
-En primer lugar,  se necesita un análisis exploratorio de los datos disponibles (EDA), esto con el fin de describir algunas características de los datos, encontrar patrones como modas y correlaciones, y obtener información necesaria para alcanzar los requerimientos de las próximas etapas.  Después de realizar la exploración, y antes de realizar el entrenamiento de los modelos, se espera una etapa de preprocesamiento que permita optimizar el rendimiento en el entrenamiento posterior.
+En primer lugar,  se necesita un análisis exploratorio de los datos disponibles (EDA), 
+esto con el fin de describir algunas características de los datos, encontrar patrones 
+como modas y correlaciones, y obtener información necesaria para alcanzar los 
+requerimientos de las próximas etapas.  Después de realizar la exploración, y antes de 
+realizar el entrenamiento de los modelos, se espera una etapa de preprocesamiento que 
+permita optimizar el rendimiento en el entrenamiento posterior.
 
 
-Es necesario el entrenamiento de múltiples modelos de clasificación, desde los modelos clásicos y más simples, hasta modelos más avanzados. Durante el entrenamiento se deben aplicar estrategias para mejorar las capacidades de generalización de los modelos. Para cada entrenamiento se debe realizar las pruebas de los modelos y obtener sus matrices de confusión y métricas como  Exactitud, Precisión, Sensibilidad, F1 y área bajo la curva ROC.
+Es necesario el entrenamiento de múltiples modelos de clasificación, desde los modelos 
+clásicos y más simples, hasta modelos más avanzados. Durante el entrenamiento se deben 
+aplicar estrategias para mejorar las capacidades de generalización de los modelos. 
+Para cada entrenamiento se debe realizar las pruebas de los modelos y obtener sus 
+matrices de confusión y métricas como  Exactitud, Precisión, Sensibilidad, F1 y 
+área bajo la curva ROC.
 
 
-Se debe comparar los resultados de los múltiples modelos entrenados, y hacer énfasis en aquellos que destaquen por su interpretabilidad y rendimiento. Si los modelos que son mejor interpretables tienen buen desempeño, explorar los modelos con el fin de identificar cuáles son aquellas variables que influyen en las predicciones. Los modelos que sean escogidos por sus métricas de rendimiento, deben tener un valor mayor a 0.85 en todas sus m+etricas. 
+Se debe comparar los resultados de los múltiples modelos entrenados, y hacer énfasis en 
+aquellos que destaquen por su interpretabilidad y rendimiento. Si los modelos que son 
+mejor interpretables tienen buen desempeño, explorar los modelos con el fin de 
+identificar cuáles son aquellas variables que influyen en las predicciones. 
+Los modelos que sean escogidos por sus métricas de rendimiento, deben tener un valor 
+mayor a 0.85 en todas sus m+etricas. 
 
 
 \chapter{Objetivos}
@@ -1024,29 +1431,73 @@ Este paso garantiza el cumplimiento del objetivo general.
 
 \chapter{Desarrollo del trabajo}
 
-Debido a que se han encontrado múltiples modelos de aprendizaje automático capaces de identificar si se presenta o no alguna anomalía, se plantea el desarrollo de una estrategia para realizar la comparación. El rendimiento de los modelos de aprendizaje automático en las tareas de clasificación de datos es muy bueno, se espera que las métricas al evaluar los modelos sean elevadas. 
+Debido a que se han encontrado múltiples modelos de aprendizaje automático capaces de 
+identificar si se presenta o no alguna anomalía, se plantea el desarrollo de una 
+estrategia para realizar la comparación. El rendimiento de los modelos de aprendizaje 
+automático en las tareas de clasificación de datos es muy bueno, se espera que las 
+métricas al evaluar los modelos sean elevadas. 
 
 
-Para poder llevar a cabo esta comparativa se ha propuesto una serie de factores a tener en cuenta, cómo será configurado el experimento, qué preprocesamiento se le hará al dataset para garantizar buenos rendimientos en los modelos, qué métricas serán seleccionadas a la hora de comparar los modelos, qué modelos harán parte de esta comparativa, y con qué criterio se selecciona al mejor modelo. Finalmente, se hace una interpretación de algunos modelos seleccionados que serán de ayuda para una mejor interpretación del conjunto de datos. 
+Para poder llevar a cabo esta comparativa se ha propuesto una serie de factores a tener 
+en cuenta, cómo será configurado el experimento, qué preprocesamiento se le hará al 
+dataset para garantizar buenos rendimientos en los modelos, qué métricas serán 
+seleccionadas a la hora de comparar los modelos, qué modelos harán parte de esta 
+comparativa, y con qué criterio se selecciona al mejor modelo. Finalmente, se hace una 
+interpretación de algunos modelos seleccionados que serán de ayuda para una mejor 
+interpretación del conjunto de datos. 
 
 
 \section{Configuración de experimentos}
 
- En el presente proyecto se ha decidido simplificar el problema de detección de fallas por medio de la construcción de un modelo de clasificador binario cuyo objetivo es diferenciar entre datos anómalos y datos normales provenientes de las mediciones del CWRU Bearing Dataset. Este enfoque permite establecer una primera etapa de detección de fallas, en la que el modelo actúa como un sistema de alerta temprana al identificar desviaciones respecto al comportamiento esperado de los rodamientos bajo condiciones normales de operación.
-Para la construcción del clasificador binario, se organizaron los datos del CWRU Bearing Dataset en dos grandes grupos: Normales, que corresponden al funcionamiento sin fallas, y Anómalos,  que agrupan todos los registros asociados a fallas en la pista interna (\texttt{IR}), el elemento rodante (\texttt{B}) o la pista externa (\texttt{OR}), independientemente de su diámetro o ubicación.
+En el presente proyecto se ha decidido simplificar el problema de detección de fallas 
+por medio de la construcción de un modelo de clasificador binario cuyo objetivo es 
+diferenciar entre datos anómalos y datos normales provenientes de las mediciones del 
+CWRU Bearing Dataset. Este enfoque permite establecer una primera etapa de detección de 
+fallas, en la que el modelo actúa como un sistema de alerta temprana al identificar 
+desviaciones respecto al comportamiento esperado de los rodamientos bajo condiciones 
+normales de operación.
+Para la construcción del clasificador binario, se organizaron los datos del CWRU Bearing 
+Dataset en dos grandes grupos: Normales, que corresponden al funcionamiento sin fallas, 
+y Anómalos,  que agrupan todos los registros asociados a fallas en la pista interna 
+(\texttt{IR}), el elemento rodante (\texttt{B}) o la pista externa (\texttt{OR}), 
+independientemente de su diámetro o ubicación.
 
 
-Esta estrategia de agrupación simplifica el problema de clasificación, permitiendo contar con un modelo que funcione como un sistema de detección temprana de anomalías. En lugar de distinguir entre múltiples tipos de fallas, el clasificador se centra en identificar si los datos corresponden a un estado saludable o defectuoso del rodamiento, lo que constituye un primer paso esencial antes de avanzar hacia modelos más especializados de clasificación multiclase.
+Esta estrategia de agrupación simplifica el problema de clasificación, permitiendo 
+contar con un modelo que funcione como un sistema de detección temprana de anomalías. 
+En lugar de distinguir entre múltiples tipos de fallas, el clasificador se centra en 
+identificar si los datos corresponden a un estado saludable o defectuoso del rodamiento,
+lo que constituye un primer paso esencial antes de avanzar hacia modelos más 
+especializados de clasificación multiclase.
 
 
-El dataset que se genere a partir del agrupamiento de los datos anómalos y no anómalos, se utilizará para entrenar todos los modelos de clasificación binaria. Adoptar esta estrategia garantiza que todos los modelos son evaluados bajo las mismas condiciones experimentales, lo que permite realizar comparaciones más justas de rendimiento. Además, usar un único dataset reduce la variabilidad introducida por particiones diferentes de los datos y se evitan sesgos en la comparación de modelos de aprendizaje.
+El dataset que se genere a partir del agrupamiento de los datos anómalos y no anómalos, 
+se utilizará para entrenar todos los modelos de clasificación binaria. 
+Adoptar esta estrategia garantiza que todos los modelos son evaluados bajo las mismas 
+condiciones experimentales, lo que permite realizar comparaciones más justas de rendimiento. 
+Además, usar un único dataset reduce la variabilidad introducida por particiones 
+diferentes de los datos y se evitan sesgos en la comparación de modelos de aprendizaje.
 
 
-Por el contrario, si no se emplea el mismo dataset para todos los modelos, las métricas obtenidas podrían reflejar más las diferencias en los datos de entrada que en las capacidades reales de los algoritmos. Esto claramente, dificulta la tarea de identificar qué modelo es más robusto y podría conllevar a conclusiones poco confiables. En ese sentido, mantener un dataset unificado asegura que las diferencias observadas sean atribuídas directamente a las propiedades del modelo y no a variaciones accidentales en los datos utilizados para el entrenamiento y la validación.
+Por el contrario, si no se emplea el mismo dataset para todos los modelos, las métricas 
+obtenidas podrían reflejar más las diferencias en los datos de entrada que en las 
+capacidades reales de los algoritmos. Esto claramente, dificulta la tarea de identificar 
+qué modelo es más robusto y podría conllevar a conclusiones poco confiables. 
+En ese sentido, mantener un dataset unificado asegura que las diferencias observadas 
+sean atribuídas directamente a las propiedades del modelo y no a variaciones 
+accidentales en los datos utilizados para el entrenamiento y la validación.
 
 
-Para mejorar los resultados de entrenamiento, se aplicó la técnica de división del dataset en tres subconjuntos: entrenamiento, validación y evaluación (test). El conjunto de prueba se reserva exclusivamente para la comparación final de los modelos, de manera que no sean utilizados en ninguna etapa del entrenamiento. De esta manera se garantiza una evaluación objetiva y realista del rendimiento. 
-Adicionalmente, el dataset de validación se emplea durante la búsqueda de hiperparámetros, permitiendo optimizar parámetros clave de los modelos con el fin de obtener la configuración con las mejores métricas de desempeño. Como resultado, se asegura que el modelo seleccionado sea aquel que genere los mejores resultados, evitando tanto el sobreajuste como conclusiones sesgadas por un mal diseño experimental.
+Para mejorar los resultados de entrenamiento, se aplicó la técnica de división del 
+dataset en tres subconjuntos: entrenamiento, validación y evaluación (test). 
+El conjunto de prueba se reserva exclusivamente para la comparación final de los modelos,
+de manera que no sean utilizados en ninguna etapa del entrenamiento. 
+De esta manera se garantiza una evaluación objetiva y realista del rendimiento. 
+Adicionalmente, el dataset de validación se emplea durante la búsqueda de 
+hiperparámetros, permitiendo optimizar parámetros clave de los modelos con el fin de 
+obtener la configuración con las mejores métricas de desempeño. Como resultado, se 
+asegura que el modelo seleccionado sea aquel que genere los mejores resultados, evitando
+tanto el sobreajuste como conclusiones sesgadas por un mal diseño experimental.
 
 \begin{figure}[h]
     \centering
@@ -1055,23 +1506,43 @@ Adicionalmente, el dataset de validación se emplea durante la búsqueda de hipe
     \label{fig:figArchitecture}
 \end{figure}
 
-En la Figura~\ref{fig:figArchitecture}, se observa la arquitectura diseñada para la configuración de este experimento. Esta arquitectura permite implementar un flujo de trabajo organizado, reproducible y escalable, donde cada componente cumple un rol específico dentro del ciclo de vida del desarrollo de modelos de aprendizaje automático. La arquitectura se basa en un flujo de trabajo modular, apoyado en diferentes herramientas de ciencia de datos y gestión de modelos:
+En la Figura~\ref{fig:figArchitecture}, se observa la arquitectura diseñada para la 
+configuración de este experimento. Esta arquitectura permite implementar un flujo de 
+trabajo organizado, reproducible y escalable, donde cada componente cumple un rol 
+específico dentro del ciclo de vida del desarrollo de modelos de aprendizaje automático.
+La arquitectura se basa en un flujo de trabajo modular, apoyado en diferentes 
+herramientas de ciencia de datos y gestión de modelos:
 
 \begin{itemize}
 
-\item \textbf{Generación del dataset}. Se utilizan notebooks en \textbf{Jupyter} que hacen uso de librerías como \textbf{NumPy} y \textbf{Pandas} (basadas en Python) para la carga, limpieza, transformación y construcción del dataset final. En esta etapa se preparan los datos en el formato adecuado para los experimentos de entrenamiento.
+\item \textbf{Generación del dataset}. Se utilizan notebooks en \textbf{Jupyter} que 
+hacen uso de librerías como \textbf{NumPy} y \textbf{Pandas} (basadas en Python) para 
+la carga, limpieza, transformación y construcción del dataset final. En esta etapa se 
+preparan los datos en el formato adecuado para los experimentos de entrenamiento.
 
 
-\item \textbf{Entrenamiento de modelos}. En esta etapa, se desarrollan notebooks enfocados en el entrenamiento de modelos de machine learning mediante la librería \textbf{scikit-learn} (también basada en python). Aquí se incluyen técnicas de validación cruzada, búsqueda de hiperparámetros y evaluación de rendimiento con métricas de clasificación.
+\item \textbf{Entrenamiento de modelos}. En esta etapa, se desarrollan notebooks 
+enfocados en el entrenamiento de modelos de machine learning mediante la librería 
+\textbf{scikit-learn} (también basada en python). Aquí se incluyen técnicas de 
+validación cruzada, búsqueda de hiperparámetros y evaluación de rendimiento con métricas
+de clasificación.
 
 
-\item \textbf{Gestión de experimentos y modelos}. Para asegurar el monitoreo y reproducibilidad, se integra \textbf{MLflow}, que permite llevar un registro sistemático de los experimentos, los hiperparámetros utilizados, las métricas obtenidas y las versiones de cada modelo entrenado.
+\item \textbf{Gestión de experimentos y modelos}. Para asegurar el monitoreo y 
+reproducibilidad, se integra \textbf{MLflow}, que permite llevar un registro 
+sistemático de los experimentos, los hiperparámetros utilizados, las métricas obtenidas 
+y las versiones de cada modelo entrenado.
 
 
-\item \textbf{Almacenamiento de metadatos}.  Toda la información relacionada con los experimentos, como configuraciones, métricas y resultados, se almacena en una base de datos \textbf{PostgreSQL}, que sirve como repositorio centralizado para la metadata del proyecto. Y allí se almacenan todos los metadatos que el servidor de MLflow genera. 
+\item \textbf{Almacenamiento de metadatos}.  Toda la información relacionada con los 
+experimentos, como configuraciones, métricas y resultados, se almacena en una base de 
+datos \textbf{PostgreSQL}, que sirve como repositorio centralizado para la metadata del 
+proyecto. Y allí se almacenan todos los metadatos que el servidor de MLflow genera. 
 
 
-\item \textbf{Almacenamiento de modelos}. Los modelos que alcanzan mejores métricas son almacenados en \textbf{MinIO}, un sistema de almacenamiento de objetos, lo cual facilita la gestión, acceso y despliegue futuro de los modelos seleccionados.
+\item \textbf{Almacenamiento de modelos}. Los modelos que alcanzan mejores métricas son 
+almacenados en \textbf{MinIO}, un sistema de almacenamiento de objetos, lo cual facilita 
+la gestión, acceso y despliegue futuro de los modelos seleccionados.
 
 \end{itemize}
 
@@ -1079,45 +1550,87 @@ En la Figura~\ref{fig:figArchitecture}, se observa la arquitectura diseñada par
 \subsection{Recursos propios}
 
 
-En el desarrollo de este proyecto, se implementan dos repositorios en GitHub que contienen el código fuente necesario para la generación de datos y el entrenamiento de los modelos:
+En el desarrollo de este proyecto, se implementan dos repositorios en GitHub que 
+contienen el código fuente necesario para la generación de datos y el entrenamiento de 
+los modelos:
 
 \begin{itemize}
-    \item \textbf{Generación del dataset}: \href{https://github.com/jelambrar96-unir/CWRU_Bearing_NumPy}{\underline{\textcolor{blue}{CWRU\_Bearing\_NumPy}}}. Este repositorio contiene los Notebooks para el procesamiento de las señales originales del \textit{CWRU Bearing Dataset}, con el fin de construir un conjunto de datos estructurado y apto para su posterior análisis y modelado.
+    \item \textbf{Generación del dataset}: 
+    \href{https://github.com/jelambrar96-unir/CWRU_Bearing_NumPy}
+    {\underline{\textcolor{blue}{CWRU\_Bearing\_NumPy}}}.
+    Este repositorio contiene los Notebooks para el procesamiento de las señales originales 
+    del \textit{CWRU Bearing Dataset}, con el fin de construir un conjunto de datos 
+    estructurado y apto para su posterior análisis y modelado.
     
-    \item \textbf{Entrenamiento de modelos}: \href{https://github.com/jelambrar96-unir/tfm-deteccion-anomalias/tree/main/notebooks}{\underline{\textcolor{blue}{tfm-deteccion-anomalias}}}. Este repositorio contiene los notebooks utilizados para entrenar, evaluar,  comparar y publicar diferentes modelos de aprendizaje automático orientados a la detección de anomalías en rodamientos.
+    \item \textbf{Entrenamiento de modelos}: 
+    \href{https://github.com/jelambrar96-unir/tfm-deteccion-anomalias}
+    {\underline{\textcolor{blue}{tfm-deteccion-anomalias}}}. 
+    Este repositorio contiene los notebooks utilizados para entrenar, evaluar, comparar 
+    y publicar diferentes modelos de aprendizaje automático orientados a la detección de 
+    anomalías en rodamientos.
 \end{itemize}
 
-Se compararten los enlaces a los repositorios en lugar de incluir el código fuente como anexo en este documento, dado que la cantidad de archivos que conforman ambos repositorios es considerable, y que incluyen scripts, notebooks, datos procesados, manuales para reproducir los resultados y configuraciones adicionales, 
+Se compararten los enlaces a los repositorios en lugar de incluir el código fuente como 
+anexo en este documento, dado que la cantidad de archivos que conforman ambos repositorios
+es considerable, y que incluyen scripts, notebooks, datos procesados, manuales para 
+reproducir los resultados y configuraciones adicionales, 
 
 
 \section{Exploración del dataset}
 
-Como se ha mencionado anteriormente, se ha decidido trabajar con datos refinados del conjunto de datos de CWRU Bearing Dataset. El primer paso en la exploración de los datos consistió en listar los archivos disponibles en el dataset. El dataset se encuentra organizado en cuatro grandes grupos, cada uno asociado a un valor específico de revoluciones por minuto (RPM): 1797, 1772, 1750 y 1730. Dentro de cada uno de estos grupos solo existe un archivo de datos de condiciones normales, mientras que el resto de los archivos corresponden a condiciones de fallo en los rodamientos.
+Como se ha mencionado anteriormente, se ha decidido trabajar con datos refinados del 
+conjunto de datos de CWRU Bearing Dataset. El primer paso en la exploración de los datos
+consistió en listar los archivos disponibles en el dataset. El dataset se encuentra 
+organizado en cuatro grandes grupos, cada uno asociado a un valor específico de 
+revoluciones por minuto (RPM): 1797, 1772, 1750 y 1730. Dentro de cada uno de estos 
+grupos solo existe un archivo de datos de condiciones normales, mientras que el resto de
+los archivos corresponden a condiciones de fallo en los rodamientos.
 
 
-De esta manera, se obtiene un total de 157 archivos correspondientes a fallos frente a únicamente 4 archivos de datos normales. Este resultado es inusual en los problemas de detección de anomalías, ya que lo más frecuente es encontrar una proporción mucho menor de registros anómalos respecto a los normales. Esto permite construir un dataset balanceado para el entrenamiento de modelos, reduciendo así la necesidad de aplicar técnicas adicionales de re-muestreo para equilibrar las clases.
+De esta manera, se obtiene un total de 157 archivos correspondientes a fallos frente a 
+únicamente 4 archivos de datos normales. Este resultado es inusual en los problemas de 
+detección de anomalías, ya que lo más frecuente es encontrar una proporción mucho menor 
+de registros anómalos respecto a los normales. Esto permite construir un dataset 
+balanceado para el entrenamiento de modelos, reduciendo así la necesidad de aplicar 
+técnicas adicionales de re-muestreo para equilibrar las clases.
 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{media/dataset/normal-series.png}
-    \caption{Gráfica de una submuestra de las series de tiempo que corresponden a datos en condiciones normales para RPM iguales a 1772 (superior) y 1730 (inferior). }
+    \caption{Gráfica de una submuestra de las series de tiempo que corresponden a datos 
+    en condiciones normales para RPM iguales a 1772 (superior) y 1730 (inferior). }
     \label{fig:figNormalSeries}
 \end{figure}
 
 
-Con el fin de obtener una aproximación visual de las diferencias entre los patrones de vibración de entre los datos de condiciones normales y los datos de fallos en los rodamientos, el siguiente paso en la exploración de los datos consiste en la exploración de los datos consistió en visualizar gráficamente un segmento de las series de tiempo para ambos conjuntos de datos. La Figura~\ref{fig:figNormalSeries} y Figura~\ref{fig:figAnomalySeries}, muestran las señales en condiciones normales y en presencia de defectos respectivamente. 
+Con el fin de obtener una aproximación visual de las diferencias entre los patrones de 
+vibración de entre los datos de condiciones normales y los datos de fallos en los 
+rodamientos, el siguiente paso en la exploración de los datos consiste en la exploración 
+de los datos consistió en visualizar gráficamente un segmento de las series de tiempo 
+para ambos conjuntos de datos. La Figura~\ref{fig:figNormalSeries} y 
+Figura~\ref{fig:figAnomalySeries}, muestran las señales en condiciones normales y en 
+presencia de defectos respectivamente. 
 
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{media/dataset/anomaly-series.png}
-    \caption{Gráfica de una submuestra de la serie tiempo que corresponden a datos en condiciones anómalas a 1750 RPM con el rodamiento cargado en la condición B un defecto de 0.021 pulgadas en el lado del accionamiento (superior) y a 1772 RPM con el rodamiento cargado en la condición B un defecto de 0.014 pulgadas en el lado del accionamiento (inferior). }
+    \caption{Gráfica de una submuestra de la serie tiempo que corresponden a datos en 
+    condiciones anómalas a 1750 RPM con el rodamiento cargado en la condición B un 
+    defecto de 0.021 pulgadas en el lado del accionamiento (superior) y a 1772 RPM con 
+    el rodamiento cargado en la condición B un defecto de 0.014 pulgadas en el lado del 
+    accionamiento (inferior). }
     \label{fig:figAnomalySeries}
 \end{figure}
 
 
-Cada archivo contiene mediciones de tres acelerómetros, dependiendo de las claves DE, FE o BA. Pero el número de llaves puede variar de un archivo a otros, algunos pueden contener sólo 1, mientras que otros pueden contener 3 \cite{rigas2024marine}. Al revisar detalladamente las llaves de los archivos de las series de tiempo en condiciones normales y en presencia de fallas  se obtiene el resultado de la Tabla~\ref{tab:tab1keys}. 
+Cada archivo contiene mediciones de tres acelerómetros, dependiendo de las claves DE, 
+FE o BA. Pero el número de llaves puede variar de un archivo a otros, algunos pueden 
+contener sólo 1, mientras que otros pueden contener 3 \cite{rigas2024marine}. 
+Al revisar detalladamente las llaves de los archivos de las series de tiempo en 
+condiciones normales y en presencia de fallas  se obtiene el resultado de la 
+Tabla~\ref{tab:tab1keys}. 
 
 
 \begin{table}[h]
@@ -1143,7 +1656,13 @@ Cada archivo contiene mediciones de tres acelerómetros, dependiendo de las clav
 
 
 
-Según la Tabla~\ref{tab:tab1keys}, los archivos que contienen series de tiempo en condiciones normales presentan datos de los acelerómetros DE y FE, sin embargo no presentan datos de los acelerómetros de tipo BA. Esta información es de mucha importancia a la hora de construir el dataset de entrenamiento de los modelos. Por otra parte, todos los archivos de datos anómalos presentan datos de los acelerómetros de tipo DE, pero datos faltantes en los acelerómetros de tipo FE, y en mayor medida BA. 
+Según la Tabla~\ref{tab:tab1keys}, los archivos que contienen series de tiempo en 
+condiciones normales presentan datos de los acelerómetros DE y FE, sin embargo no 
+presentan datos de los acelerómetros de tipo BA. Esta información es de mucha 
+importancia a la hora de construir el dataset de entrenamiento de los modelos. 
+Por otra parte, todos los archivos de datos anómalos presentan datos de los 
+acelerómetros de tipo DE, pero datos faltantes en los acelerómetros de tipo FE, y 
+en mayor medida BA. 
 
 
 \begin{table}[h]
@@ -1173,7 +1692,13 @@ Según la Tabla~\ref{tab:tab1keys}, los archivos que contienen series de tiempo 
 
 
 
-A cada serie de tiempo se le calculan parámetros estadísticos básicos que permiten caracterizar su comportamiento y servir como insumo para la construcción de los modelos. Los parámetros a calcular son longitud de la serie, media, promedio, desviación estándar y los valores máximos y mínimos. Y se calcularon los estadísticos de estos valores, y se graficaron los histogramas de esos parámetros. La Tabla~\ref{tab:stats} muestra los resultados de los estadísticos de los parámetros calculados, donde cada fila contiene los estadísticos de los parámetros calculados. 
+A cada serie de tiempo se le calculan parámetros estadísticos básicos que permiten 
+caracterizar su comportamiento y servir como insumo para la construcción de los modelos. 
+Los parámetros a calcular son longitud de la serie, media, promedio, desviación estándar 
+y los valores máximos y mínimos. Y se calcularon los estadísticos de estos valores, y se 
+graficaron los histogramas de esos parámetros. La Tabla~\ref{tab:stats} muestra los 
+resultados de los estadísticos de los parámetros calculados, donde cada fila contiene 
+los estadísticos de los parámetros calculados. 
 
 
 \begin{figure}[h]
@@ -1184,12 +1709,29 @@ A cada serie de tiempo se le calculan parámetros estadísticos básicos que per
 \end{figure}
 
 
-La Figura~\ref{fig:figHistogram01} muestra los histogramas de cada uno de los parámetro de las series. Los histogramas de los parámetros máximo (b) y mínimo (a) son simétricos, lo cual es un indicio de una alta correlación. Los datos corresponden a series de tiempo es de esperarse que para estos tipos de datos la media esté concentrada en valores cercanos a cero, el histograma de distribución de la media (d) lo confirma. La longitud de las series (a) es un parámetro que no se tiene en cuenta a la hora de generar el dataset de entrenamiento porque es una característica propia de la medición. La distribución de rpm (f) muestra la cantidad de archivos por rpm medida.    
+La Figura~\ref{fig:figHistogram01} muestra los histogramas de cada uno de los parámetro 
+de las series. Los histogramas de los parámetros máximo (b) y mínimo (a) son simétricos, 
+lo cual es un indicio de una alta correlación. Los datos corresponden a series de 
+tiempo es de esperarse que para estos tipos de datos la media esté concentrada en 
+valores cercanos a cero, el histograma de distribución de la media (d) lo confirma. 
+La longitud de las series (a) es un parámetro que no se tiene en cuenta a la hora de 
+generar el dataset de entrenamiento porque es una característica propia de la medición. 
+La distribución de rpm (f) muestra la cantidad de archivos por rpm medida.    
 
 
-Las distribuciones del promedio (d), el máximo (b), el mínimo (c) y la desviación estándar (e) presentan un marcado sesgo hacia cero. Para atenuar este efecto y aproximarse a una distribución más similar a la normal, se aplica una transformación logarítmica. La transformación trae como resultado las gráficas de la Figura~\ref{fig:figHistogram01}. En general, se puede apreciar una mejoría en las distribuciones de desviación estándar (b), máximos (a) y mínimos(d). 
+Las distribuciones del promedio (d), el máximo (b), el mínimo (c) y la desviación 
+estándar (e) presentan un marcado sesgo hacia cero. Para atenuar este efecto y 
+aproximarse a una distribución más similar a la normal, se aplica una transformación 
+logarítmica. La transformación trae como resultado las gráficas de la 
+Figura~\ref{fig:figHistogram01}. En general, se puede apreciar una mejoría en las 
+distribuciones de desviación estándar (b), máximos (a) y mínimos(d). 
 
-Para analizar las relaciones existentes entre los distintos parámetros numéricos, se construyó la matriz de correlación entre las variables. Esta herramienta permite identificar el grado de asociación lineal entre cada par de variables, facilitando la detección de posibles dependencias o redundancias en los datos. La matriz resultante se observa en la Figura~\ref{fig:figCorrMat}. 
+
+Para analizar las relaciones existentes entre los distintos parámetros numéricos, se 
+construyó la matriz de correlación entre las variables. Esta herramienta permite 
+identificar el grado de asociación lineal entre cada par de variables, facilitando la 
+detección de posibles dependencias o redundancias en los datos. La matriz resultante se 
+observa en la Figura~\ref{fig:figCorrMat}. 
 
 
 \begin{figure}[h]
@@ -1200,14 +1742,27 @@ Para analizar las relaciones existentes entre los distintos parámetros numéric
 \end{figure}
 
 
-\cite{Alvarez2023} definió una matriz de correlación como una tabla que muestra el grado de relación lineal entre un conjunto de variables. En forma de matriz cada fila y columna representa una variable, está a su vez facilita la visualización conjunta de múltiples variables, lo que facilita observar de forma más entendible la exploración de los datos de forma gráfica.
+\cite{Alvarez2023} definió una matriz de correlación como una tabla que muestra el grado 
+de relación lineal entre un conjunto de variables. En forma de matriz cada fila y 
+columna representa una variable, está a su vez facilita la visualización conjunta de 
+múltiples variables, lo que facilita observar de forma más entendible la exploración de 
+los datos de forma gráfica.
 
 
-En esta matriz se evidencia que los valores en la diagonal principal siempre serán 1 ya que se encuentran correlacionadas todas las variables, por otro lado tenemos que los valores fuera de la diagonal van de -1 a +1 lo que expresa que mientras más cercano sea el valor a +1 más mayor será la relación positiva, es decir, pueden directamente proporcionales, por otro lado un valor cercano a -1 indica que no existe una relación entre las variables, es decir, pueden ser inversamente proporcionales y un valor cercano a 0 indica que no existe una relación clara entre las variables. \cite{Alvarez2023}
+En esta matriz se evidencia que los valores en la diagonal principal siempre serán 1 ya 
+que se encuentran correlacionadas todas las variables, por otro lado tenemos que los 
+valores fuera de la diagonal van de -1 a +1 lo que expresa que mientras más cercano sea 
+el valor a +1 más mayor será la relación positiva, es decir, pueden directamente 
+proporcionales, por otro lado un valor cercano a -1 indica que no existe una relación 
+entre las variables, es decir, pueden ser inversamente proporcionales y un valor cercano 
+a 0 indica que no existe una relación clara entre las variables. \cite{Alvarez2023}
 
 
-Entre muchas de sus ventajas se resaltan la detección de dependencias o redundancia de variables, lo cual es muy importante y prioritario en campos como análisis de datos y aprendizaje automático y por otro lado nos encontramos que por medio de la implementación de esta técnica se puede simplificar modelos eliminando variables muy correlacionadas que produzcan redundancia en la información. \cite{Alvarez2023}
-
+Entre muchas de sus ventajas se resaltan la detección de dependencias o redundancia de 
+variables, lo cual es muy importante y prioritario en campos como análisis de datos y 
+aprendizaje automático y por otro lado nos encontramos que por medio de la implementación
+de esta técnica se puede simplificar modelos eliminando variables muy correlacionadas que 
+produzcan redundancia en la información. \cite{Alvarez2023}
 
 
 \begin{figure}[h]
@@ -1219,19 +1774,33 @@ Entre muchas de sus ventajas se resaltan la detección de dependencias o redunda
 
 
 
-Muchas variables tienen relaciones muy fuertes (positivas o negativas) entre sí. Por ejemplo,  maximum y minimum tiene una correlación muy cercana a -1. Debido a que las señales en el dataset corresponden a vibraciones, se espera que si se tiene una vibración con una alta amplitud en uno de los ejes positivos, también lo haga en el eje negativo. En el caso de las variables mean a las que se les realizó una transformación logarítmica se obtienen correlaciones altas entre las variables y su respectiva correlación. 
+Muchas variables tienen relaciones muy fuertes (positivas o negativas) entre sí. 
+Por ejemplo,  maximum y minimum tiene una correlación muy cercana a -1. 
+Debido a que las señales en el dataset corresponden a vibraciones, se espera que si se 
+tiene una vibración con una alta amplitud en uno de los ejes positivos, 
+también lo haga en el eje negativo. En el caso de las variables mean a las que se les 
+realizó una transformación logarítmica se obtienen correlaciones altas entre 
+las variables y su respectiva correlación. 
 
 
-Finalmente se analiza la relación de correlación entre cada parámetro y la categoría si pertenece o no a algún archivo de fallas. La Figura~\ref{fig:figCorrMatTarget} muestra la correlación entre cada parámetro y esa variable objetivo. No hay correlaciones fuertes (mayores a 0.3) entre ninguna variable y anomaly. 
+Finalmente se analiza la relación de correlación entre cada parámetro y la categoría si 
+pertenece o no a algún archivo de fallas. La Figura~\ref{fig:figCorrMatTarget} muestra 
+la correlación entre cada parámetro y esa variable objetivo. No hay correlaciones fuertes
+(mayores a 0.3) entre ninguna variable y anomaly. 
 Esto significa que ninguna variable por sí sola explica bien la aparición de anomalías. 
-Las variables con mayor asociación, aunque débil, son: \lstinline|log_maximum| (+0.145) y \lstinline|log_std| (+0.112), \lstinline|log_minimum| (-0.152) y \lstinline|length| (-0.216).
+Las variables con mayor asociación, aunque débil, son: \lstinline|log_maximum| (+0.145) y 
+\lstinline|log_std| (+0.112), \lstinline|log_minimum| (-0.152) y \lstinline|length| (-0.216).
 Variables como \lstinline|mean| y \lstinline|rpm| no aportan relación clara con la anomalía.
 
 
 
 \section{Preparación del dataset de entrenamiento}
 
-En esta etapa se estandarizan el conjunto de datos original con fin que los modelos sean capaces de utilizar los datos para su entrenamiento y predicción. La salida de esta etapa son el conjunto de características y etiquetas que utilizarán los modelos de aprendizaje supervisado para su entrenamiento y evaluación. Los pasos para la construcción del dataset de entrenamiento se visualizan en la Figura~\ref{fig:figGenerationDataset}.
+En esta etapa se estandarizan el conjunto de datos original con fin que los modelos sean 
+capaces de utilizar los datos para su entrenamiento y predicción. La salida de esta etapa
+son el conjunto de características y etiquetas que utilizarán los modelos de aprendizaje 
+supervisado para su entrenamiento y evaluación. Los pasos para la construcción del dataset 
+de entrenamiento se visualizan en la Figura~\ref{fig:figGenerationDataset}.
 
 
 \begin{figure}[h]
@@ -1242,22 +1811,49 @@ En esta etapa se estandarizan el conjunto de datos original con fin que los mode
 \end{figure}
 
 
-En primer lugar, cada archivo del conjunto de datos contiene mediciones de diferentes tipos de acelerómetros. Debido a que los archivos de series de tiempo de condiciones normales, no contienen datos del acelerómetros BA. Por esa razón, se ignoran los datos provenientes de los acelerómetros de tipo BA, puesto que solo están presente en los archivos con datos anómalos. Incluir estos datos genera ruido en el modelo, y en caso que se realice una medición en condiciones normales usando el acelerómetro de tipo BA, el modelo no sería capaz de clasificarlo correctamente.
+En primer lugar, cada archivo del conjunto de datos contiene mediciones de diferentes 
+tipos de acelerómetros. Debido a que los archivos de series de tiempo de condiciones 
+normales, no contienen datos del acelerómetros BA. Por esa razón, se ignoran los datos 
+provenientes de los acelerómetros de tipo BA, puesto que solo están presente en los 
+archivos con datos anómalos. Incluir estos datos genera ruido en el modelo, y en caso 
+que se realice una medición en condiciones normales usando el acelerómetro de tipo BA, 
+el modelo no sería capaz de clasificarlo correctamente.
 
 
-Adicionalmente, las series de tiempo de los diferentes archivos no tienen la misma longitud, y la cantidad de muestras de los archivos es muy alta. La serie más corta tiene más de 60.000 muestras. Con el fin de generar un conjunto de datos con un misma longitud y una cantidad mayor de registros, se ha decido tomar segmentos de 2048 muestras de cada serie.  De esta manera, de un mismo archivo se pueden obtener muchos segmentos, que se convertirán en una observación para el entrenamiento o evaluación del modelo. 
+Adicionalmente, las series de tiempo de los diferentes archivos no tienen la misma 
+longitud, y la cantidad de muestras de los archivos es muy alta. La serie más corta 
+tiene más de 60.000 muestras. Con el fin de generar un conjunto de datos con un misma 
+longitud y una cantidad mayor de registros, se ha decido tomar segmentos de 2048 
+muestras de cada serie.  De esta manera, de un mismo archivo se pueden obtener muchos 
+segmentos, que se convertirán en una observación para el entrenamiento o evaluación 
+del modelo. 
 
 
-Los segmentos son seleccionados de forma aleatoria, debido a que hay muchos más archivos que tienen datos de condiciones anómalas en comparación a los archivos de datos en condiciones normales, de éstos últimos se obtienen más observaciones por archivos que de los anteriores. En la salida se obtienen 8192 series de condiciones anómalas de 2048 muestras cada una y la misma cantidad de series para condiciones normales. 
+Los segmentos son seleccionados de forma aleatoria, debido a que hay muchos más archivos 
+que tienen datos de condiciones anómalas en comparación a los archivos de datos en 
+condiciones normales, de éstos últimos se obtienen más observaciones por archivos que 
+de los anteriores. En la salida se obtienen 8192 series de condiciones anómalas de 2048 
+muestras cada una y la misma cantidad de series para condiciones normales. 
 
 
-No es recomendable entrenar directamente un modelo con esos valores crudos de los segmentos sin calcular características. En primer lugar, esta alta dimensionalidad de los datos hace a los modelos muy grandes, y si la relación entre el número de observaciones a entrenar y el número de dimensiones de entrada es muy bajo, son más probable que ocurran  efectos negativos como sobreajuste y dificultad para generalizar. 
+No es recomendable entrenar directamente un modelo con esos valores crudos de los 
+segmentos sin calcular características. En primer lugar, esta alta dimensionalidad de 
+los datos hace a los modelos muy grandes, y si la relación entre el número de 
+observaciones a entrenar y el número de dimensiones de entrada es muy bajo, son más 
+probable que ocurran  efectos negativos como sobreajuste y dificultad para generalizar. 
 
 
-Por otra parte las series de tiempo suelen tener datos ruidosos y con gran variabilidad local. Esto hace que el modelo se ajuste a patrones irrelevantes.  Además, ruido, un valor pico o un desplazamiento leve temporal puede tener grandes efectos en los resultados del modelo. Extraer features de la serie de tiempo reduce la dimensionalidad, mejora la robustez del modelo y facilita la interpretación de resultados. 
+Por otra parte las series de tiempo suelen tener datos ruidosos y con gran variabilidad 
+local. Esto hace que el modelo se ajuste a patrones irrelevantes.  Además, ruido, un 
+valor pico o un desplazamiento leve temporal puede tener grandes efectos en los 
+resultados del modelo. Extraer features de la serie de tiempo reduce la dimensionalidad, 
+mejora la robustez del modelo y facilita la interpretación de resultados. 
 
 
-Por lo anterior, una vez obtenidos los segmentos, se procede a la generación de las características de cada conjunto de muestras. Para esto, se calculan una serie de métricas estadísticas descriptivas para cada fila (serie temporal) de la matriz de datos. Estas métricas incluyen:
+Por lo anterior, una vez obtenidos los segmentos, se procede a la generación de las 
+características de cada conjunto de muestras. Para esto, se calculan una serie de 
+métricas estadísticas descriptivas para cada fila (serie temporal) de la matriz de 
+datos. Estas métricas incluyen:
 
 \begin{itemize}
 \item \textbf{Maximum}: Valor máximo de la serie temporal.
@@ -1279,14 +1875,21 @@ Además, se calculan dos métricas adicionales basadas en el espectro en frecuen
 \end{itemize}
 
 
-Finalmente, se agrega información adicional a cada fila del DataFrame, como el RPM, el tipo de anomalía, el diámetro de la falla, el valor de muestreo y la etiqueta de muestreo, así como el nombre del acelerómetro. El resultado final es un DataFrame de Pandas que contiene todas las características extraídas de los segmentos de datos, listo para ser utilizado en tareas de aprendizaje automático.
+Finalmente, se agrega información adicional a cada fila del DataFrame, como el RPM, el 
+tipo de anomalía, el diámetro de la falla, el valor de muestreo y la etiqueta de 
+muestreo, así como el nombre del acelerómetro. El resultado final es un DataFrame de 
+Pandas que contiene todas las características extraídas de los segmentos de datos, 
+listo para ser utilizado en tareas de aprendizaje automático.
 
 
 
 \section{Métricas de evaluación utilizadas}
 
 
-Para determinar las métricas de rendimiento se divide el conjunto de datos en conjuntos de entrenamiento y prueba, y que los datos de prueba se utilizan únicamente para comparar los modelos, sin participar en el proceso de entrenamiento. La división escogida para este experimento es 80\% para entrenamiento y 20\% para prueba. 
+Para determinar las métricas de rendimiento se divide el conjunto de datos en conjuntos 
+de entrenamiento y prueba, y que los datos de prueba se utilizan únicamente para 
+comparar los modelos, sin participar en el proceso de entrenamiento. La división 
+escogida para este experimento es 80\% para entrenamiento y 20\% para prueba. 
 
 
 \begin{lstlisting}
@@ -1303,10 +1906,21 @@ y_test = (df_test[TARGET_COLUMN]).astype('int').values
 \end{lstlisting}
 
 
-Los datos se dividen usando la misma semilla aleatoria para garantizar la reproducibilidad del experimento, es decir, que todos los modelos tengan exactamente los mismos datos de entrenamiento y prueba que tienen los demás, evitando sesgos derivados de particiones distintas. Adicionalmente, los datos de entrenamiento se dividen aún más en conjuntos de entrenamiento y validación, y durante el proceso de entrenamiento se utiliza la técnica de validación cruzada. 
+Los datos se dividen usando la misma semilla aleatoria para garantizar la 
+reproducibilidad del experimento, es decir, que todos los modelos tengan exactamente 
+los mismos datos de entrenamiento y prueba que tienen los demás, evitando sesgos 
+derivados de particiones distintas. Adicionalmente, los datos de entrenamiento se 
+dividen aún más en conjuntos de entrenamiento y validación, y durante el proceso de 
+entrenamiento se utiliza la técnica de validación cruzada. 
 
 
-La matriz de confusión constituye el punto de partida para el cálculo de las principales métricas de rendimiento en clasificación. En problemas con clases desbalanceadas, la matriz de confusión resulta especialmente útil para identificar sesgos hacia una clase mayoritaria y analizar con mayor detalle los errores cometidos. A partir de ella se derivan la mayoría de las métricas que se utilizan para la evaluación de modelos. En la Figura~\ref{fig:figMatrixConfusion} se observa la matriz de confusión que se generará de cada modelo entrenado. 
+La matriz de confusión constituye el punto de partida para el cálculo de las principales 
+métricas de rendimiento en clasificación. En problemas con clases desbalanceadas, la 
+matriz de confusión resulta especialmente útil para identificar sesgos hacia una clase 
+mayoritaria y analizar con mayor detalle los errores cometidos. A partir de ella se 
+derivan la mayoría de las métricas que se utilizan para la evaluación de modelos. En la 
+Figura~\ref{fig:figMatrixConfusion} se observa la matriz de confusión que se generará 
+de cada modelo entrenado. 
 
 
 
@@ -1320,63 +1934,109 @@ La matriz de confusión constituye el punto de partida para el cálculo de las p
 
 \subsubsection{Exactitud}
 
-También llamado Accuracy, es el porcentaje qué indica, del total de predicciones, cuántas de las predicciones realizadas durante el entrenamiento tuvieron una predicción acertada. Es una de las principales métricas que se utilizan en aprendizaje automático. La Ecuación~\eqref{eq:eq2accuracy} describe cómo se calcula esta métrica a partir de los valores de la matriz de confusión. 
+También llamado Accuracy, es el porcentaje qué indica, del total de predicciones, 
+cuántas de las predicciones realizadas durante el entrenamiento tuvieron una predicción 
+acertada. Es una de las principales métricas que se utilizan en aprendizaje automático. 
+La Ecuación~\eqref{eq:eq2accuracy} describe cómo se calcula esta métrica a partir de 
+los valores de la matriz de confusión. 
 
 \begin{equation}\label{eq:eq2accuracy}
 \text{Exactitud(Accuracy)} = \frac{TP + TN}{TP + TN + FP + FN}
 \end{equation}
 
-Para poder obtener un valor confiable de esta métrica se requiere un conjunto de datos correctamente balanceado.  En un escenario donde la clase positiva, por ejemplo, la presencia de una falla, es muy poco frecuente en comparación con la clase negativa, el modelo podría lograr una alta precisión simplemente prediciendo la clase negativa todo el tiempo, sin aprender realmente a identificar correctamente la clase positiva.
+Para poder obtener un valor confiable de esta métrica se requiere un conjunto de datos 
+correctamente balanceado.  En un escenario donde la clase positiva, por ejemplo, la 
+presencia de una falla, es muy poco frecuente en comparación con la clase negativa, el 
+modelo podría lograr una alta precisión simplemente prediciendo la clase negativa todo 
+el tiempo, sin aprender realmente a identificar correctamente la clase positiva.
 
 \subsubsection{Precisión}
 
-Con esta métrica se busca el grado de dispersión en las predicciones, con el propósito de determinar cuántas veces el modelo acertó realmente cuando se predijo la clase positiva. La Ecuación~\eqref{eq:eq2precision} describe cómo se calcula esta métrica a partir de los valores de la matriz de confusión. 
+Con esta métrica se busca el grado de dispersión en las predicciones, con el propósito 
+de determinar cuántas veces el modelo acertó realmente cuando se predijo la clase 
+positiva. La Ecuación~\eqref{eq:eq2precision} describe cómo se calcula esta métrica a 
+partir de los valores de la matriz de confusión. 
 
 \begin{equation}\label{eq:eq2precision}
 \text{Precisión(Precision)} = \frac{TP}{TP + FP}
 \end{equation}
 
-La precisión es clave en situaciones donde los falsos positivos son muy costosos. En el caso de la detección de anomalías, realizar un mantenimiento predictivo, puede requerir que se suspenda el funcionamiento de una máquina o incluso de la producción. 
+La precisión es clave en situaciones donde los falsos positivos son muy costosos. En el 
+caso de la detección de anomalías, realizar un mantenimiento predictivo, puede requerir 
+que se suspenda el funcionamiento de una máquina o incluso de la producción. 
 
 
 \subsubsection{Sensibilidad}
 
-También llamado recall o True Positive Rate, es una métrica valiosa en conjuntos de datos desbalanceados. Esta métrica determina, para el total existente de una determinada categoría en el conjunto de entrenamiento, cuántas fueron correctamente predichas. La Ecuación~\eqref{eq:eq2recall} describe cómo se calcula esta métrica a partir de los valores de la matriz de confusión. 
+También llamado recall o True Positive Rate, es una métrica valiosa en conjuntos de 
+datos desbalanceados. Esta métrica determina, para el total existente de una determinada 
+categoría en el conjunto de entrenamiento, cuántas fueron correctamente predichas. La 
+Ecuación~\eqref{eq:eq2recall} describe cómo se calcula esta métrica a partir de los 
+valores de la matriz de confusión. 
 
 \begin{equation}\label{eq:eq2recall}
 \text{Sensibilidad(Recall)} = \frac{TP}{TP + FN}
 \end{equation}
 
-La sensibilidad responde a la pregunta: De todas las observaciones de una misma clase, ¿cuáles fueron predichas correctamente?. Precisión y sensibilidad pueden confundirse fácilmente. Pero para dejarlo claro, el número de referencia en precisión es la cantidad de predicciones de una categoría (acertadas y no acertadas), mientras qué en la sensibilidad el número de referencia es la cantidad real de una categoría en el conjunto de entrenamiento.
+La sensibilidad responde a la pregunta: De todas las observaciones de una misma clase, 
+¿cuáles fueron predichas correctamente?. Precisión y sensibilidad pueden confundirse 
+fácilmente. Pero para dejarlo claro, el número de referencia en precisión es la 
+cantidad de predicciones de una categoría (acertadas y no acertadas), mientras qué en 
+la sensibilidad el número de referencia es la cantidad real de una categoría en el 
+conjunto de entrenamiento.
 
 
 \subsubsection{F1}
 
-Esta métrica es la combinación de Precisión y sensibilidad, por medio de una media armónica. Esta métrica solo puede ser alta si tanto precisión como sensibilidad son altas. Si alguno cae, cae toda la métrica. Lo cual nos da una referencia de qué tan bueno es el modelo. La Ecuación~\eqref{eq:eq2F1} describe cómo se calcula esta métrica a partir de los valores de la matriz de confusión. 
+Esta métrica es la combinación de Precisión y sensibilidad, por medio de una media 
+armónica. Esta métrica solo puede ser alta si tanto precisión como sensibilidad son 
+altas. Si alguno cae, cae toda la métrica. Lo cual nos da una referencia de qué tan 
+bueno es el modelo. La Ecuación~\eqref{eq:eq2F1} describe cómo se calcula esta métrica 
+a partir de los valores de la matriz de confusión. 
 
 \begin{equation}\label{eq:eq2F1}
 F_1 = 2 \cdot \frac{\text{Precisión} \cdot \text{Recall}}{\text{Precisión} + \text{Recall}}
 \end{equation}
 
 
-El F1 mide el equilibrio entre la capacidad del modelo para detectar correctamente los positivos (recall) y la capacidad de evitar falsos positivos (precisión). Es especialmente útil cuando existe un desequilibrio de clases, como ocurre en detección de anomalías, donde las clases suelen estar desbalanceadas. 
+El F1 mide el equilibrio entre la capacidad del modelo para detectar correctamente los 
+positivos (recall) y la capacidad de evitar falsos positivos (precisión). 
+Es especialmente útil cuando existe un desequilibrio de clases, como ocurre en detección 
+de anomalías, donde las clases suelen estar desbalanceadas. 
 
 
 \subsubsection{Área bajo la curva ROC}
 
-Esta métrica determina, para distintos umbrales de decisión, la probabilidad de qué un conjunto de datos sea clasificado de manera correcta, respecto a cuantos verdaderos positivos y falsos positivos tiene. El AUC mide la capacidad del modelo para separar clases, independientemente de un umbral específico. Un AUC mayor a 0.9 significa que el modelo tiene gran capacidad para identificar patrones anómalos aunque sean poco frecuentes.
+Esta métrica determina, para distintos umbrales de decisión, la probabilidad de qué un 
+conjunto de datos sea clasificado de manera correcta, respecto a cuantos verdaderos 
+positivos y falsos positivos tiene. El AUC mide la capacidad del modelo para separar 
+clases, independientemente de un umbral específico. Un AUC mayor a 0.9 significa que el 
+modelo tiene gran capacidad para identificar patrones anómalos aunque sean poco frecuentes.
 
-A pesar que el conjunto de datos construído contiene un número igual de observaciones positivas (presencia de anomalías) y negativas. No se utiliza la exactitud para seleccionar al mejor modelo, se optó por elegir al área bajo la curva RoC, puesto que esta métrica evalúa qué tan bien el modelo distingue entre condiciones normales y anómalas, sin depender de un umbral en particular. 
+A pesar que el conjunto de datos construído contiene un número igual de observaciones 
+positivas (presencia de anomalías) y negativas. No se utiliza la exactitud para 
+seleccionar al mejor modelo, se optó por elegir al área bajo la curva RoC, puesto que 
+esta métrica evalúa qué tan bien el modelo distingue entre condiciones normales y 
+anómalas, sin depender de un umbral en particular. 
 
 
 \section{Modelos de aprendizaje automático}
 
-Para la selección del mejor clasificador binario, se eligen modelos de clasificación con el objetivo de predecir si una serie de características corresponden a una anomalía o no dentro del conjunto de características. A cada modelo se le aplica un proceso de búsqueda de hiperparámetros, lo que permite ajustar sus configuraciones internas y obtener un modelo optimizado para alcanzar las mejores métricas de desempeño posibles. 
+Para la selección del mejor clasificador binario, se eligen modelos de clasificación 
+con el objetivo de predecir si una serie de características corresponden a una anomalía 
+o no dentro del conjunto de características. A cada modelo se le aplica un proceso de 
+búsqueda de hiperparámetros, lo que permite ajustar sus configuraciones internas y 
+obtener un modelo optimizado para alcanzar las mejores métricas de desempeño posibles. 
 
 
 \subsubsection{Regresión Logística}
 
-El primer modelo de clasificación que se aplica es la regresión logística. Se parte de  regresión logística ya que es uno de los métodos clásicos de clasificación y de los  más efectivos. Otra ventaja de la regresión logística es su fácil interpretación, y por lo tanto, el modelo resultante del entrenamiento, puede ser de gran ayuda a la hora de obtener una comprensión de los datos. Estos aspectos, junto con su simplicidad,  justifican su elección como modelo de clasificación.
+El primer modelo de clasificación que se aplica es la regresión logística. Se parte de  
+regresión logística ya que es uno de los métodos clásicos de clasificación y de los  más 
+efectivos. Otra ventaja de la regresión logística es su fácil interpretación, y por lo 
+tanto, el modelo resultante del entrenamiento, puede ser de gran ayuda a la hora de 
+obtener una comprensión de los datos. Estos aspectos, junto con su simplicidad, 
+justifican su elección como modelo de clasificación.
 
 
 \vspace{5mm}
@@ -1404,14 +2064,25 @@ logistic_regression_pipeline = Pipeline([
 \end{lstlisting}
 
 
-Además de elegir este modelo, se aplicó la técnica de búsqueda de hiperparametros para encontrar aquellos parámetro que permiten al modelo obtener mejores métricas. Se realizó utilizando una técnica de validación cruzada, específicamente GridSearchCV, que permite explorar de manera exhaustiva el espacio de hiperparámetros definido.
+Además de elegir este modelo, se aplicó la técnica de búsqueda de hiperparametros para 
+encontrar aquellos parámetro que permiten al modelo obtener mejores métricas. Se realizó 
+utilizando una técnica de validación cruzada, específicamente GridSearchCV, que permite 
+explorar de manera exhaustiva el espacio de hiperparámetros definido.
 
-Una vez encontrada la mejor configuración de hiperparámetros, el modelo de Regresión Logística entrenado con esos parámetros se puede utilizar para hacer predicciones sobre nuevos datos y evaluar su rendimiento en métricas como precisión, exhaustividad, puntaje F1, entre otras.
+Una vez encontrada la mejor configuración de hiperparámetros, el modelo de Regresión 
+Logística entrenado con esos parámetros se puede utilizar para hacer predicciones sobre 
+nuevos datos y evaluar su rendimiento en métricas como precisión, exhaustividad, 
+puntaje F1, entre otras.
 
 
 \subsubsection{Naive Bayes}
 
-Adicionalmente, se escogió el modelo de Naive Bayes debido a su simplicidad en la construcción de clasificadores, su buen rendimiento en entrenamiento y predicción y su fácil interpretabilidad de este tipo de modelos. Este algoritmo permite entender de manera directa cómo cada variable contribuye a la predicción de la clase. Esto brinda una visión intuitiva sobre las relaciones que existen entre las características de entradas y las clases del problema.
+Adicionalmente, se escogió el modelo de Naive Bayes debido a su simplicidad en la 
+construcción de clasificadores, su buen rendimiento en entrenamiento y predicción y su 
+fácil interpretabilidad de este tipo de modelos. Este algoritmo permite entender de 
+manera directa cómo cada variable contribuye a la predicción de la clase. Esto brinda 
+una visión intuitiva sobre las relaciones que existen entre las características de 
+entradas y las clases del problema.
 
 
 \vspace{5mm}
@@ -1436,12 +2107,21 @@ naive_bayes_pipeline = Pipeline([
 \end{lstlisting}
 
 
-Con el fin de obtener un mejor modelo se itera con diferentes valores de suavizado (smoothing) aplicado a la varianza de cada característica. Un valor más pequeño significa que el suavizado es menor.  El objetivo de optimizar este parámetro es encontrar la mejor configuración para el modelo de Naive Bayes Gaussiano.
+Con el fin de obtener un mejor modelo se itera con diferentes valores de suavizado 
+(smoothing) aplicado a la varianza de cada característica. Un valor más pequeño 
+significa que el suavizado es menor.  El objetivo de optimizar este parámetro es 
+encontrar la mejor configuración para el modelo de Naive Bayes Gaussiano.
 
 
 \subsubsection{Clasificador basado en árbol de decisión}
 
-Otro modelo seleccionado fue el modelo de árboles de decisión debido a su capacidad de interpretabilidad y a la posibilidad de extraer la importancia de las características (feature importance) utilizadas en la clasificación. Este tipo de modelo no solo permite visualizar el proceso de decisión de manera jerárquica y comprensible, sino que también brinda información valiosa sobre qué variables tienen mayor peso en la predicción. Esto resulta especialmente útil para identificar patrones relevantes en los datos y para orientar futuras etapas de análisis o recolección de información.
+Otro modelo seleccionado fue el modelo de árboles de decisión debido a su capacidad de 
+interpretabilidad y a la posibilidad de extraer la importancia de las características 
+(feature importance) utilizadas en la clasificación. Este tipo de modelo no solo permite 
+visualizar el proceso de decisión de manera jerárquica y comprensible, sino que también 
+brinda información valiosa sobre qué variables tienen mayor peso en la predicción. 
+Esto resulta especialmente útil para identificar patrones relevantes en los datos y 
+para orientar futuras etapas de análisis o recolección de información.
 
 
 \vspace{5mm}
@@ -1468,12 +2148,24 @@ decision_tree_pipeline = Pipeline([
 ])
 \end{lstlisting}
 
-Así como a los modelos anteriores, también se aplica optimización de hiperparámetros con el fin de  de tener un modelo con mejores métricas. El parámetro criterium define la función utilizada para medir la calidad de una división de los diferentes árboles de decisión y la pureza de los nodos, \lstinline|decision_tree__max_depth|, controla la profundidad máxima del árbol de decisión, \lstinline|decision_tree__min_samples_split|  controla el número mínimo de muestras requeridas para dividir un nodo interno y \lstinline|min_samples_leaf| establece el número mínimo de muestras requeridas en cada nodo hoja. 
+Así como a los modelos anteriores, también se aplica optimización de hiperparámetros 
+con el fin de  de tener un modelo con mejores métricas. El parámetro criterium define 
+la función utilizada para medir la calidad de una división de los diferentes árboles de 
+decisión y la pureza de los nodos, \lstinline|decision_tree__max_depth|, controla la 
+profundidad máxima del árbol de decisión, \lstinline|decision_tree__min_samples_split|  
+controla el número mínimo de muestras requeridas para dividir un nodo interno y 
+\lstinline|min_samples_leaf| establece el número mínimo de muestras requeridas en 
+cada nodo hoja. 
 
 
 \subsubsection{Clasificador basado en Bosque Aleatorio}
 
-Se seleccionó el modelo de clasificador basado en bosque aleatorio basándose en los buenos resultados obtenidos en estudios previos como el de Cánovas et al. (2017) y  Yu y Caspary (2025). En diferentes campos, incluyendo la detección de anomalías, los modelos de bosque aleatorio han demostrado un rendimiento competitivo en tareas de clasificación y regresión debido a su robustez, versatilidad y facilidad de entrenamiento. 
+Se seleccionó el modelo de clasificador basado en bosque aleatorio basándose en los 
+buenos resultados obtenidos en estudios previos como el de \cite{canovas2017random} 
+y \cite{yu2025tkeo}. En diferentes campos, incluyendo la detección de anomalías, 
+los modelos de bosque aleatorio han demostrado un rendimiento competitivo en tareas 
+de clasificación y regresión debido a su robustez, versatilidad y facilidad de 
+entrenamiento. 
 
 
 \vspace{5mm}
@@ -1502,12 +2194,25 @@ random_forest_pipeline = Pipeline([
 ])
 \end{lstlisting}
 
-La optimización de hiperparámetros es una etapa crucial en el proceso de construcción del modelo. algunos parámetros seleccionados para optimizar fueron: el número de árboles de decisión (\lstinline|n_estimators|), la función de criterio para dividir los nodos (\lstinline|criterion|), la profundidad máxima de los árboles (\lstinline|max_depth|), el número mínimo de muestras para dividir un nodo (\lstinline|min_samples_split|), el número mínimo de muestras en un nodo hoja (\lstinline|min_samples_leaf|) y si se debe utilizar el bootstrap (\lstinline|bootstrap|). 
+La optimización de hiperparámetros es una etapa crucial en el proceso de construcción 
+del modelo. algunos parámetros seleccionados para optimizar fueron: el número de árboles 
+de decisión (\lstinline|n_estimators|), la función de criterio para dividir los nodos 
+(\lstinline|criterion|), la profundidad máxima de los árboles (\lstinline|max_depth|), 
+el número mínimo de muestras para dividir un nodo (\lstinline|min_samples_split|), el 
+número mínimo de muestras en un nodo hoja (\lstinline|min_samples_leaf|) y si se debe 
+utilizar el bootstrap (\lstinline|bootstrap|). 
 
 
 \subsubsection{CatBoost}
 
-Adicionalmente, se utilizó el modelo de CatBoost y para mejorar el rendimiento del modelo, se llevó a cabo un proceso de optimización de hiperparámetros mediante búsqueda en malla, ajustando parámetros clave como el número de iteraciones (\lstinline|iterations|), la tasa de aprendizaje del modelo (\lstinline|learning_rate|), la profundidad de los árboles de decisión (\lstinline|depth|), la regularización del modelo (\lstinline|l2_leaf_reg|) y el número de divisiones para las características (\lstinline|border_count|). Este procedimiento permite encontrar la mejor combinación de que maximizan la capacidad predictiva del modelo.
+Adicionalmente, se utilizó el modelo de CatBoost y para mejorar el rendimiento del 
+modelo, se llevó a cabo un proceso de optimización de hiperparámetros mediante búsqueda 
+en malla, ajustando parámetros clave como el número de iteraciones (\lstinline|iterations|),
+la tasa de aprendizaje del modelo (\lstinline|learning_rate|), la profundidad de los 
+árboles de decisión (\lstinline|depth|), la regularización del modelo 
+(\lstinline|l2_leaf_reg|) y el número de divisiones para las características 
+(\lstinline|border_count|). Este procedimiento permite encontrar la mejor combinación de 
+que maximizan la capacidad predictiva del modelo.
 
 
 \vspace{5mm}
@@ -1539,7 +2244,11 @@ catboost_pipeline = Pipeline([
 
 \subsubsection{XGBoost}
 
-De los algoritmos de boosting, se incluye también XGBoost ampliamente reconocido por su eficiencia y alto rendimiento en tareas de clasificación y regresión. XGBoost ha sido ampliamente adoptado en la comunidad de ciencia de datos por su robustez, versatilidad y por haber demostrado resultados sobresalientes en aplicaciones de detección de anomalías en el mundo real.
+De los algoritmos de boosting, se incluye también XGBoost ampliamente reconocido por su 
+eficiencia y alto rendimiento en tareas de clasificación y regresión. XGBoost ha sido 
+ampliamente adoptado en la comunidad de ciencia de datos por su robustez, versatilidad y 
+por haber demostrado resultados sobresalientes en aplicaciones de detección de anomalías 
+en el mundo real.
 
 
 \vspace{5mm}
@@ -1569,12 +2278,21 @@ xgb_pipeline = Pipeline([
 ])
 \end{lstlisting}
 
-Para alcanzar un desempeño óptimo, se le aplica un proceso de optimización de hiperparámetros mediante búsqueda en malla, ajustando parámetros clave como la profundidad máxima de los árboles de decisión (\lstinline|max_depth|), la tasa de aprendizaje del modelo (\lstinline|learning_rate|), el número de estimadores (\lstinline|n_estimators|), el peso mínimo por nodo (\lstinline|min_child_weight|), la fracción de muestras utilizadas en cada árbol (\lstinline|subsample|) y la proporción de características consideradas en cada división (\lstinline|colsample_bytree|). 
+Para alcanzar un desempeño óptimo, se le aplica un proceso de optimización de 
+hiperparámetros mediante búsqueda en malla, ajustando parámetros clave como la 
+profundidad máxima de los árboles de decisión (\lstinline|max_depth|), la tasa de 
+aprendizaje del modelo (\lstinline|learning_rate|), el número de estimadores 
+(\lstinline|n_estimators|), el peso mínimo por nodo (\lstinline|min_child_weight|), la 
+fracción de muestras utilizadas en cada árbol (\lstinline|subsample|) y la proporción de 
+características consideradas en cada división (\lstinline|colsample_bytree|). 
 
 
 \subsubsection{LGBM Classifier}
 
-Otro modelo a utilizar es LightGBM (Light Gradient Boosting Machine), un algoritmo de boosting basado en árboles que se caracteriza por su alta eficiencia y velocidad de entrenamiento en comparación con otros métodos similares. Una de sus principales ventajas es que ofrece un muy buen rendimiento en términos de precisión y consumo de memoria. 
+Otro modelo a utilizar es LightGBM (Light Gradient Boosting Machine), un algoritmo de 
+boosting basado en árboles que se caracteriza por su alta eficiencia y velocidad de 
+entrenamiento en comparación con otros métodos similares. Una de sus principales ventajas 
+es que ofrece un muy buen rendimiento en términos de precisión y consumo de memoria. 
 
 
 \vspace{5mm}
@@ -1613,13 +2331,28 @@ lgbm_pipeline = Pipeline([
 ])
 \end{lstlisting}
 
-Para mejorar el desempeño de este modelo, se lleva a cabo una optimización de hiperparámetros, ajustando el número de estimadores (\lstinline|n_estimators|), la tasa de aprendizaje (\lstinline|learning_rate|), la profundidad máxima de los árboles (\lstinline|max_depth|), el número de hojas (\lstinline|num_leaves|), la cantidad mínima de muestras por nodo (\lstinline|min_child_samples|), así como la proporción de datos y características empleadas en cada iteración (\lstinline|subsample| y \lstinline|colsample_bytree|). También se exploraron factores de regularización como \lstinline|reg_alpha|, \lstinline|reg_lambda| y el criterio de división (\lstinline|min_split_gain|). 
+Para mejorar el desempeño de este modelo, se lleva a cabo una optimización de 
+hiperparámetros, ajustando el número de estimadores (\lstinline|n_estimators|), la tasa 
+de aprendizaje (\lstinline|learning_rate|), la profundidad máxima de los árboles 
+(\lstinline|max_depth|), el número de hojas (\lstinline|num_leaves|), la cantidad mínima 
+de muestras por nodo (\lstinline|min_child_samples|), así como la proporción de datos y 
+características empleadas en cada iteración (\lstinline|subsample| y 
+\lstinline|colsample_bytree|). También se exploraron factores de regularización como 
+\lstinline|reg_alpha|, \lstinline|reg_lambda| y el criterio de división 
+(\lstinline|min_split_gain|). 
 
 
 
 \subsubsection{Clasificador basado en perceptrón multicapa}
 
-Adicionalmente, se agrega un modelo basado en redes neuronales artificiales: Perceptrón multicapa. Una de las principales ventajas de este modelo es su capacidad de modelar relaciones no lineales complejas entre las variables, lo que las hace especialmente potentes en contextos donde los patrones no pueden ser capturados fácilmente por algoritmos lineales o basados en árboles. Además, las redes neuronales son modelos altamente flexibles y escalables, capaces de ajustarse a distintos volúmenes y tipos de datos. Incluso las redes neuronales podrían ser entrenadas directamente con los datos crudos. 
+Adicionalmente, se agrega un modelo basado en redes neuronales artificiales: Perceptrón 
+multicapa. Una de las principales ventajas de este modelo es su capacidad de modelar 
+relaciones no lineales complejas entre las variables, lo que las hace especialmente 
+potentes en contextos donde los patrones no pueden ser capturados fácilmente por 
+algoritmos lineales o basados en árboles. Además, las redes neuronales son modelos 
+altamente flexibles y escalables, capaces de ajustarse a distintos volúmenes y tipos de 
+datos. Incluso las redes neuronales podrían ser entrenadas directamente con los datos 
+crudos. 
 
 
 \vspace{5mm}
@@ -1651,12 +2384,24 @@ mlp_classifier_pipeline = Pipeline([
 ])
 \end{lstlisting}
 
-Al igual que los modelos anteriores, a este modelo se le aplica un proceso de optimización de hiperparámetros, evaluando diferentes configuraciones del número de neuronas y capas ocultas (\lstinline|hidden_layer_sizes|), funciones de activación (\lstinline|activation|), algoritmos de optimización (\lstinline|solver|), tasas de aprendizaje iniciales (\lstinline|learning_rate_init|) y estrategias de adaptación del aprendizaje (\lstinline|learning_rate|). También se consideraron parámetros relacionados con la regularización y la generalización, como el uso de early stopping y la fracción de datos destinada a validación (\lstinline|validation_fraction|). 
+Al igual que los modelos anteriores, a este modelo se le aplica un proceso de 
+optimización de hiperparámetros, evaluando diferentes configuraciones del número de 
+neuronas y capas ocultas (\lstinline|hidden_layer_sizes|), funciones de activación 
+(\lstinline|activation|), algoritmos de optimización (\lstinline|solver|), tasas de 
+aprendizaje iniciales (\lstinline|learning_rate_init|) y estrategias de adaptación del 
+aprendizaje (\lstinline|learning_rate|). También se consideraron parámetros relacionados 
+con la regularización y la generalización, como el uso de early stopping y la fracción 
+de datos destinada a validación (\lstinline|validation_fraction|). 
 
 
 \subsubsection{Máquinas de soporte vectorial SVM}
 
-Se entrena además un modelo basado en Máquinas de Vectores de Soporte (SVM) para la clasificación de anomalías. Este modelo ha sido utilizado en aplicaciones de detección de anomalías debido a su capacidad de encontrar hiperplanos óptimos que separan las clases con el mayor margen posible. Este algoritmo es especialmente ventajoso en escenarios donde las clases no son linealmente separables, ya que puede utilizar funciones kernel para proyectar los datos en espacios de mayor dimensión. 
+Se entrena además un modelo basado en Máquinas de Vectores de Soporte (SVM) para la 
+clasificación de anomalías. Este modelo ha sido utilizado en aplicaciones de detección 
+de anomalías debido a su capacidad de encontrar hiperplanos óptimos que separan las 
+clases con el mayor margen posible. Este algoritmo es especialmente ventajoso en 
+escenarios donde las clases no son linealmente separables, ya que puede utilizar 
+funciones kernel para proyectar los datos en espacios de mayor dimensión. 
 
 
 \vspace{5mm}
@@ -1686,16 +2431,46 @@ svm_pipeline = Pipeline([
 ])
 \end{lstlisting}
 
-Con el fin de optimizar el rendimiento del modelo también se le implementa una búsqueda de hiperparámetros. El parámetro \lstinline|C| controla el grado de regularización, donde valores más altos reducen los errores de clasificación en entrenamiento pero pueden llevar a sobreajuste. El hiperparámetro \lstinline|kernel| define la función de transformación que se aplica a los datos, siendo \lstinline|linear|, \lstinline|rbf| y \lstinline|poly| algunas de las opciones más comunes. 
 
-Además de los parámetros anteriores, se busca optimizar parámetros como \lstinline|gamma| que regula la influencia de cada muestra en el cálculo de la frontera de decisión, \lstinline|degree| que especifica el grado del polinomio cuando se selecciona el kernel \lstinline|poly|, y el parámetro \lstinline|probability| que permite estimar probabilidades de pertenencia a cada clase, lo cual resulta útil en la evaluación con métricas basadas en umbrales como el área bajo la curva ROC. 
+Con el fin de optimizar el rendimiento del modelo también se le implementa una búsqueda 
+de hiperparámetros. El parámetro \lstinline|C| controla el grado de regularización, 
+donde valores más altos reducen los errores de clasificación en entrenamiento pero 
+pueden llevar a sobreajuste. El hiperparámetro \lstinline|kernel| define la función de 
+transformación que se aplica a los datos, siendo \lstinline|linear|, \lstinline|rbf| y 
+\lstinline|poly| algunas de las opciones más comunes. 
+
+
+Además de los parámetros anteriores, se busca optimizar parámetros como 
+\lstinline|gamma| que regula la influencia de cada muestra en el cálculo de la frontera 
+de decisión, \lstinline|degree| que especifica el grado del polinomio cuando se 
+selecciona el kernel \lstinline|poly|, y el parámetro \lstinline|probability| que 
+permite estimar probabilidades de pertenencia a cada clase, lo cual resulta útil en la 
+evaluación con métricas basadas en umbrales como el área bajo la curva ROC. 
 
 
 \subsubsection{KNN}
 
-Finalmente, se entrena un modelo de K-Nearest Neighbors (KNN) con el objetivo de evaluar su desempeño en la clasificación de anomalías. Este algoritmo se basa en la premisa de que las observaciones similares tienden a encontrarse cerca en el espacio de características, lo que lo convierte en una técnica intuitiva y de fácil interpretación. Una de sus principales ventajas es que no hace suposiciones fuertes sobre la distribución de los datos, además de ser especialmente útil en problemas donde la relación entre las variables es compleja y no lineal.
 
-Para mejorar su rendimiento, también se le aplica a este modelo una optimización de hiperparámetros. Entre ellos, el hiperparámetro \lstinline|n_neighbors| que define el número de vecinos considerados para la clasificación, afectando directamente el sesgo y la varianza del modelo. El parámetro \lstinline|weights| define si todos los vecinos contribuyen por igual a la decisión (\lstinline|uniform|) o si se les asigna mayor importancia a los más cercanos (\lstinline|distance|). Por su parte, \lstinline|metric| determina la función de distancia utilizada para calcular la cercanía entre puntos (como \lstinline|euclidean|, \lstinline|manhattan| o \lstinline|minkowski|), mientras que el hiperparámetro \lstinline|p| ajusta la potencia de la métrica de Minkowski, permitiendo simular tanto la distancia Manhattan (\lstinline|p=1|) como la Euclídea (\lstinline|p=2|). 
+Finalmente, se entrena un modelo de K-Nearest Neighbors (KNN) con el objetivo de 
+evaluar su desempeño en la clasificación de anomalías. 
+Este algoritmo se basa en la premisa de que las observaciones similares tienden a 
+encontrarse cerca en el espacio de características, lo que lo convierte en una técnica 
+intuitiva y de fácil interpretación. Una de sus principales ventajas es que no hace 
+suposiciones fuertes sobre la distribución de los datos, además de ser especialmente 
+útil en problemas donde la relación entre las variables es compleja y no lineal.
+
+
+Para mejorar su rendimiento, también se le aplica a este modelo una optimización de 
+hiperparámetros. Entre ellos, el hiperparámetro \lstinline|n_neighbors| que define el 
+número de vecinos considerados para la clasificación, afectando directamente el sesgo y 
+la varianza del modelo. El parámetro \lstinline|weights| define si todos los vecinos 
+contribuyen por igual a la decisión (\lstinline|uniform|) o si se les asigna mayor 
+importancia a los más cercanos (\lstinline|distance|). Por su parte, \lstinline|metric| 
+determina la función de distancia utilizada para calcular la cercanía entre puntos 
+(como \lstinline|euclidean|, \lstinline|manhattan| o \lstinline|minkowski|), mientras 
+que el hiperparámetro \lstinline|p| ajusta la potencia de la métrica de Minkowski, 
+permitiendo simular tanto la distancia Manhattan (\lstinline|p=1|) como la 
+Euclídea (\lstinline|p=2|). 
 
 
 \vspace{5mm}
@@ -1802,7 +2577,11 @@ knn_pipeline = Pipeline([
 \end{table}
 
 
-Para poder comparar los modelos, primero se entrenan con el mismo conjunto de datos para garantizar que las diferencias entre las métricas obtenidas al evaluar los modelos dependan exclusivamente de los modelos. Adicionalmente, se aplica un proceso de búsqueda de hiperparámetros con el fin de encontrar la configuración que ofreciera el mejor rendimiento. 
+Para poder comparar los modelos, primero se entrenan con el mismo conjunto de datos para 
+garantizar que las diferencias entre las métricas obtenidas al evaluar los modelos 
+dependan exclusivamente de los modelos. Adicionalmente, se aplica un proceso de búsqueda 
+de hiperparámetros con el fin de encontrar la configuración que ofreciera el mejor 
+rendimiento. 
 
 
 \begin{table}[h]
@@ -1866,7 +2645,12 @@ Para poder comparar los modelos, primero se entrenan con el mismo conjunto de da
 \end{table}
 
 
-Como criterio de comparación para encontrar los parámetros óptimos, se utiliza el área bajo la curva ROC (AUC-ROC), métrica que mide la capacidad del modelo para distinguir entre clases positivas y negativas. Al optimizar los hiperparámetros con base en esta métrica, se garantiza que los modelos seleccionados ofrezcan un equilibrio adecuado entre sensibilidad y especificidad, logrando así un desempeño más robusto en la detección de anomalías.
+Como criterio de comparación para encontrar los parámetros óptimos, se utiliza el área 
+bajo la curva ROC (AUC-ROC), métrica que mide la capacidad del modelo para distinguir 
+entre clases positivas y negativas. Al optimizar los hiperparámetros con base en esta 
+métrica, se garantiza que los modelos seleccionados ofrezcan un equilibrio adecuado 
+entre sensibilidad y especificidad, logrando así un desempeño más robusto en la 
+detección de anomalías.
 
 
 \begin{table}[h]
@@ -1909,13 +2693,32 @@ Como criterio de comparación para encontrar los parámetros óptimos, se utiliz
 \end{table}
 
 
-Para la mayoría de los modelos se emplea el método Grid Search, que explora de manera exhaustiva todas las combinaciones posibles de hiperparámetros definidos. Sin embargo, en el caso de Random Forest, LightGBM y Perceptrón Multicapa MLP,  se utiliza Random Search, ya que estos algoritmos requieren un mayor esfuerzo computacional durante su entrenamiento, y tienen, en su definición de hiperparámetros un conjunto de combinaciones más amplio. Esta estrategia permite explorar de forma más eficiente el espacio de hiperparámetros y reducir los tiempos de cómputo sin sacrificar la calidad del modelo.
+Para la mayoría de los modelos se emplea el método Grid Search, que explora de manera 
+exhaustiva todas las combinaciones posibles de hiperparámetros definidos. Sin embargo, 
+en el caso de Random Forest, LightGBM y Perceptrón Multicapa MLP,  se utiliza Random 
+Search, ya que estos algoritmos requieren un mayor esfuerzo computacional durante su 
+entrenamiento, y tienen, en su definición de hiperparámetros un conjunto de 
+combinaciones más amplio. Esta estrategia permite explorar de forma más eficiente el 
+espacio de hiperparámetros y reducir los tiempos de cómputo sin sacrificar la calidad 
+del modelo.
 
 
-Cabe destacar que no fue necesario separar explícitamente el conjunto de datos en entrenamiento y validación, ya que se aplica la técnica de validación cruzada (cross-validation) al ejecutar la búsqueda de los hiperparámetros. La validación cruzada permite evaluar los modelos en múltiples particiones de los datos, y proporciona una estimación más confiable del rendimiento del modelo y una reducción  del riesgo de sesgos y sobreajustes asociados a una única división de entrenamiento y prueba. Los resultados de la búsqueda de hiperparámetros: parámetros óptimos para cada modelo y valor del área bajo la curva RoC, se observan en la Tabla~\ref{tab:modelosjsonp1}, la Tabla~\ref{tab:modelosjsonp2} y la Tabla~\ref{tab:modelosjsonp3}.  
+Cabe destacar que no fue necesario separar explícitamente el conjunto de datos en 
+entrenamiento y validación, ya que se aplica la técnica de validación cruzada 
+(cross-validation) al ejecutar la búsqueda de los hiperparámetros. La validación 
+cruzada permite evaluar los modelos en múltiples particiones de los datos, y 
+proporciona una estimación más confiable del rendimiento del modelo y una reducción 
+del riesgo de sesgos y sobreajustes asociados a una única división de entrenamiento y 
+prueba. Los resultados de la búsqueda de hiperparámetros: parámetros óptimos para cada 
+modelo y valor del área bajo la curva RoC, se observan en la 
+Tabla~\ref{tab:modelosjsonp1}, la Tabla~\ref{tab:modelosjsonp2} y la 
+Tabla~\ref{tab:modelosjsonp3}.  
 
 
-Una vez obtenidos los modelos optimizados, se procede a evaluarlos utilizando el conjunto de datos de prueba, con el propósito de estimar el desempeño de los modelos con datos no vistos durante el entrenamiento. Para esta evaluación se calcularon distintas métricas que permiten analizar el rendimiento desde diferentes perspectivas. 
+Una vez obtenidos los modelos optimizados, se procede a evaluarlos utilizando el 
+conjunto de datos de prueba, con el propósito de estimar el desempeño de los modelos 
+con datos no vistos durante el entrenamiento. Para esta evaluación se calcularon 
+distintas métricas que permiten analizar el rendimiento desde diferentes perspectivas. 
 
 
 \begin{table}[H]
@@ -1957,9 +2760,21 @@ K-NN & 0.9951 & 1.0000 & 0.9901 & 0.9950 & 0.9951 \\
 \end{table}
 
 
-Entre las métricas calculadas se incluyen la exactitud, que mide la proporción total de predicciones correctas; la precisión, que refleja la capacidad del modelo para identificar correctamente las observaciones positivas evitando falsos positivos; la sensibilidad (también llamada recall), que indica la capacidad para detectar la mayor cantidad de anomalías reales; y la métrica F1, que combina precisión y sensibilidad en un único valor armónico.
+Entre las métricas calculadas se incluyen la exactitud, que mide la proporción total de 
+predicciones correctas; la precisión, que refleja la capacidad del modelo para 
+identificar correctamente las observaciones positivas evitando falsos positivos; 
+la sensibilidad (también llamada recall), que indica la capacidad para detectar la 
+mayor cantidad de anomalías reales; y la métrica F1, que combina precisión y 
+sensibilidad en un único valor armónico.
 
-Adicionalmente, se calculó el área bajo la curva ROC (AUC-ROC), una métrica ampliamente utilizada en clasificación binaria que evalúa la capacidad del modelo para diferenciar entre clases positivas y negativas de manera independiente al umbral de decisión. Con este conjunto de métricas fue posible obtener una visión integral del rendimiento de los modelos y comparar su capacidad de generalización en la tarea de detección de anomalías. Los resultados de las métricas se observan en  la Tabla~\ref{tab:metricas_modelos}. 
+
+Adicionalmente, se calculó el área bajo la curva ROC (AUC-ROC), una métrica 
+ampliamente utilizada en clasificación binaria que evalúa la capacidad del modelo para 
+diferenciar entre clases positivas y negativas de manera independiente al umbral de 
+decisión. Con este conjunto de métricas fue posible obtener una visión integral del 
+rendimiento de los modelos y comparar su capacidad de generalización en la tarea de 
+detección de anomalías. Los resultados de las métricas se observan en  
+la Tabla~\ref{tab:metricas_modelos}. 
 
 
 
@@ -2001,29 +2816,62 @@ Adicionalmente, se calculó el área bajo la curva ROC (AUC-ROC), una métrica a
 \end{table}
 
 
-Una vez obtenidos los modelos optimizados, se procede a evaluarlos utilizando el conjunto de datos de prueba, con el propósito de estimar el desempeño de los modelos con datos no vistos durante el entrenamiento. Para esta evaluación se calcularon distintas métricas que permiten analizar el rendimiento desde diferentes perspectivas. 
+Una vez obtenidos los modelos optimizados, se procede a evaluarlos utilizando el 
+conjunto de datos de prueba, con el propósito de estimar el desempeño de los modelos 
+con datos no vistos durante el entrenamiento. Para esta evaluación se calcularon 
+distintas métricas que permiten analizar el rendimiento desde diferentes perspectivas. 
 
-Entre las métricas calculadas se incluyen la exactitud, que mide la proporción total de predicciones correctas; la precisión, que refleja la capacidad del modelo para identificar correctamente las observaciones positivas evitando falsos positivos; la sensibilidad (también llamada recall), que indica la capacidad para detectar la mayor cantidad de anomalías reales; y la métrica F1, que combina precisión y sensibilidad en un único valor armónico.
 
-Adicionalmente, se calculó el área bajo la curva ROC (AUC-ROC), una métrica ampliamente utilizada en clasificación binaria que evalúa la capacidad del modelo para diferenciar entre clases positivas y negativas de manera independiente al umbral de decisión. Con este conjunto de métricas fue posible obtener una visión integral del rendimiento de los modelos y comparar su capacidad de generalización en la tarea de detección de anomalías. Los resultados de las métricas se observan en  la Tabla~\ref{tab:matrixconff}. 
+Entre las métricas calculadas se incluyen la exactitud, que mide la proporción total 
+de predicciones correctas; la precisión, que refleja la capacidad del modelo para 
+identificar correctamente las observaciones positivas evitando falsos positivos; la 
+sensibilidad (también llamada recall), que indica la capacidad para detectar la mayor 
+cantidad de anomalías reales; y la métrica F1, que combina precisión y sensibilidad en 
+un único valor armónico.
 
 
+Adicionalmente, se calculó el área bajo la curva ROC (AUC-ROC), una métrica ampliamente 
+utilizada en clasificación binaria que evalúa la capacidad del modelo para diferenciar 
+entre clases positivas y negativas de manera independiente al umbral de decisión. 
+Con este conjunto de métricas fue posible obtener una visión integral del rendimiento 
+de los modelos y comparar su capacidad de generalización en la tarea de detección de 
+anomalías. Los resultados de las métricas se observan en  la Tabla~\ref{tab:matrixconff}. 
 
 
 \subsection{Interpretación de los modelos}
 
 
-Además de modelar los datos, los modelos de aprendizaje automático altamente interpretables permiten comprender mejor los datos y los fenómenos que representan. Los modelos se comportan como codificadores de conocimiento, capaces de resumir la información y los patrones ocultos en los datos. A través del proceso de entrenamiento, el modelo aprende a identificar relaciones complejas entre las características de entrada y a condensar esa información en una estructura matemática que permite predecir si se presenta o no una anomalía. 
+Además de modelar los datos, los modelos de aprendizaje automático altamente 
+interpretables permiten comprender mejor los datos y los fenómenos que representan. 
+Los modelos se comportan como codificadores de conocimiento, capaces de resumir la 
+información y los patrones ocultos en los datos. A través del proceso de entrenamiento, 
+el modelo aprende a identificar relaciones complejas entre las características de entrada 
+y a condensar esa información en una estructura matemática que permite predecir si se 
+presenta o no una anomalía. 
 
 
-Algoritmos como la regresión logística, los árboles de decisión y los algoritmos basados en Naive Bayes permiten visualizar y cuantificar de forma explícita la relación que existe entre las variables de entrada y las predicciones realizadas. Los pesos y parámetros que los modelos aprenden a partir del proceso de entrenamiento actúan como un mecanismo de síntesis de información del conjunto de datos de entrenamiento. 
+Algoritmos como la regresión logística, los árboles de decisión y los algoritmos basados 
+en Naive Bayes permiten visualizar y cuantificar de forma explícita la relación que 
+existe entre las variables de entrada y las predicciones realizadas. Los pesos y 
+parámetros que los modelos aprenden a partir del proceso de entrenamiento actúan como 
+un mecanismo de síntesis de información del conjunto de datos de entrenamiento. 
 
 \subsubsection{Modelo regresión logística.}
 
-Además de los resultados obtenidos por las métricas de rendimiento, la regresión logística ofrece información fácilmente interpretable a través de sus coeficientes. Gracias a las características seleccionadas están muy bien representadas por el modelo (con métricas cercanas al 99\%) y que éste es capaz de generalizar adecuadamente, se puede utilizar los pesos del modelo para hacer un análisis de variables relevantes e interpretación del modelo.  
+Además de los resultados obtenidos por las métricas de rendimiento, la regresión 
+logística ofrece información fácilmente interpretable a través de sus coeficientes. 
+Gracias a las características seleccionadas están muy bien representadas por el modelo 
+(con métricas cercanas al 99\%) y que éste es capaz de generalizar adecuadamente, 
+se puede utilizar los pesos del modelo para hacer un análisis de variables relevantes 
+e interpretación del modelo.  
 
 
-En el modelo de regresión logística, cada coeficiente representa la influencia de una característica sobre la probabilidad de que una observación sea clasificada como anomalía, la clase positiva. Aquellos coeficientes con un alto valor positivo incrementan la probabilidad de que la predicción corresponda a una anomalía, por el contrario una probabilidad muy negativa reduce dicha probabilidad. Los coeficientes del modelo de regresión logística se pueden observar en la Tabla 5. 
+En el modelo de regresión logística, cada coeficiente representa la influencia de una 
+característica sobre la probabilidad de que una observación sea clasificada como anomalía, 
+la clase positiva. Aquellos coeficientes con un alto valor positivo incrementan la 
+probabilidad de que la predicción corresponda a una anomalía, por el contrario una 
+probabilidad muy negativa reduce dicha probabilidad. Los coeficientes del modelo de 
+regresión logística se pueden observar en la Tabla 5. 
 
 
 \vspace{5mm}
@@ -2043,23 +2891,50 @@ thd: 2.7267589007265456
 \end{lstlisting}
 
 
-Gracias a los coeficientes del modelo, se puede inferir que variables como maximum, rms y std incrementan la probabilidad de anomalía, mientras que \lstinline|form_factor|, skewness y \lstinline|crest_factor| la disminuyen. 
-Estas son las variables que más le aportan al modelo y las que más se tienen en cuenta a la hora de definir si una observación es o no una anomalía. Si bien el resto de características incluidas en el modelo también tienen cierto impacto, su contribución relativa es menor, lo que sugiere que su relevancia en el proceso de predicción es secundaria
+Gracias a los coeficientes del modelo, se puede inferir que variables como maximum, rms 
+y std incrementan la probabilidad de anomalía, mientras que \lstinline|form_factor|, 
+skewness y \lstinline|crest_factor| la disminuyen. 
+Estas son las variables que más le aportan al modelo y las que más se tienen en cuenta 
+a la hora de definir si una observación es o no una anomalía. Si bien el resto de 
+características incluidas en el modelo también tienen cierto impacto, su contribución 
+relativa es menor, lo que sugiere que su relevancia en el proceso de predicción es 
+secundaria
 
 
-Los resultados anteriores permiten identificar qué variables físicas de este sistema son las más relevantes. De acuerdo con este modelo, una mayor amplitud en las vibraciones, reflejada en altos valores de maximum y rms, así como una mayor dispersión en los datos capturados, evidenciada en el std, constituyen los principales indicios de la presencia de anomalías. En términos prácticos, esto significa que cuando se experimenta con picos pronunciados o incrementos en la intensidad de las vibraciones, es más probable que esté presentando un comportamiento anómalo.
+Los resultados anteriores permiten identificar qué variables físicas de este sistema son 
+las más relevantes. De acuerdo con este modelo, una mayor amplitud en las vibraciones, 
+reflejada en altos valores de maximum y rms, así como una mayor dispersión en los datos 
+capturados, evidenciada en el std, constituyen los principales indicios de la presencia 
+de anomalías. En términos prácticos, esto significa que cuando se experimenta con picos 
+pronunciados o incrementos en la intensidad de las vibraciones, es más probable que esté 
+presentando un comportamiento anómalo.
 
 
-Por otro lado, variables como el \lstinline|form_factor|, el skewness y el \lstinline|crest_factor| actúan como factores de corrección, reduciendo la probabilidad de anomalía cuando presentan valores elevados, lo cual sugiere que ciertas formas de distribución y regularidad en las señales vibracionales son propias de un funcionamiento normal. 
+Por otro lado, variables como el \lstinline|form_factor|, el skewness y el 
+\lstinline|crest_factor| actúan como factores de corrección, reduciendo la probabilidad 
+de anomalía cuando presentan valores elevados, lo cual sugiere que ciertas formas de 
+distribución y regularidad en las señales vibracionales son propias de un funcionamiento 
+normal. 
 
 
 
 \subsubsection{Modelo árbol de decisión.}
 
-Los modelos basados en árboles de decisión son también fácilmente interpretables. El árbol de decisión entrenado muestra cómo ciertas características de los datos de entrada permiten distinguir entre condiciones normales y anomalías en el sistema. Las altas métricas obtenidas con este modelo confirman que las características extraídas de la señal capturan de manera efectiva los patrones distintivos entre el funcionamiento en condiciones normales y las anomalías del sistema.
+Los modelos basados en árboles de decisión son también fácilmente interpretables. 
+El árbol de decisión entrenado muestra cómo ciertas características de los datos de 
+entrada permiten distinguir entre condiciones normales y anomalías en el sistema. 
+Las altas métricas obtenidas con este modelo confirman que las características extraídas 
+de la señal capturan de manera efectiva los patrones distintivos entre el funcionamiento 
+en condiciones normales y las anomalías del sistema.
 
 
-Según el árbol de decisión resultante de la etapa de entrenamiento que se observa acontinuación, una de las variables con mayor peso en la clasificación es la desviación estándar (std), que aparece en los primeros niveles del árbol y actúa como un criterio principal de partición. Esta variable también aparece como criterio de partición en niveles inferiores. Esto refleja que la dispersión o variabilidad de la señal es un indicador clave para identificar anomalías, ya que valores altos de desviación suelen estar asociados a comportamientos irregulares o inestables en la dinámica del sistema.
+Según el árbol de decisión resultante de la etapa de entrenamiento que se observa 
+acontinuación, una de las variables con mayor peso en la clasificación es la desviación 
+estándar (std), que aparece en los primeros niveles del árbol y actúa como un criterio 
+principal de partición. Esta variable también aparece como criterio de partición en 
+niveles inferiores. Esto refleja que la dispersión o variabilidad de la señal es un 
+indicador clave para identificar anomalías, ya que valores altos de desviación suelen 
+estar asociados a comportamientos irregulares o inestables en la dinámica del sistema.
 
 \vspace{5mm}
 \begin{lstlisting}[language={}, basicstyle=\ttfamily\footnotesize\color{black}, frame=lines]
@@ -2091,17 +2966,28 @@ Según el árbol de decisión resultante de la etapa de entrenamiento que se obs
 \end{lstlisting}
 
 
-Otra variable relevante en este árbol de decisión es la frecuencia fundamental (f0), que se utiliza para refinar la clasificación dentro de las ramas donde la desviación estándar es baja. Esto sugiere que la distribución de energía en el espectro en frecuencia de la señal, y en particular la frecuencia dominante de la vibración, es un factor determinante a la hora de diferenciar entre señales en condiciones normales y en presencia de anomalías. 
+Otra variable relevante en este árbol de decisión es la frecuencia fundamental (f0), 
+que se utiliza para refinar la clasificación dentro de las ramas donde la desviación 
+estándar es baja. Esto sugiere que la distribución de energía en el espectro en 
+frecuencia de la señal, y en particular la frecuencia dominante de la vibración, es un 
+factor determinante a la hora de diferenciar entre señales en condiciones normales y en 
+presencia de anomalías. 
 
 
-Adicionalmente, otras variables como la media (mean), la asimetría (skewness), la curtosis (kurtosis) y la distorsión armónica total (THD) también hacen parte en las reglas de decisión, lo que confirma que la forma, la distribución de la señal y su contenido armónico aportan información valiosa para su clasificación.
+Adicionalmente, otras variables como la media (mean), la asimetría (skewness), la 
+curtosis (kurtosis) y la distorsión armónica total (THD) también hacen parte en las 
+reglas de decisión, lo que confirma que la forma, la distribución de la señal y su 
+contenido armónico aportan información valiosa para su clasificación.
 
 
 
 \subsubsection{Modelo naive bayes.}
 
-En primer lugar, las probabilidades a priori muestran que las clases están muy balanceadas, resultado de un correcto balance del conjunto de datos, las proporciones entre la clase positiva y negativas es casi igual. 
-El modelo Native Bayes también aporta información valiosa respecto a los patrones encontrados en los datos. La información que se obtuvo se muestra a continuación:  
+En primer lugar, las probabilidades a priori muestran que las clases están muy 
+balanceadas, resultado de un correcto balance del conjunto de datos, las proporciones 
+entre la clase positiva y negativas es casi igual. 
+El modelo Native Bayes también aporta información valiosa respecto a los patrones 
+encontrados en los datos. La información que se obtuvo se muestra a continuación:  
 
 
 \vspace{5mm}
@@ -2141,20 +3027,50 @@ Clase 1:
 
 
 
-Se observa además que las variables adquieren valores medios característicos en cada clase. Para la clase negativa (normal), la frecuencia fundamental (\lstinline|f0|) se centra alrededor de 259.6 Hz, mientras que en la clase positiva (anomalía) aumenta hasta aproximadamente 346.2 Hz. 
-Algo similar ocurre con variables como el factor de cresta (\lstinline|crest_factor|), que pasa de 3.28 en clase negativa a 4.60 en clase 1. Esto indica que los cambios en la frecuencia dominante de vibración y la  presencia de picos más pronunciados en la señal son características distintivas de las anomalías.
+Se observa además que las variables adquieren valores medios característicos en cada 
+clase. Para la clase negativa (normal), la frecuencia fundamental (\lstinline|f0|) se 
+centra alrededor de 259.6 Hz, mientras que en la clase positiva (anomalía) aumenta hasta 
+aproximadamente 346.2 Hz. 
+Algo similar ocurre con variables como el factor de cresta (\lstinline|crest_factor|), 
+que pasa de 3.28 en clase negativa a 4.60 en clase 1. Esto indica que los cambios en la 
+frecuencia dominante de vibración y la  presencia de picos más pronunciados en la señal 
+son características distintivas de las anomalías.
 
 
-Por otro lado, según los resultados del modelo, variables como maximun, rms y desviación stándard (\lstinline|std|) son relevantes para identificar comportamientos anómalos, puesto que mientras que en la clase negativa (normal) destacan valores más bajos de variables como el maximum (0.24), el rms (0.073) y la desviación estándar (0.069) en la clase positiva, estos parámetros no aparecen explícitamente. Además, diferencias otras variables como en el \lstinline|form_factor| y en la asimetría (\lstinline|skewness|) y kurtosis también aportan información sobre la forma de la distribución de la señal en cada caso.
+Por otro lado, según los resultados del modelo, variables como maximun, rms y desviación 
+stándard (\lstinline|std|) son relevantes para identificar comportamientos anómalos, 
+puesto que mientras que en la clase negativa (normal) destacan valores más bajos de 
+variables como el maximum (0.24), el rms (0.073) y la desviación estándar (0.069) en la 
+clase positiva, estos parámetros no aparecen explícitamente. Además, diferencias otras 
+variables como en el \lstinline|form_factor| y en la asimetría (\lstinline|skewness|) y 
+kurtosis también aportan información sobre la forma de la distribución de la señal en 
+cada caso.
 
 
-A pesar que la interpretación de los tres modelos, a primera vista, es diferente para algunas variables, la interpretación de los tres modelos se complementa de forma muy valiosa, porque cada uno aporta información desde una perspectiva distinta sobre el mismo problema de detección de anomalías. La regresión logística aporta claridad sobre las tendencias lineales entre las variables del modelo, los árboles de decisión destacan relaciones no lineales y reglas de decisión, y Naive Bayes proporciona una visión probabilística de las distribuciones de las variables. 
+A pesar que la interpretación de los tres modelos, a primera vista, es diferente para 
+algunas variables, la interpretación de los tres modelos se complementa de forma muy 
+valiosa, porque cada uno aporta información desde una perspectiva distinta sobre el 
+mismo problema de detección de anomalías. La regresión logística aporta claridad sobre 
+las tendencias lineales entre las variables del modelo, los árboles de decisión destacan 
+relaciones no lineales y reglas de decisión, y Naive Bayes proporciona una visión 
+probabilística de las distribuciones de las variables. 
 
 
-La Regresión Logística muestra que valores altos de maximum, RMS y std aumentan la probabilidad de anomalía, mientras que variables como form factor, skewness y crest factor la disminuyen.  El Árbol de Decisión, revela interacciones entre variables como la desviación estándar (\lstinline|std|), la frecuencia fundamental (\lstinline|f0|) y la kurtosis a la hora de realizar predicciones de los datos. Esto complementa la regresión logística mostrando no solo qué variables son relevantes, sino también cómo interactúan entre sí para determinar una anomalía.
+La Regresión Logística muestra que valores altos de maximum, RMS y std aumentan la 
+probabilidad de anomalía, mientras que variables como form factor, skewness y crest 
+factor la disminuyen.  El Árbol de Decisión, revela interacciones entre variables como 
+la desviación estándar (\lstinline|std|), la frecuencia fundamental (\lstinline|f0|) y 
+la kurtosis a la hora de realizar predicciones de los datos. Esto complementa la 
+regresión logística mostrando no solo qué variables son relevantes, sino también cómo 
+interactúan entre sí para determinar una anomalía.
 
 
-Por último, el Naive Bayes ofrece una perspectiva probabilística sencilla, destacando cómo cambian los valores promedio de ciertas variables entre clases. El modelo muestra que las anomalías (clase 1) se caracterizan principalmente por frecuencias fundamentales más altas, factor de cresta mayores y diferencias en la forma estadística de la señal, mientras que las condiciones normales se asocian con valores más bajos de amplitud, dispersión y energía de la vibración. 
+Por último, el Naive Bayes ofrece una perspectiva probabilística sencilla, destacando 
+cómo cambian los valores promedio de ciertas variables entre clases. 
+El modelo muestra que las anomalías (clase 1) se caracterizan principalmente por 
+frecuencias fundamentales más altas, factor de cresta mayores y diferencias en la forma 
+estadística de la señal, mientras que las condiciones normales se asocian con valores 
+más bajos de amplitud, dispersión y energía de la vibración. 
 
 
 
@@ -2167,7 +3083,8 @@ Los modelos entrenados tienen muy buenas métricas de rendimiento.
 Los resultados obtenidos en la evaluación de los diferentes modelos de aprendizaje 
 automático aplicados a la detección de anomalías muestran un desempeño sobresaliente 
 en todas las métricas. 
-Al revisar los valores de la Tabla~\ref{tab:metricas_modelos}, se observa que variables como la exactitud, 
+Al revisar los valores de la Tabla~\ref{tab:metricas_modelos}, se observa que variables 
+como la exactitud, 
 la precisión, la sensibilidad, el F1-score y el área bajo la curva ROC alcanzan 
 valores muy altos, superiores en la mayoría de los casos al 0.99. Esto refleja que los 
 errores cometidos por los modelos son mínimos, los modelos logran una detección 
@@ -2251,7 +3168,8 @@ eficiencia, precisión e interpretabilidad.
 
 
 Finalmente, gracias al uso de modelos con mayor interpretabilidad, se identificó que 
-variables como los valores pico (maximum), la desviación estándar ($std$), el valor RMS ($rms$),
+variables como los valores pico (maximum), la desviación estándar ($std$), el valor RMS 
+($rms$),
 la frecuencia fundamental ($f0$) y la distorsión armónica total ($tdh$) son las que más 
 aportan a la clasificación de una observación como anomalía. Este hallazgo  además de 
 validar la calidad del modelo, proporciona información valiosa para la toma de 
@@ -2327,24 +3245,3 @@ mantenimiento predictivo más preciso y especializado.
 
 
 \end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
