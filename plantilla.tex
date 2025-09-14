@@ -24,8 +24,13 @@
 %\makeatother
 
 
+% para tablas
 \usepackage{tabularx}
 \usepackage{float} % en el preámbulo
+\usepackage[font=small,labelfont=bf,labelsep=newline]{caption}
+\captionsetup{justification=raggedright, singlelinecheck=false}
+
+
 
 \usepackage{xcolor}
 \usepackage{listings}
@@ -335,71 +340,40 @@ reales.
 \section{Estructura de la memoria}
 
 
-El presente trabajo tiene la siguiente estructura:
+En el Capítulo 1, se brinda una breve introducción del presente trabajo. 
+Se expone la motivación y se plantea con claridad el problema de investigación.
+Mientras tanto, en el Capítulo 2, se realiza una revisión exhaustiva del estado del arte
+y un barrido de las diferentes técnicas que están relacionadas con la detección 
+de anomalías y se examinan los enfoques más relevantes utilizados en la literatura.
 
 
-\textbf{Capítulo 1:} Se brinda una breve introducción del presente trabajo. 
-Se expone la motivación que ha impulsado este desarrollo y por qué es importante 
-profundizar en la detección de anomalías. 
-Además, se plantea con claridad el problema de investigación, formulado en términos 
-precisos. 
-Finalmente, se describe la estructura del presente documento, explicando de forma clara 
-cómo está dividido el contenido del estudio y qué se espera encontrar en cada capítulo.
-
-
-\textbf{Capítulo 2:} Se realiza una revisión exhaustiva del estado del arte, también se 
-realiza un barrido de las diferentes técnicas que están relacionadas con la detección 
-de anomalías. 
-En ella se examinan los enfoques más relevantes utilizados en la literatura, abarcando 
-desde una perspectiva tradicional así como enfoques más modernos basados en inteligencia 
-artificial y aprendizaje automático. 
-Asimismo, se analizan los resultados que han obtenido otros investigadores en este campo, 
-junto con las estrategias y métodos implementados.
-
-
-\textbf{Capítulo 3:} Se exponen los requerimientos que guían el diseño e implementación 
+En el Capítulo 3, se exponen los requerimientos que guían el diseño e implementación 
 del presente trabajo.  En estos requerimientos se establecen tanto las condiciones mínimas 
-que deben cumplirse para obtener los objetivos propuestos, como las restricciones y 
-limitaciones que condicionan el proceso metodológico.
-
-
-\textbf{Capítulo 4:} Se presentan los objetivos generales y específicos que guían cada 
+que deben cumplirse para obtener los objetivos propuestos.
+En el Capítulo 4, se presentan esos objetivos: generales y específicos que guían cada 
 etapa de desarrollo del presente estudio. 
 El objetivo general enuncia de manera precisa la finalidad del estudio y su impacto 
 esperado. 
 Por otro lado, los objetivos específicos desglosan dicho propósito en metas alcanzables 
 y medibles que estructuran el camino metodológico a seguir. 
-Esta sección es fundamental, ya que permite al lector entender qué se espera lograr y 
-cómo se evaluará el cumplimiento de las metas.
 
 
-\textbf{Capítulo 5:} Se describe detalladamente la metodología adoptada para llevar a 
+En el Capítulo 5, se describe detalladamente la metodología adoptada para llevar a 
 cabo la investigación. 
 Se explican los pasos y procedimientos que se seguirán, desde la recolección de los 
 datos y su procesamiento, hasta la implementación de los modelos y técnicas 
 seleccionadas para la detección de anomalías. 
-Esta sección incluye el conjunto de herramientas y tecnologías utilizadas, así como los 
-criterios de validación y evaluación de los modelos a implementar. 
-La metodología constituye el puente entre los objetivos planteados y los resultados que
-se desean obtener.
-
-
-\textbf{Capítulo 6:} Se presentan los resultados obtenidos tras la aplicación de la 
+En el capítulo 6, se presentan los resultados obtenidos tras la aplicación de la 
 metodología previamente descrita. 
 Se analizan de forma crítica y detallada los datos generados, utilizando 
 representaciones visuales y métricas pertinentes que faciliten su comprensión. 
-Además, se comparan los resultados con estudios previos y se realizan las respectivas 
-interpretaciones, lo que permite identificar patrones, tendencias y posibles 
-explicaciones para los hallazgos obtenidos. 
 
 
-\textbf{Capítulo 7:} Se presentan conclusiones derivadas del estudio, las cuales 
-sintetizan los principales hallazgos y resultados obtenidos y su relevancia en el 
-contexto del problema investigado. 
-Se reflexiona sobre el cumplimiento de los objetivos y la metodología planteada. 
-Además, se identifican las oportunidades de mejora, reconociendo aquellos aspectos 
-que podrían explorarse con mayor profundidad, y dan espacio a diversas líneas de 
-investigación futura que permitan extender y enriquecer el presente trabajo.
+Finalmente en el Capítulo 7, se presentan conclusiones derivadas del estudio, 
+las cuales sintetizan los principales hallazgos y resultados obtenidos y su relevancia 
+en el contexto del problema investigado. Se reflexiona sobre el cumplimiento de los 
+objetivos y la metodología planteada, y se identifican las oportunidades de mejora,
+y da espacio a diversas líneas de investigación futuras.
 
 
 \chapter{Contexto y Estado del Arte}
@@ -622,9 +596,10 @@ se aprecia los puntos de cambios calulados para una señal.
 
 
 \begin{figure}[h]
+	\caption{Puntos de cambio detectados y división de la señal segmentos \protect\cite{contreras2024cusum}}
     \centering
     \includegraphics[width=1.0\textwidth]{media/puntos-cambios-segmenteos.png}
-    \caption{Puntos de cambio detectados y división de la señal segmentos  \protect\cite{contreras2024cusum} }
+    
     \label{fig:figPuntosCambiosSegmentos}
 \end{figure}
 
@@ -746,13 +721,13 @@ datos en un hiperplano.
 
 
 \begin{figure}[h]
+    \caption{Clasificación de datos en un espacio bidimensional. \protect\cite{suarez2014svm}}
     \centering
     \includegraphics[width=1.0\textwidth]{media/svm-dm.png}
-    \caption{Clasificación de datos en un espacio bidimensional. En (a) se observan 
-    los datos separados a través de un hiperplano óptimo, mientras que en (b) se muestra 
-    los posibles hiperplanos que se pueden aplicar para la separación de los datos.  
-    \protect\cite{suarez2014svm} }
     \label{fig:figSVM}
+	\parbox{\textwidth}{\footnotesize \textit{Nota:} En (a) se observan 
+    los datos separados a través de un hiperplano óptimo, mientras que en (b) se muestra 
+    los posibles hiperplanos que se pueden aplicar para la separación de los datos.}
 \end{figure}
 
 
@@ -766,10 +741,9 @@ permitiendo manejar problemas no linealmente separables.
 
 
 \begin{figure}[h]
+	\caption{Detección de anomalías en datos de vuelo utilizando One-Class SVM. \protect\cite{qin2022flight}}
     \centering
     \includegraphics[width=1.0\textwidth]{media/svm-kun.png}
-    \caption{Detección de anomalías en datos de vuelo utilizando One-Class SVM.  
-    \protect\cite{qin2022flight} }
     \label{fig:figSVMflight}
 \end{figure}
 
@@ -806,9 +780,9 @@ permita elegir los puntos de vecinos más cercanos, la cual pueda operar de mane
 efectiva con la gran parte de las muestras de entrenamiento. \cite{zhang2022influence}
 
 \begin{figure}[h]
+    \caption{Detección de fallos usando FD‑kNN y PC‑kNN. \protect\cite{zhou2015faultdetection}}
     \centering
     \includegraphics[width=1.0\textwidth]{media/knn-zhou.png}
-    \caption{Detección de fallos usando FD‑kNN y PC‑kNN.  \protect\cite{zhou2015faultdetection} }
     \label{fig:figKnnZhou}
 \end{figure}
 
@@ -874,11 +848,13 @@ adaptabilidad y excelente desempeño para solucionar problemas complicados de
 clasificación y regresión. 
 
 \begin{figure}[h]
+    \caption{Visualización del algoritmo XGBoost. Ensamble de árboles de decisión.
+    \protect\cite{salman2024rf}}
     \centering
     \includegraphics[width=1.0\textwidth]{media/xgboost-salman.png}
-    \caption{Visualización del algoritmo XGBoost. Ensamble de árboles de decisión. 
-    \protect\cite{salman2024rf} }
     \label{fig:figXGBoostSalman}
+	\parbox{\textwidth}{\footnotesize \textit{Nota:} Los árboles 1, 2 y 3 se encuentran 
+	ensamblados. Donde \textit{Y} corresponde a la clase de salida.}
 \end{figure}
 
 
@@ -968,10 +944,10 @@ y detección de anomalías, sin sacrificar eficiencia computacional.
 \cite{liu2021isoletionforest}.
 
 \begin{figure}[h]
+	\caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos 
+    normalmente distribuidos.  \protect\cite{liu2021isoletionforest} }
     \centering
     \includegraphics[width=1.0\textwidth]{media/liu-isolation-forest.png}
-    \caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos 
-    normalmente distribuidos.  \protect\cite{liu2021isoletionforest} }
     \label{fig:figIsolationForest}
 \end{figure}
 
@@ -1014,10 +990,10 @@ artificial, el procesamiento digital de señales y la detección de fallos.
 
 
 \begin{figure}[h]
-    \centering
-    \includegraphics[width=1.0\textwidth]{media/neuona-artificial.png}
     \caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos 
     normalmente distribuidos.  \protect\cite{fernandez2013redes} }
+    \centering
+    \includegraphics[width=1.0\textwidth]{media/neuona-artificial.png}
     \label{fig:figNauronaArtificial}
 \end{figure}
 
@@ -1055,9 +1031,9 @@ relevancia como un modelo fundamental y eficaz. \cite{larranaga2021redes}
 
 
 \begin{figure}[h]
+    \caption{Sistema global de proceso de una red neuronal. \protect\cite{larranaga2021redes}}
     \centering
     \includegraphics[width=1.0\textwidth]{media/sistema-neuronal.png}
-    \caption{Sistema global de proceso de una red neuronal.  \protect\cite{larranaga2021redes} }
     \label{fig:figSistemaNeuronal}
 \end{figure}
 
@@ -1118,9 +1094,9 @@ rigor para controlar falsos positivos. \cite{ameijeiras2021algoritmos}.
 
 
 \begin{figure}[h]
+    \caption{Architecture of LeNet-5  \protect\cite{Zhao2024review}}
     \centering
     \includegraphics[width=1.0\textwidth]{media/lenet-o5.png}
-    \caption{Architecture of LeNet-5  \protect\cite{Zhao2024review}}
     \label{fig:figLenet}
 \end{figure}
 
@@ -1155,9 +1131,10 @@ transición hacia sistemas industriales más resilientes, inteligentes y sosteni
 
 
 \begin{figure}[h]
+    \caption{Crecimiento del mercado de mantenimiento predictivo de 2022 a 2030  
+    \protect\cite{worktrek2023predictive}}
     \centering
     \includegraphics[width=0.4\textwidth]{media/worktrek.png}
-    \caption{Crecimiento del mercado de mantenimiento predictivo de 2022 a 2030  \protect\cite{worktrek2023predictive}}
     \label{fig:figWorkTrek}
 \end{figure}
 
@@ -1349,9 +1326,9 @@ CRISP-D.
 
 
 \begin{figure}[h]
+    \caption{Fases de la metodología {CRISP-DM}. \protect\cite{chapman2000crisp}}
     \centering
     \includegraphics[width=0.6\textwidth]{media/crisp-dm.png}
-    \caption{Fases de la metodología {CRISP-DM}.  \protect\cite{chapman2000crisp} }
     \label{fig:figCrispdm}
 \end{figure}
 
@@ -1500,9 +1477,9 @@ asegura que el modelo seleccionado sea aquel que genere los mejores resultados, 
 tanto el sobreajuste como conclusiones sesgadas por un mal diseño experimental.
 
 \begin{figure}[h]
+    \caption{Arquitectura y componentes propuestos}
     \centering
     \includegraphics[width=1\textwidth]{media/arquitecura.png}
-    \caption{Arquitectura y componentes propuestos  }
     \label{fig:figArchitecture}
 \end{figure}
 
@@ -1596,11 +1573,17 @@ técnicas adicionales de re-muestreo para equilibrar las clases.
 
 
 \begin{figure}[h]
+	\caption{Gráfica de una submuestra de las series de tiempo que corresponden a datos 
+    en condiciones normales}    
     \centering
     \includegraphics[width=0.8\textwidth]{media/dataset/normal-series.png}
-    \caption{Gráfica de una submuestra de las series de tiempo que corresponden a datos 
-    en condiciones normales para RPM iguales a 1772 (superior) y 1730 (inferior). }
     \label{fig:figNormalSeries}
+    % para RPM iguales a 1772 (superior) y 1730 (inferior).}
+    \parbox{\textwidth}{\footnotesize \textit{Nota:} La gráfica superior corresponde a
+    datos capturados a 1772 rpm, mientras que la gráfica inferior corresponde a 
+    datos capturados a 1730 rpm. En ambos casos se obtuvo mediciones de los acelerómetros
+    \textit{Drive end} (DE) y \textit{Fan end} FE.}
+
 \end{figure}
 
 
@@ -1614,14 +1597,18 @@ presencia de defectos respectivamente.
 
 
 \begin{figure}[h]
+    \caption{Gráfica de una submuestra de la serie de tiempo que corresponden a datos en 
+    condiciones anómalas}
     \centering
     \includegraphics[width=0.8\textwidth]{media/dataset/anomaly-series.png}
-    \caption{Gráfica de una submuestra de la serie tiempo que corresponden a datos en 
-    condiciones anómalas a 1750 RPM con el rodamiento cargado en la condición B un 
-    defecto de 0.021 pulgadas en el lado del accionamiento (superior) y a 1772 RPM con 
-    el rodamiento cargado en la condición B un defecto de 0.014 pulgadas en el lado del 
-    accionamiento (inferior). }
     \label{fig:figAnomalySeries}
+    \parbox{\textwidth}{\footnotesize \textit{Nota:} La gráfica superior corresponde a datos
+    capturado a 1750 RPM con el rodamiento cargado en la condición B un 
+    defecto de 0.021 pulgadas en el lado del accionamiento, mientras que la gráfica inferior
+    corresponde a datos capturados a 1772 RPM con 
+    el rodamiento cargado en la condición B un defecto de 0.014 pulgadas en el lado del 
+    accionamiento. Note que la gráfica superior contiene mediciones del acelerómetro 
+    \textit{Base Engine} (BA). }
 \end{figure}
 
 
@@ -1634,6 +1621,7 @@ Tabla~\ref{tab:tab1keys}.
 
 
 \begin{table}[h]
+\caption{\textit{Presencia de las mediciones de los acelerómetros DE, FE y BA, en cada tipo de archivo.}}
 \centering
 \footnotesize
 \renewcommand{\arraystretch}{1.5} % Espaciado entre filas
@@ -1650,8 +1638,10 @@ Tabla~\ref{tab:tab1keys}.
     Archivo con datos en presencia de anomalías & 157 & 157 & 149 & 97 \\
     \hline
 \end{tabularx}
-\caption{Presencia de las mediciones de los acelerómetros DE, FE y BA, en cada tipo de archivo.}
+
 \label{tab:tab1keys}
+\vspace{2mm}
+\parbox{\textwidth}{\footnotesize \textit{Nota:} Los valores corresponden a la cantidad de archivos disponibles en el dataset original.}
 \end{table}
 
 
@@ -1666,6 +1656,7 @@ en mayor medida BA.
 
 
 \begin{table}[h]
+\caption{Estadíaticas de los parámetros de los datos originales.}
 \centering
 \renewcommand{\arraystretch}{1.2}
 \footnotesize
@@ -1686,8 +1677,9 @@ en mayor medida BA.
     \textbf{rpm} & 411 & 1762.50 & 25.08 & 1730.00 & 1750.00 & 1772.00 & 1797.00 & 1797.00 \\
     \hline
 \end{tabularx}
-\caption{Parámetros de los datos de entrada.}
 \label{tab:stats}
+\vspace{2mm}
+\parbox{\textwidth}{\footnotesize \textit{Nota:} Las columnas contienen las estadísticas calculadas mientras que las filas contienen los parámetros que se obtuvieron los de los datos originales.}
 \end{table}
 
 
@@ -1702,9 +1694,9 @@ los estadísticos de los parámetros calculados.
 
 
 \begin{figure}[h]
+    \caption{Histograma de la distribución de cada uno de los parámetros calculados para cada serie. }
     \centering
     \includegraphics[width=1\textwidth]{media/dataset/histogram-01.png}
-    \caption{Histograma de la distribución de cada uno de los parámetros calculados para cada serie. }
     \label{fig:figHistogram01}
 \end{figure}
 
@@ -1735,9 +1727,9 @@ observa en la Figura~\ref{fig:figCorrMat}.
 
 
 \begin{figure}[h]
+    \caption{Matriz de correlación de los parámetros calculados en la exploración de los datos. }
     \centering
     \includegraphics[width=0.8\textwidth]{media/dataset/corr-mat.png}
-    \caption{Matriz de correlación de los parámetros calculados en la exploración de los datos. }
     \label{fig:figCorrMat}
 \end{figure}
 
@@ -1766,9 +1758,9 @@ produzcan redundancia en la información. \cite{Alvarez2023}
 
 
 \begin{figure}[h]
+    \caption{Correlación entre la variable objetivo y el resto de parámetros.}
     \centering
     \includegraphics[width=1\textwidth]{media/dataset/corr-mat-target.png}
-    \caption{Correlación entre la variable objetivo y el resto de parámetros.}
     \label{fig:figCorrMatTarget}
 \end{figure}
 
@@ -1804,9 +1796,9 @@ de entrenamiento se visualizan en la Figura~\ref{fig:figGenerationDataset}.
 
 
 \begin{figure}[h]
+    \caption{Etapas para la construcción del dataset de entrenamiento.}
     \centering
     \includegraphics[width=0.9\textwidth]{media/generacion-dataset.drawio.png}
-    \caption{Etapas para la construcción del dataset de entrenamiento.}
     \label{fig:figGenerationDataset}
 \end{figure}
 
@@ -1892,17 +1884,10 @@ comparar los modelos, sin participar en el proceso de entrenamiento. La divisió
 escogida para este experimento es 80\% para entrenamiento y 20\% para prueba. 
 
 
+\vspace{5mm}
 \begin{lstlisting}
-from sklearn.model_selection import train_test_split
-
 df_full_train, df_test = train_test_split(
     df, test_size=0.2, random_state=RANDOM_SEED)
-
-df_full_train = df_full_train.reset_index(drop=True)
-df_test = df_test.reset_index(drop=True)
-
-y_full_train = (df_full_train[TARGET_COLUMN]).astype('int').values
-y_test = (df_test[TARGET_COLUMN]).astype('int').values
 \end{lstlisting}
 
 
@@ -1925,9 +1910,9 @@ de cada modelo entrenado.
 
 
 \begin{figure}[h]
+    \caption{Matriz de confusión de los modelos calculada con los datos de prueba.}
     \centering
     \includegraphics[width=0.6\textwidth]{media/matrix-confusión.drawio.png}
-    \caption{Matriz de confusión de los modelos calculada con los datos de prueba.}
     \label{fig:figMatrixConfusion}
 \end{figure}
 
@@ -2041,11 +2026,6 @@ justifican su elección como modelo de clasificación.
 
 \vspace{5mm}
 \begin{lstlisting}
-from sklearn.linear_model import LogisticRegression
-
-# -------------------------------------------------------------------
-# Definicion de parametros para Logistic Regression
-# -------------------------------------------------------------------
 logistic_regression_params = {
     'dict_vectorizer__sparse': [False],
     'logistic_regression__penalty': ['l2', 'l1', 'elasticnet', None ],
@@ -2053,14 +2033,6 @@ logistic_regression_params = {
     'logistic_regression__fit_intercept': [True, False],
     'logistic_regression__solver': ['lbfgs']
 }
-
-# -------------------------------------------------------------------
-# Pipeline con DictVectorizer + LogisticRegression
-# -------------------------------------------------------------------
-logistic_regression_pipeline = Pipeline([
-    ('dict_vectorizer', DictVectorizer()),
-    ('logistic_regression', LogisticRegression(max_iter=1000))
-])
 \end{lstlisting}
 
 
@@ -2087,23 +2059,10 @@ entradas y las clases del problema.
 
 \vspace{5mm}
 \begin{lstlisting}
-from sklearn.naive_bayes import GaussianNB
-
-# -------------------------------------------------------------------
-# Definicion de parametros para Naive Bayes
-# -------------------------------------------------------------------
 naive_bayes_params = {
     'dict_vectorizer__sparse': [False],
     'naive_bayes__var_smoothing': [1e-9, 1e-8, 1e-7, 1e-6]
 }
-
-# -------------------------------------------------------------------
-# Pipeline con DictVectorizer + GaussianNB
-# -------------------------------------------------------------------
-naive_bayes_pipeline = Pipeline([
-    ('dict_vectorizer', DictVectorizer()),
-    ('naive_bayes', GaussianNB())
-])
 \end{lstlisting}
 
 
@@ -2126,11 +2085,6 @@ para orientar futuras etapas de análisis o recolección de información.
 
 \vspace{5mm}
 \begin{lstlisting}
-from sklearn.tree import DecisionTreeClassifier
-
-# -------------------------------------------------------------------
-# Definicion de parametros para Decision Tree
-# -------------------------------------------------------------------
 decision_tree_params = {
     'dict_vectorizer__sparse': [False],
     'decision_tree__criterion': ['gini', 'entropy', 'log_loss'],
@@ -2138,14 +2092,6 @@ decision_tree_params = {
     'decision_tree__min_samples_split': [2, 5, 10],
     'decision_tree__min_samples_leaf': [1, 2, 5]
 }
-
-# -------------------------------------------------------------------
-# Pipeline con DictVectorizer + DecisionTreeClassifier
-# -------------------------------------------------------------------
-decision_tree_pipeline = Pipeline([
-    ('dict_vectorizer', DictVectorizer()),
-    ('decision_tree', DecisionTreeClassifier(random_state=42))
-])
 \end{lstlisting}
 
 Así como a los modelos anteriores, también se aplica optimización de hiperparámetros 
@@ -2170,11 +2116,6 @@ entrenamiento.
 
 \vspace{5mm}
 \begin{lstlisting}
-from sklearn.ensemble import RandomForestClassifier
-
-# -------------------------------------------------------------------
-# Definicion de parametros para Random Forest
-# -------------------------------------------------------------------
 random_forest_params = {
     'dict_vectorizer__sparse': [False],
     'random_forest__n_estimators': [100, 200, 500],   
@@ -2184,14 +2125,6 @@ random_forest_params = {
     'random_forest__min_samples_leaf': [1, 2, 5],
     'random_forest__bootstrap': [True, False]
 }
-
-# -------------------------------------------------------------------
-# Pipeline con DictVectorizer + RandomForestClassifier
-# -------------------------------------------------------------------
-random_forest_pipeline = Pipeline([
-    ('dict_vectorizer', DictVectorizer()),
-    ('random_forest', RandomForestClassifier(random_state=42, n_jobs=-1))
-])
 \end{lstlisting}
 
 La optimización de hiperparámetros es una etapa crucial en el proceso de construcción 
@@ -2217,11 +2150,6 @@ que maximizan la capacidad predictiva del modelo.
 
 \vspace{5mm}
 \begin{lstlisting}
-from catboost import CatBoostClassifier
-
-# -------------------------------------------------------------------
-# Definicion de parametros para CatBoost
-# -------------------------------------------------------------------
 catboost_params = {
     'dict_vectorizer__sparse': [False],
     'catboost__iterations': [100, 200],
@@ -2231,14 +2159,6 @@ catboost_params = {
     'catboost__border_count': [32, 64],
     'catboost__verbose': [False]
 }
-
-# -------------------------------------------------------------------
-# Pipeline con DictVectorizer + CatBoost
-# -------------------------------------------------------------------
-catboost_pipeline = Pipeline([
-    ('dict_vectorizer', DictVectorizer()),
-    ('catboost', CatBoostClassifier(random_state=RANDOM_SEED))
-])
 \end{lstlisting}
 
 
@@ -2253,11 +2173,6 @@ en el mundo real.
 
 \vspace{5mm}
 \begin{lstlisting}
-import xgboost as xgb
-
-# -------------------------------------------------------------------
-# Definicion de parametros para XGBoost
-# -------------------------------------------------------------------
 xgb_params = {
     'dict_vectorizer__sparse': [False],
     'xgboost__max_depth': [3, 5, 7],
@@ -2268,14 +2183,6 @@ xgb_params = {
     'xgboost__colsample_bytree': [0.8, 1.0],
     'xgboost__objective': ['binary:logistic']
 }
-
-# -------------------------------------------------------------------
-# Pipeline con DictVectorizer + XGBoost
-# -------------------------------------------------------------------
-xgb_pipeline = Pipeline([
-    ('dict_vectorizer', DictVectorizer()),
-    ('xgboost', xgb.XGBClassifier(random_state=RANDOM_SEED))
-])
 \end{lstlisting}
 
 Para alcanzar un desempeño óptimo, se le aplica un proceso de optimización de 
@@ -2297,11 +2204,6 @@ es que ofrece un muy buen rendimiento en términos de precisión y consumo de me
 
 \vspace{5mm}
 \begin{lstlisting}
-from lightgbm import LGBMClassifier
-
-# -------------------------------------------------------------------
-# Definicion de parametros para LightGBM
-# -------------------------------------------------------------------
 lgbm_params = {
     'dict_vectorizer__sparse': [False],
     'lightgbm__n_estimators': [100, 200],
@@ -2316,19 +2218,6 @@ lgbm_params = {
     'lightgbm__reg_lambda': [0.0, 0.1],  
     'lightgbm__verbose': [-1]  
 }
-
-# -------------------------------------------------------------------
-# Pipeline con DictVectorizer + LightGBM
-# -------------------------------------------------------------------
-lgbm_pipeline = Pipeline([
-    ('dict_vectorizer', DictVectorizer()),
-    ('lightgbm', LGBMClassifier(
-        random_state=RANDOM_SEED,
-        objective='binary',
-        metric='auc',
-        boosting_type='gbdt'
-    ))
-])
 \end{lstlisting}
 
 Para mejorar el desempeño de este modelo, se lleva a cabo una optimización de 
@@ -2357,11 +2246,6 @@ crudos.
 
 \vspace{5mm}
 \begin{lstlisting}
-from sklearn.neural_network import MLPClassifier
-
-# -------------------------------------------------------------------
-# Definicion de parametros para MLPClassifier
-# -------------------------------------------------------------------
 mlp_classifier_params = {
     'dict_vectorizer__sparse': [False],
     'mlp_classifier__hidden_layer_sizes': [(32,), (64,), (128,)],
@@ -2374,14 +2258,6 @@ mlp_classifier_params = {
     'mlp_classifier__early_stopping': [True, False],
     'mlp_classifier__validation_fraction': [0.2, 0.5]
 }
-
-# -------------------------------------------------------------------
-# Pipeline con DictVectorizer + MLPClassifier
-# -------------------------------------------------------------------
-mlp_classifier_pipeline = Pipeline([
-    ('dict_vectorizer', DictVectorizer()),
-    ('mlp_classifier', MLPClassifier(random_state=RANDOM_SEED))
-])
 \end{lstlisting}
 
 Al igual que los modelos anteriores, a este modelo se le aplica un proceso de 
@@ -2406,12 +2282,6 @@ funciones kernel para proyectar los datos en espacios de mayor dimensión.
 
 \vspace{5mm}
 \begin{lstlisting}
-from sklearn.svm import SVC
-from sklearn.preprocessing import StandardScaler
-
-# -------------------------------------------------------------------
-# Definicion de parametros para SVM
-# -------------------------------------------------------------------
 svm_params = {
     'dict_vectorizer__sparse': [False],
     'svm__C': [0.1, 1, 10],                  
@@ -2420,15 +2290,6 @@ svm_params = {
     'svm__degree': [2, 3, 4],                
     'svm__probability': [True]               
 }
-
-# -------------------------------------------------------------------
-# Pipeline con DictVectorizer + StandardScaler + SVM
-# -------------------------------------------------------------------
-svm_pipeline = Pipeline([
-    ('dict_vectorizer', DictVectorizer()),
-    ('scaler', StandardScaler(with_mean=False)),  
-    ('svm', SVC(random_state=RANDOM_SEED))
-])
 \end{lstlisting}
 
 
@@ -2475,12 +2336,6 @@ Euclídea (\lstinline|p=2|).
 
 \vspace{5mm}
 \begin{lstlisting}
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.preprocessing import StandardScaler
-
-# -------------------------------------------------------------------
-# Definicion de parametros para KNN
-# -------------------------------------------------------------------
 knn_params = {
     'dict_vectorizer__sparse': [False],
     'knn__n_neighbors': [3, 5, 7, 9, 11],     
@@ -2488,15 +2343,6 @@ knn_params = {
     'knn__metric': ['euclidean', 'manhattan', 'minkowski'],  
     'knn__p': [1, 2]  
 }
-
-# -------------------------------------------------------------------
-# Pipeline con DictVectorizer + StandardScaler + KNN
-# -------------------------------------------------------------------
-knn_pipeline = Pipeline([
-    ('dict_vectorizer', DictVectorizer()),
-    ('scaler', StandardScaler(with_mean=False)),  
-    ('knn', KNeighborsClassifier())
-])
 \end{lstlisting}
 
 
@@ -2504,6 +2350,7 @@ knn_pipeline = Pipeline([
 
 
 \begin{table}[h]
+\caption{Modelos evaluados, parámetros óptimos  y desempeño en validación. Parte I.}
 \centering
 \renewcommand{\arraystretch}{1.2}
 \scriptsize % 🔹 Reduce el tamaño de fuente
@@ -2572,7 +2419,6 @@ knn_pipeline = Pipeline([
     \hline
 \end{tabular}
 }
-\caption{Modelos evaluados, parámetros óptimos  y desempeño en validación. Parte I.}
 \label{tab:modelosjsonp1}
 \end{table}
 
@@ -2585,6 +2431,7 @@ rendimiento.
 
 
 \begin{table}[h]
+\caption{Modelos evaluados, parámetros óptimos y desempeño en validación. Parte II.}
 \centering
 \renewcommand{\arraystretch}{1.2}
 \scriptsize % 🔹 Reduce el tamaño de fuente
@@ -2640,7 +2487,6 @@ rendimiento.
     \hline
 \end{tabular}
 }
-\caption{Modelos evaluados, parámetros óptimos y desempeño en validación. Parte II.}
 \label{tab:modelosjsonp2}
 \end{table}
 
@@ -2654,6 +2500,7 @@ detección de anomalías.
 
 
 \begin{table}[h]
+\caption{Modelos evaluados, parámetros óptimos y desempeño en validación. Parte III.}
 \centering
 \renewcommand{\arraystretch}{1.2}
 \scriptsize % 🔹 Reduce el tamaño de fuente
@@ -2688,7 +2535,6 @@ detección de anomalías.
     \hline
 \end{tabular}
 }
-\caption{Modelos evaluados, parámetros óptimos y desempeño en validación. Parte III.}
 \label{tab:modelosjsonp3}
 \end{table}
 
@@ -2721,7 +2567,8 @@ con datos no vistos durante el entrenamiento. Para esta evaluación se calcularo
 distintas métricas que permiten analizar el rendimiento desde diferentes perspectivas. 
 
 
-\begin{table}[H]
+\begin{table}[h]
+\caption{Métricas de rendimiento para los diferentes modelos de clasificación.}
 \centering
 \renewcommand{\arraystretch}{1.2}
 \footnotesize
@@ -2755,7 +2602,6 @@ Support Vector Machine & 0.9960 & 0.9988 & 0.9932 & 0.9960 & 0.9960 \\
 K-NN & 0.9951 & 1.0000 & 0.9901 & 0.9950 & 0.9951 \\
 \hline
 \end{tabularx}
-\caption{Métricas de rendimiento para los diferentes modelos de clasificación.}
 \label{tab:metricas_modelos}
 \end{table}
 
@@ -2779,6 +2625,7 @@ la Tabla~\ref{tab:metricas_modelos}.
 
 
 \begin{table}[H]
+\caption{Matrices de confusión para los diferentes modelos de clasificación.}
 \centering
 \renewcommand{\arraystretch}{1.2}
 \footnotesize
@@ -2811,7 +2658,6 @@ la Tabla~\ref{tab:metricas_modelos}.
     kNN & 1656 & 16 & 0 & 1605 \\
     \hline
 \end{tabularx}
-\caption{Matrices de confusión para los diferentes modelos de clasificación.}
 \label{tab:matrixconff}
 \end{table}
 
@@ -3074,9 +2920,6 @@ más bajos de amplitud, dispersión y energía de la vibración.
 
 
 
-
-
-
 \chapter{Discusión y análisis de resultados}
 
 Los modelos entrenados tienen muy buenas métricas de rendimiento. 
@@ -3168,9 +3011,10 @@ eficiencia, precisión e interpretabilidad.
 
 
 Finalmente, gracias al uso de modelos con mayor interpretabilidad, se identificó que 
-variables como los valores pico (maximum), la desviación estándar ($std$), el valor RMS 
-($rms$),
-la frecuencia fundamental ($f0$) y la distorsión armónica total ($tdh$) son las que más 
+variables como los valores pico (\lstinline|maximum|), la desviación estándar 
+(\lstinline|std|), el valor RMS (\lstinline|rms|),
+la frecuencia fundamental (\lstinline|f0|) y 
+la distorsión armónica total (\lstinline|tdh|) son las que más 
 aportan a la clasificación de una observación como anomalía. Este hallazgo  además de 
 validar la calidad del modelo, proporciona información valiosa para la toma de 
 decisiones en el ámbito industrial, al permitir inferir cuáles son los factores físicos
