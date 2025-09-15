@@ -380,6 +380,26 @@ y da espacio a diversas líneas de investigación futuras.
 
 \section{Contexto}
 
+La detección temprana de anomalías en maquinaria rotativa es un campo de gran 
+relevancia en la investigación académica y en la industria. 
+Los fallos en un rodamiento pueden desencadenar paradas no programadas, 
+disminución de la vida útil de los equipos y elevados costos de mantenimiento y 
+reparación. 
+Por este motivo, la implementación de técnicas avanzadas de diagnóstico permite un 
+mantenimiento predictivo mucho más eficiente, mejorar la confiabilidad de los sistemas 
+y reducir los tiempos de inactividad.
+
+
+Tradicionalmente, la identificación de fallas en rodamientos se ha realizado mediante 
+inspecciones manuales, métodos estadísticos o análisis de señales en el dominio del 
+tiempo y la frecuencia. 
+Sin embargo, estos métodos presentan limitaciones cuando se trata de detectar patrones 
+sutiles en etapas tempranas de degradación. 
+En este sentido, el aprendizaje automático ofrece una alternativa más potente y 
+escalable, capaz de aprender relaciones complejas entre variables y proporcionar 
+diagnósticos automáticos en tiempo real.
+
+
 Para el desarrollo de este proyecto se ha seleccionado el CWRU Bearing Dataset, 
 proporcionado por el Case Western Reserve University Bearing Data Center. 
 A nivel académico e industrial, este conjunto de datos es una de las principales 
@@ -387,6 +407,15 @@ referencias para el análisis del rendimiento de motores eléctricos y la detecc
 temprana de fallas en rodamientos. Se ha convertido en uno de los recursos más 
 confiables y estandarizados para el entrenamiento y comparación de modelos de detección 
 de fallas basados en aprendizaje automático.
+
+
+El uso del CWRU Bearing Dataset como base experimental permite establecer un punto 
+de comparación estandarizado entre diferentes algoritmos de aprendizaje automático, 
+facilitando la evaluación objetiva de su capacidad para identificar anomalías en 
+condiciones variadas. 
+De esta manera, el presente proyecto busca aportar evidencia sobre la aplicabilidad 
+de estas técnicas en escenarios industriales reales, donde la eficiencia, la robustez y 
+la interpretabilidad del modelo resultan factores clave.
 
 
 Con la información contenida en este dataset se pueden construir modelos para 
@@ -427,32 +456,14 @@ facilita su aplicación en algoritmos de diagnóstico y detección de fallas.
 
 Los archivos del dataset siguen una convención de nombres que permite identificar 
 fácilmente las condiciones de operación y el tipo de falla asociada a cada serie temporal.
-Para los datos con fallas, el esquema utilizado es:
-
-
-\begin{verbatim}
-RPM_Fault_Diameter_End
-\end{verbatim}
-
-
-Donde, 
-
-\begin{itemize}
-
-	\item \texttt{RPM}: Revoluciones por minuto del motor. 
-	(\texttt{1797}, \texttt{1772}, \texttt{1750} o \texttt{1730}).
-	La reducción de la velocidad se debe a que se le agrega carga al motor.
-
-	\item \texttt{Fault}: Tipo de defecto introducido en el rodamiento 
-	(\texttt{IR} para pista interna, \texttt{B} para elemento rodante, \texttt{OR@6}, 
-	\texttt{OR@3} o \texttt{OR@12} para pista externa en distintas posiciones).
-
-	\item \texttt{Diameter}: Diámetro del defecto en milésimas de pulgada 
-	(\texttt{7}, \texttt{14}, \texttt{21} o \texttt{28}).
-
-	\item \texttt{End}: Ubicación del sensor y frecuencia de muestreo (\texttt{FE}, 
-	\texttt{DE12}, \texttt{DE48}).
-\end{itemize}
+Para los datos con fallas, el esquema utilizado es \texttt{RPM\_Fault\_Diameter\_End}.
+Donde, \texttt{RPM} corresponde a las revoluciones por minuto del motor 
+(\texttt{1797}, \texttt{1772}, \texttt{1750} o \texttt{1730}), \texttt{Fault} corresponde 
+al tipo de defecto introducido en el rodamiento (\texttt{IR} para pista interna, 
+\texttt{B} para elemento rodante, \texttt{OR@6}, \texttt{OR@3} o \texttt{OR@12} 
+para pista externa en distintas posiciones), \texttt{Diameter} corresponde al 
+diámetro del defecto en milésisma de pulgada, y finalmante, \texttt{End} correponde a
+la ubicación del sensor y frecuencia de muestreo.
 
 
 En el caso de las condiciones normales (sin fallas), los archivos se nombran simplemente 
@@ -461,6 +472,13 @@ Cada archivo \texttt{.npz} puede contener una o varias series temporales,
 organizadas en claves llamadas \texttt{DE}, \texttt{FE} o \texttt{BA}, que corresponden 
 a los datos capturados en el drive end, fan end o base del motor, respectivamente 
 \cite{rigas2024marine}.
+
+
+Dado que los datos recolectados por los sensores se encuentran almacenados dentro de 
+archivos estructurados, es posible realizar su procesamiento desde cualquier equipo 
+que disponga de herramientas para el análisis de datos y desarrollo de modelos de 
+aprendizaje automático. 
+Esto permite la portabilidad y reproducibilidad de este proyecto en distintos entornos.
 
 
 \section{Estado del arte}
@@ -1220,8 +1238,9 @@ ciclo de vida de los activos \cite{jardine2006review}
 
 
 Este proyecto parte de datos que fueron previamente capturados y almacenados, por lo 
-que no es necesario definir requerimientos para la captura de datos. Por lo tanto, los 
-requerimientos están enfocados en los procesos posteriores. 
+que no es necesario definir requerimientos para la captura de datos, puesto que los 
+datos se encuentran almacenados en archivos \texttt{.npz}. 
+Por lo tanto, los requerimientos están enfocados en los procesos posteriores. 
 
 
 En primer lugar,  se necesita un análisis exploratorio de los datos disponibles (EDA), 
@@ -1245,7 +1264,7 @@ aquellos que destaquen por su interpretabilidad y rendimiento. Si los modelos qu
 mejor interpretables tienen buen desempeño, explorar los modelos con el fin de 
 identificar cuáles son aquellas variables que influyen en las predicciones. 
 Los modelos que sean escogidos por sus métricas de rendimiento, deben tener un valor 
-mayor a 0.85 en todas sus m+etricas. 
+mayor a 0.85 en todas sus métricas. 
 
 
 \chapter{Objetivos}
@@ -1259,43 +1278,40 @@ detectar desviaciones anomalías de manera eficiente y precisa.
 
 \section{Objetivo General}
 
-\textbf{Desarrollar} una solución basada en algoritmos de aprendizaje automático 
-capaz de detectar anomalías en datos provenientes de entornos industriales, garantizando
-un desempeño medible a través de métricas estándares.
-La solución deberá alcanzar métricas de rendimiento superiores a 0.85 en métricas como
-exactitud y F1, demostrando alta eficacia en la identificación de anomalías.
+\textbf{Desarrollar} una solución basada en algoritmos de aprendizaje automático para 
+la detección de anomalías en datos provenientes de entornos industriales, 
+que alcance valores superiores a 0.85 en métricas como exactitud, sensibilidad, 
+precisión y F1, y garantice un alto desempeño en la identificación eficaz y 
+confiable de anomalías.
 
 \section{Objetivos Específicos}
 
-\begin{itemize}
+\begin{enumerate}
 
-\item Desarrollar la arquitectura de una solución para la detección de anomalías, donde 
-se definan claramente los distintos componentes que la integran, sus funciones y el 
-flujo de trabajo que sigue la solución, con el fin de  garantizar una implementación 
-clara y coherente.
-
-
-\item Analizar conjuntos de datos industriales, con el fin de garantizar que cumpla 
-con los requerimientos necesarios para la implementación de algoritmos de aprendizaje 
-automático y realizar los ajustes y transformaciones a los datos en caso de ser necesario. 
+\item Diseñar la arquitectura de una solución para la detección de anomalías, donde 
+se definan claramente los distintos componentes que la integran, sus funciones y 
+el flujo de trabajo que sigue. 
 
 
-\item Seleccionar los modelos y algoritmos de aprendizaje automático que se integrarán
-en la solución, e implementar los ajustes necesarios en sus parámetros y configuración
-con el fin de optimizar su rendimiento en términos de precisión, sensibilidad y otras
-métricas relevantes.
+\item Realizar los ajustes y transformaciones al conjunto de datos CWRU Bearing Dataset 
+con el fin de garantizar que cumpla con los requerimientos necesarios para su uso 
+en algoritmos de aprendizaje automático.  
 
 
-\item Evaluar el desempeño de los modelos seleccionados, utilizando un conjunto de 
-condiciones experimentales homogéneas que garanticen una evaluación objetiva, 
-identificando fortalezas, limitaciones y oportunidades de mejora.
+\item Seleccionar los modelos de aprendizaje automático que se integrarán en la solución,
+e implementar los ajustes necesarios en sus parámetros con el fin de optimizar su rendimiento 
+en términos de precisión, sensibilidad y otras métricas relevantes.
 
 
-\item Implementar el análisis del conjunto de datos, la selección, entrenamiento y 
-evaluación de modelos, la ejecución de pruebas controladas y la disponibilización de la 
-solución final, utilizando herramientas de desarrollo especializadas. 
+\item Medir y comparar el desempeño de los modelos seleccionados, 
+utilizando un conjunto de condiciones experimentales homogéneas.
 
-\end{itemize}
+
+\item Implementar herramientas de desarrollo especializadas en el análisis del 
+conjunto de datos, la selección, entrenamiento y evaluación de modelos, 
+la ejecución de pruebas controladas. 
+
+\end{enumerate}
 
 
 \chapter{Metodología de trabajo}
@@ -1476,12 +1492,14 @@ obtener la configuración con las mejores métricas de desempeño. Como resultad
 asegura que el modelo seleccionado sea aquel que genere los mejores resultados, evitando
 tanto el sobreajuste como conclusiones sesgadas por un mal diseño experimental.
 
+
 \begin{figure}[h]
     \caption{Arquitectura y componentes propuestos}
     \centering
     \includegraphics[width=1\textwidth]{media/arquitecura.png}
     \label{fig:figArchitecture}
 \end{figure}
+
 
 En la Figura~\ref{fig:figArchitecture}, se observa la arquitectura diseñada para la 
 configuración de este experimento. Esta arquitectura permite implementar un flujo de 
@@ -1490,38 +1508,30 @@ específico dentro del ciclo de vida del desarrollo de modelos de aprendizaje au
 La arquitectura se basa en un flujo de trabajo modular, apoyado en diferentes 
 herramientas de ciencia de datos y gestión de modelos:
 
-\begin{itemize}
 
-\item \textbf{Generación del dataset}. Se utilizan notebooks en \textbf{Jupyter} que 
-hacen uso de librerías como \textbf{NumPy} y \textbf{Pandas} (basadas en Python) para 
+Para la generación del dataset de entrenamiento, se utilizan notebooks en \textbf{Jupyter} 
+que hacen uso de librerías como \textbf{NumPy} y \textbf{Pandas} (basadas en Python) para 
 la carga, limpieza, transformación y construcción del dataset final. En esta etapa se 
-preparan los datos en el formato adecuado para los experimentos de entrenamiento.
+preparan los datos en el formato adecuado para los experimentos de entrenamiento. 
+En la etapa siguiente, se ejecutan las subrutinas encargadas del entrenamiento de 
+modelos de machine learning. Aquí se incluyen técnicas de 
+validación cruzada (\textit{cross-validation}), búsqueda de hiperparámetros 
+y evaluación de rendimiento con métricas de clasificación.
 
 
-\item \textbf{Entrenamiento de modelos}. En esta etapa, se desarrollan notebooks 
-enfocados en el entrenamiento de modelos de machine learning mediante la librería 
-\textbf{scikit-learn} (también basada en python). Aquí se incluyen técnicas de 
-validación cruzada, búsqueda de hiperparámetros y evaluación de rendimiento con métricas
-de clasificación.
-
-
-\item \textbf{Gestión de experimentos y modelos}. Para asegurar el monitoreo y 
-reproducibilidad, se integra \textbf{MLflow}, que permite llevar un registro 
+Para asegurar el monitoreo y reproducibilidad, la gestión de experimentos y modelos se 
+integra con \textbf{MLflow}. Esto permite llevar un registro 
 sistemático de los experimentos, los hiperparámetros utilizados, las métricas obtenidas 
-y las versiones de cada modelo entrenado.
-
-
-\item \textbf{Almacenamiento de metadatos}.  Toda la información relacionada con los 
+y las versiones de cada modelo entrenado. Toda la información relacionada con los 
 experimentos, como configuraciones, métricas y resultados, se almacena en una base de 
 datos \textbf{PostgreSQL}, que sirve como repositorio centralizado para la metadata del 
-proyecto. Y allí se almacenan todos los metadatos que el servidor de MLflow genera. 
+proyecto. Allí se almacenan todos los metadatos que el servidor de MLflow genera. 
 
 
-\item \textbf{Almacenamiento de modelos}. Los modelos que alcanzan mejores métricas son 
-almacenados en \textbf{MinIO}, un sistema de almacenamiento de objetos, lo cual facilita 
-la gestión, acceso y despliegue futuro de los modelos seleccionados.
-
-\end{itemize}
+Finalmente, los modelos que alcanzan mejores métricas son almacenados en \textbf{MinIO},
+un sistema de almacenamiento de objetos, lo cual facilita la gestión, acceso y despliegue 
+futuro de los modelos seleccionados. Los modelos son almacanados como archivos binarios, y
+junto con los metadatos, es posible hacer un despliegue del modelo. 
 
 
 \subsection{Recursos propios}
@@ -1529,28 +1539,30 @@ la gestión, acceso y despliegue futuro de los modelos seleccionados.
 
 En el desarrollo de este proyecto, se implementan dos repositorios en GitHub que 
 contienen el código fuente necesario para la generación de datos y el entrenamiento de 
-los modelos:
-
-\begin{itemize}
-    \item \textbf{Generación del dataset}: 
-    \href{https://github.com/jelambrar96-unir/CWRU_Bearing_NumPy}
-    {\underline{\textcolor{blue}{CWRU\_Bearing\_NumPy}}}.
-    Este repositorio contiene los Notebooks para el procesamiento de las señales originales 
-    del \textit{CWRU Bearing Dataset}, con el fin de construir un conjunto de datos 
-    estructurado y apto para su posterior análisis y modelado.
-    
-    \item \textbf{Entrenamiento de modelos}: 
-    \href{https://github.com/jelambrar96-unir/tfm-deteccion-anomalias}
-    {\underline{\textcolor{blue}{tfm-deteccion-anomalias}}}. 
-    Este repositorio contiene los notebooks utilizados para entrenar, evaluar, comparar 
-    y publicar diferentes modelos de aprendizaje automático orientados a la detección de 
-    anomalías en rodamientos.
-\end{itemize}
-
+los modelos. 
 Se compararten los enlaces a los repositorios en lugar de incluir el código fuente como 
 anexo en este documento, dado que la cantidad de archivos que conforman ambos repositorios
 es considerable, y que incluyen scripts, notebooks, datos procesados, manuales para 
-reproducir los resultados y configuraciones adicionales, 
+reproducir los resultados y configuraciones adicionales.
+
+
+El primer repositorio de Generación del dataset contiene los 
+\textit{Notebooks} y sunrutinas para el 
+procesamiento de las señales originales del \textit{CWRU Bearing Dataset}, 
+se utiliza para construir un conjunto de datos estructurado y apto para su posterior 
+análisis y modelado. Enlace: 
+\href{https://github.com/jelambrar96-unir/CWRU_Bearing_NumPy}
+{https://github.com/jelambrar96-unir/CWRU\_Bearing\_NumPy}.
+
+
+El segundo repositiorio toma los datos generación en el repositorio anterior para el entrenamiento
+de los modelos. También contiene las subrutinas para la evaluación y comparación de los modeles, 
+y su posterior publicación y registro en \textit{MLFlow}. Enlace:
+\href{https://github.com/jelambrar96-unir/tfm-deteccion-anomalias}
+{https://github.com/jelambrar96-unir/tfm-deteccion-anomalias}.
+
+
+
 
 
 \section{Exploración del dataset}
@@ -1845,26 +1857,16 @@ mejora la robustez del modelo y facilita la interpretación de resultados.
 Por lo anterior, una vez obtenidos los segmentos, se procede a la generación de las 
 características de cada conjunto de muestras. Para esto, se calculan una serie de 
 métricas estadísticas descriptivas para cada fila (serie temporal) de la matriz de 
-datos. Estas métricas incluyen:
-
-\begin{itemize}
-\item \textbf{Maximum}: Valor máximo de la serie temporal.
-\item \textbf{Mean}: Media de la serie temporal.
-\item \textbf{Std}: Desviación estándar de la serie temporal.
-\item \textbf{RMS}: Raíz cuadrada del valor medio cuadrático de la serie temporal.
-\item \textbf{Skewness}: Asimetría de la serie temporal.
-\item \textbf{Kurtosis}: Curtosis de la serie temporal.
-\item \textbf{Crest Factor}: Relación entre el valor máximo y el RMS.
-\item \textbf{Form Factor}: Relación entre el RMS y el valor medio absoluto.
-\end{itemize}
-
+datos. Estas métricas incluyen, el valor máximo de la serie temporal (\texttt{maximum}),
+la media de la serie temporal (\texttt{mean}), la desviación estándar de la serie
+temporal (\texttt{std}), el valor cuadrático medio de la serie temporal (\texttt{rms}),
+la asimetría de la serie temporal (\texttt{skewness}), la relación entre el valor máximo 
+y el RMS (\texttt{crest\_factor}) y la relación entre el RMS (\texttt{form\_factor}).
 
 Además, se calculan dos métricas adicionales basadas en el espectro en frecuencia de la señal:
-
-\begin{itemize}
-\item \textbf{THD}: Distorsión armónica total.
-\item \textbf{f0}: Frecuencia fundamental..
-\end{itemize}
+La distorsión armónica total (\texttt{thd}) y la frecuencia fundamental (\texttt{f0}).
+Generar características a partir del espectro de frecuencia complementa la información
+temporal proveniente de las características anteriores. 
 
 
 Finalmente, se agrega información adicional a cada fila del DataFrame, como el RPM, el 
