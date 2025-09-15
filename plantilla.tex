@@ -31,7 +31,7 @@
 \captionsetup{justification=raggedright, singlelinecheck=false}
 
 
-
+% bloques de codigo
 \usepackage{xcolor}
 \usepackage{listings}
 \lstset{
@@ -46,6 +46,15 @@
       showstringspaces=false,
       frame=lines
     }
+
+
+% comillas
+\usepackage{dirtytalk}
+
+
+% citations
+\usepackage{natbib}
+\bibliographystyle{apalike}
 
 
 %---------------------------
@@ -210,8 +219,8 @@ transacciones inusuales o patrones de comportamiento sospechosos en tiempo real,
 resulta crucial para prevenir pérdidas económicas y violaciones de seguridad. Para este
 caso de uso, los datos de entrada del sistema de detección son diferentes al anterior,
 es decir, en lugar de requerir videos o imágenes como datos de entrada, se requiere
-información de las transacciones. Por este gran espectro de aplicaciones la detección de
-anomalías se ha convertido en una foco de estudio de la informática. Actualmente, se 
+información de las transacciones. 
+Actualmente, se 
 investigan modelos cada vez más precisos y escalables que puedan adaptarse a entornos 
 dinámicos y con grandes volúmenes de datos. 
 
@@ -468,9 +477,9 @@ la ubicación del sensor y frecuencia de muestreo.
 
 En el caso de las condiciones normales (sin fallas), los archivos se nombran simplemente 
 como \texttt{RPM\_Normal}. 
-Cada archivo \texttt{.npz} puede contener una o varias series temporales, 
+\say{Cada archivo \texttt{.npz} puede contener una o varias series temporales, 
 organizadas en claves llamadas \texttt{DE}, \texttt{FE} o \texttt{BA}, que corresponden 
-a los datos capturados en el drive end, fan end o base del motor, respectivamente 
+a los datos capturados en el drive end, fan end o base del motor, respectivamente}
 \cite{rigas2024marine}.
 
 
@@ -556,6 +565,8 @@ presenta importantes limitaciones en entornos industriales modernos.
 Entre sus principales desventajas está su rigidez frente a variaciones normales del 
 sistema, su escasa capacidad de adaptación a condiciones cambiantes y la dificultad 
 de mantener reglas actualizadas en sistemas complejos o multivariantes. 
+
+
 Como consecuencia de lo anterior, el desempeño de los modelos de detección de 
 anomalías basados en este enfoque suele degradarse con el tiempo. 
 Otra gran desventaja de los sistemas basados en reglas es su dependencia del 
@@ -563,7 +574,9 @@ conocimiento experto para definir los umbrales y condiciones, esto limita su
 escalabilidad, flexibilidad y capacidad de generalización ante nuevos contextos 
 operativos.
 
+
 \subsubsection{Enfoques de detección de anomalías univariados.}
+
 
 En entornos donde los procesos son relativamente estables o las variables monitoreadas 
 pueden analizarse de forma individual, es común aplicar técnicas de detección de 
@@ -571,13 +584,8 @@ anomalías univariadas.
 Estas técnicas se centran en evaluar una sola variable a lo largo del tiempo, y 
 permiten identificar desviaciones significativas del comportamiento normal mediante el 
 uso principalmente de herramientas estadísticas. Ejemplos de estás técnicas de 
-detección son las siguientes: 
-
-\begin{itemize}
-	\item Shewhart Chart.
-	\item Suma Acumulada.
-	\item Media Móvil con Ponderación Exponencial.
-\end{itemize}
+detección son el gráfico de control (\textit{Shewhart Chart}), la suma acumulada y la
+media móvil con poderación exponencial. 
 
 
 Shewhart Chart, también conocido como gráfico de control, según \cite{chen1998shewhart}, 
@@ -606,18 +614,50 @@ muestras alternadas por encima y debajo de la línea central LC, y una serie de 
 debajo o encima de la línea central. 
 
 
+% parrafofr introductio de la imagen 
+En la Figura~\ref{fig:figGraficoControl} se observa el muestreo de una variable de un 
+proceso y la definición de los límites y las zonas de control. 
+Se observa que la mayoría de los valores están en una zona donde genera confianza y 
+viabilidad en el proceso, sin embargo, existen muestras cuyos valores presentaron anomalías.
+Adcionalmente, se definen tres zonas que se tienen en consideración para la 
+detección de anomalías: 
+La Zona C está comprendida entre la línea central LC y una desviación típica, 
+la Zona B se encuentra entre una y dos desviaciones típicas y finalmente, 
+la Zona A, se encuentra entre dos y tres desviaciones típicas de la línea central. 
+
+
+\begin{figure}[H]
+	\caption{Gráfico de control. \protect\cite{lopezcano2023spc}}
+    \centering
+    \includegraphics[width=0.8\textwidth]{media/grafico-control-lopez.png}
+    \label{fig:figGraficoControl}
+	\parbox{\textwidth}{\footnotesize \textit{Nota:} Las muestras se distribuyen entre las
+	Zonas A, B y C del gráfico de control. }
+\end{figure}
+
+
+
 Suma Acumulada, CumSum. \cite{contreras2024cusum}. CumSum ha sido una de las primeras 
 estrategias para detectar cambios en series de tiempo, más específicamente para la 
 detección de cambios en la media. De esta manera, la señal de entrada se divide en 
-segmentos con diferentes valores medios. En la Figura~\ref{fig:figPuntosCambiosSegmentos}
-se aprecia los puntos de cambios calulados para una señal. 
+segmentos con diferentes valores medios. 
 
 
-\begin{figure}[h]
+En la Figura~\ref{fig:figPuntosCambiosSegmentos} se aprecia los puntos de cambios de una señal
+calulados con el método de suma acumulada. \say{Se observan unas líneas horizontales rojas, 
+éstas nos indican los
+periodos de tiempo en los cuales no se detectaron cambios en la media de las observaciones.
+El número de observación o el punto en el cual se suspende la continuidad de la línea roja es
+justo el punto de cambio detectado.} \citep{contreras2024cusum}. Existen cambios más intensos
+que otros: los cambios en las medias en las
+observaciones 200 y 100, son más pronunciados que los cambio detectados en las observaciones 
+133,159 y 180. 
+
+
+\begin{figure}[H]
 	\caption{Puntos de cambio detectados y división de la señal segmentos \protect\cite{contreras2024cusum}}
     \centering
-    \includegraphics[width=1.0\textwidth]{media/puntos-cambios-segmenteos.png}
-    
+    \includegraphics[width=0.8\textwidth]{media/puntos-cambios-segmenteos.png}
     \label{fig:figPuntosCambiosSegmentos}
 \end{figure}
 
@@ -1281,35 +1321,37 @@ detectar desviaciones anomalías de manera eficiente y precisa.
 \textbf{Desarrollar} una solución basada en algoritmos de aprendizaje automático para 
 la detección de anomalías en datos provenientes de entornos industriales, 
 que alcance valores superiores a 0.85 en métricas como exactitud, sensibilidad, 
-precisión y F1, y garantice un alto desempeño en la identificación eficaz y 
-confiable de anomalías.
+precisión y F1, en la identificación de anomalías presentes en el conjunto de datos 
+CWRU Bearing.
 
 \section{Objetivos Específicos}
 
 \begin{enumerate}
 
-\item Diseñar la arquitectura de una solución para la detección de anomalías, donde 
-se definan claramente los distintos componentes que la integran, sus funciones y 
-el flujo de trabajo que sigue. 
+\item Diseñar la arquitectura funcional de la solución para la detección de anomalías, 
+donde se defina claramente el flujo de trabajo: Preprocesamiento, 
+extracción de características, entrenamiento y evaluación.
 
 
-\item Realizar los ajustes y transformaciones al conjunto de datos CWRU Bearing Dataset 
-con el fin de garantizar que cumpla con los requerimientos necesarios para su uso 
-en algoritmos de aprendizaje automático.  
+\item Preparar el conjunto de datos CWRU Bearing para la fase de entrenamiento: 
+Limpieza, normalización, transformación, etiquetado. Ésto con el fin de garantizar que 
+se cumplan los requerimientos para su uso en algoritmos de aprendizaje automático.  
 
 
-\item Seleccionar los modelos de aprendizaje automático que se integrarán en la solución,
-e implementar los ajustes necesarios en sus parámetros con el fin de optimizar su rendimiento 
-en términos de precisión, sensibilidad y otras métricas relevantes.
+\item Seleccionar los modelos de aprendizaje automático que se integrarán en la 
+solución, entrenarlos e implementar estrategias de ajustes de hiperparámetros, 
+en busca de optimizar los valores de precisión, sensibilidad y otras métricas 
+relevantes.
 
 
-\item Medir y comparar el desempeño de los modelos seleccionados, 
-utilizando un conjunto de condiciones experimentales homogéneas.
+\item Medir y comparar el desempeño de los modelos seleccionados, utilizando un 
+conjunto de condiciones experimentales homogéneas, identificando fortalezas, 
+limitaciones y oportunidades de mejora.
 
 
-\item Implementar herramientas de desarrollo especializadas en el análisis del 
-conjunto de datos, la selección, entrenamiento y evaluación de modelos, 
-la ejecución de pruebas controladas. 
+\item Construir un entorno reproducible para el procesamiento de los datos, 
+y el entrenamiento y evaluación de modelos, implementando herramientas de desarrollo 
+especializadas para facilitar su reproducibilidad.
 
 \end{enumerate}
 
@@ -1449,6 +1491,8 @@ CWRU Bearing Dataset. Este enfoque permite establecer una primera etapa de detec
 fallas, en la que el modelo actúa como un sistema de alerta temprana al identificar 
 desviaciones respecto al comportamiento esperado de los rodamientos bajo condiciones 
 normales de operación.
+
+
 Para la construcción del clasificador binario, se organizaron los datos del CWRU Bearing 
 Dataset en dos grandes grupos: Normales, que corresponden al funcionamiento sin fallas, 
 y Anómalos,  que agrupan todos los registros asociados a fallas en la pista interna 
@@ -1482,11 +1526,13 @@ accidentales en los datos utilizados para el entrenamiento y la validación.
 
 
 Para mejorar los resultados de entrenamiento, se aplicó la técnica de división del 
-dataset en tres subconjuntos: entrenamiento, validación y evaluación (test). 
+dataset en tres subconjuntos: entrenamiento, validación y evaluación (\textit{test}). 
 El conjunto de prueba se reserva exclusivamente para la comparación final de los modelos,
 de manera que no sean utilizados en ninguna etapa del entrenamiento. 
 De esta manera se garantiza una evaluación objetiva y realista del rendimiento. 
-Adicionalmente, el dataset de validación se emplea durante la búsqueda de 
+
+
+El dataset de validación se emplea durante la búsqueda de 
 hiperparámetros, permitiendo optimizar parámetros clave de los modelos con el fin de 
 obtener la configuración con las mejores métricas de desempeño. Como resultado, se 
 asegura que el modelo seleccionado sea aquel que genere los mejores resultados, evitando
@@ -2328,7 +2374,10 @@ hiperparámetros. Entre ellos, el hiperparámetro \lstinline|n_neighbors| que de
 número de vecinos considerados para la clasificación, afectando directamente el sesgo y 
 la varianza del modelo. El parámetro \lstinline|weights| define si todos los vecinos 
 contribuyen por igual a la decisión (\lstinline|uniform|) o si se les asigna mayor 
-importancia a los más cercanos (\lstinline|distance|). Por su parte, \lstinline|metric| 
+importancia a los más cercanos (\lstinline|distance|). 
+
+
+Por otra parte, \lstinline|metric| 
 determina la función de distancia utilizada para calcular la cercanía entre puntos 
 (como \lstinline|euclidean|, \lstinline|manhattan| o \lstinline|minkowski|), mientras 
 que el hiperparámetro \lstinline|p| ajusta la potencia de la métrica de Minkowski, 
