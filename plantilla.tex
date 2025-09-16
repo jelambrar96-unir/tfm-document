@@ -1341,11 +1341,7 @@ detectar desviaciones anomalías de manera eficiente y precisa.
 
 \section{Objetivo General}
 
-\textbf{Desarrollar} una solución basada en algoritmos de aprendizaje automático para 
-la detección de anomalías en datos provenientes de entornos industriales, 
-que alcance valores superiores a 0.85 en métricas como exactitud, sensibilidad, 
-precisión y F1, en la identificación de anomalías presentes en el conjunto de datos 
-CWRU Bearing.
+Desarrollar, validar e integrar una solución basada en algoritmos de aprendizaje automático para la detección de anomalías en datos de entornos industriales provenientes del conjunto de datos CWRU Bearing, que alcance valores superiores a 0.85 en métricas como exactitud, sensibilidad, precisión y F1, y demuestre capacidad para reducir la tasa de falsos negativos y apoyar decisiones de mantenimiento predictivo.
 
 \section{Objetivos Específicos}
 
@@ -1361,10 +1357,7 @@ Limpieza, normalización, transformación, etiquetado. Ésto con el fin de garan
 se cumplan los requerimientos para su uso en algoritmos de aprendizaje automático.  
 
 
-\item Seleccionar los modelos de aprendizaje automático que se integrarán en la 
-solución, entrenarlos e implementar estrategias de ajustes de hiperparámetros, 
-en busca de optimizar los valores de precisión, sensibilidad y otras métricas 
-relevantes.
+\item Seleccionar los modelos de aprendizaje automático que se integrarán en la solución y entrenarlos junto con estrategias de ajustes de hiperparámetros, en busca de optimizar los valores de precisión, sensibilidad y otras métricas relevantes.
 
 
 \item Medir y comparar el desempeño de los modelos seleccionados, utilizando un 
@@ -1372,9 +1365,8 @@ conjunto de condiciones experimentales homogéneas, identificando fortalezas,
 limitaciones y oportunidades de mejora.
 
 
-\item Construir un entorno reproducible para el procesamiento de los datos, 
-y el entrenamiento y evaluación de modelos, implementando herramientas de desarrollo 
-especializadas para facilitar su reproducibilidad.
+\item Programar subrutinas reproducibles para el procesamiento de los datos, y el entrenamiento y evaluación de modelos, haciendo uso de herramientas de desarrollo especializadas.
+
 
 \end{enumerate}
 
@@ -1588,10 +1580,12 @@ datos \textbf{PostgreSQL}, que sirve como repositorio centralizado para la metad
 proyecto. Allí se almacenan todos los metadatos que el servidor de MLflow genera. 
 
 
-Finalmente, los modelos que alcanzan mejores métricas son almacenados en \textbf{MinIO},
+Los modelos que alcanzan mejores métricas son almacenados en \textbf{MinIO},
 un sistema de almacenamiento de objetos, lo cual facilita la gestión, acceso y despliegue 
 futuro de los modelos seleccionados. Los modelos son almacanados como archivos binarios, y
-junto con los metadatos, es posible hacer un despliegue del modelo. 
+junto con los metadatos, es posible hacer un despliegue del modelo. Finalmente, un servicio
+de \textbf{FastAPI} toma los mejores modelos obtenidos y a través de RestAPI realiza predicciones
+de series de tiempo, esto permite una fácil integración y uso de los modelos.
 
 
 \subsection{Recursos propios}
@@ -1733,7 +1727,8 @@ en mayor medida BA.
 
 \label{tab:tab1keys}
 \vspace{2mm}
-\parbox{\textwidth}{\footnotesize \textit{Nota:} Los valores corresponden a la cantidad de archivos disponibles en el dataset original.}
+\parbox{\textwidth}{\footnotesize \textit{Nota:} Los valores corresponden a la cantidad de 
+archivos disponibles en el dataset original.}
 \end{table}
 
 
@@ -1754,9 +1749,10 @@ los estadísticos de los parámetros calculados.
 \footnotesize
 \begin{tabularx}{\textwidth}{|l|X|X|X|X|X|X|X|X|}
     \hline
-    \textbf{ } & \textbf{count} & \textbf{mean} & \textbf{std} & \textbf{min} & \textbf{25\%} & \textbf{50\%} & \textbf{75\%} & \textbf{max} \\
+    \textbf{ } & \textbf{count} & \textbf{mean} & \textbf{std} & \textbf{min} 
+    & \textbf{25\%} & \textbf{50\%} & \textbf{75\%} & \textbf{max} \\
     \hline
-    \textbf{length} & 411 & 200992.33 & 146098.17 & 63788.00 & 121351.00 & 121991.00 & 130549.00 & 491446.00 \\
+    \textbf{length} & 411 & 200992 & 146098 & 63788 & 121351 & 121991 & 130549 & 491446 \\
     \hline
     \textbf{maximum} & 411 & 1.60 & 1.76 & 0.13 & 0.48 & 0.98 & 2.02 & 11.67 \\
     \hline
@@ -1766,12 +1762,13 @@ los estadísticos de los parámetros calculados.
     \hline
     \textbf{std} & 411 & 0.24 & 0.27 & 0.03 & 0.10 & 0.15 & 0.26 & 2.15 \\
     \hline
-    \textbf{rpm} & 411 & 1762.50 & 25.08 & 1730.00 & 1750.00 & 1772.00 & 1797.00 & 1797.00 \\
+    \textbf{rpm} & 411 & 1762.50 & 25.08 & 1730 & 1750 & 1772 & 1797 & 1797 \\
     \hline
 \end{tabularx}
 \label{tab:stats}
 \vspace{2mm}
-\parbox{\textwidth}{\footnotesize \textit{Nota:} Las columnas contienen las estadísticas calculadas mientras que las filas contienen los parámetros que se obtuvieron los de los datos originales.}
+\parbox{\textwidth}{\footnotesize \textit{Nota:} Las columnas contienen las estadísticas calculadas 
+mientras que las filas contienen los parámetros que se obtuvieron los de los datos originales.}
 \end{table}
 
 
@@ -1785,20 +1782,20 @@ generar el dataset de entrenamiento porque es una característica propia de la m
 La distribución de rpm (f) muestra la cantidad de archivos por rpm medida.    
 
 
-\begin{figure}[h]
-    \caption{Histograma de la distribución de cada uno de los parámetros calculados para cada serie. }
-    \centering
-    \includegraphics[width=1\textwidth]{media/dataset/histogram-01.png}
-    \label{fig:figHistogram01}
-\end{figure}
-
-
 Las distribuciones del promedio (d), el máximo (b), el mínimo (c) y la desviación 
 estándar (e) presentan un marcado sesgo hacia cero. Para atenuar este efecto y 
 aproximarse a una distribución más similar a la normal, se aplica una transformación 
 logarítmica. La transformación trae como resultado las gráficas de la 
 Figura~\ref{fig:figHistogram01}. En general, se puede apreciar una mejoría en las 
 distribuciones de desviación estándar (b), máximos (a) y mínimos(d). 
+
+
+\begin{figure}[H]
+    \caption{Matriz de correlación de los parámetros calculados en la exploración de los datos. }
+    \centering
+    \includegraphics[width=0.8\textwidth]{media/dataset/corr-mat.png}
+    \label{fig:figCorrMat}
+\end{figure}
 
 
 La Figura~\ref{fig:figCorrMat} muestra la matriz de correlación. Se
@@ -1808,14 +1805,6 @@ Esta herramienta permite
 identificar el grado de asociación lineal entre cada par de variables, facilitando la 
 detección de posibles dependencias o redundancias en los datos. La matriz resultante se 
 observa en la Figura~\ref{fig:figCorrMat}. 
-
-
-\begin{figure}[H]
-    \caption{Matriz de correlación de los parámetros calculados en la exploración de los datos. }
-    \centering
-    \includegraphics[width=0.8\textwidth]{media/dataset/corr-mat.png}
-    \label{fig:figCorrMat}
-\end{figure}
 
 
 \cite{Alvarez2023} definió una matriz de correlación como una tabla que muestra el grado 
@@ -1850,6 +1839,14 @@ realizó una transformación logarítmica se obtienen correlaciones altas entre
 las variables y su respectiva correlación. 
 
 
+\begin{figure}[h]
+    \caption{Correlación entre la variable objetivo y el resto de parámetros.}
+    \centering
+    \includegraphics[width=1\textwidth]{media/dataset/corr-mat-target.png}
+    \label{fig:figCorrMatTarget}
+\end{figure}
+
+
 La Figura~\ref{fig:figCorrMatTarget} muestra 
 la correlación entre cada parámetro y esa variable objetivo. No hay correlaciones fuertes
 (mayores a 0.3) entre ninguna variable y anomaly. 
@@ -1859,12 +1856,6 @@ Las variables con mayor asociación, aunque débil, son: \lstinline|log_maximum|
 Variables como \lstinline|mean| y \lstinline|rpm| no aportan relación clara con la anomalía.
 
 
-\begin{figure}[H]
-    \caption{Correlación entre la variable objetivo y el resto de parámetros.}
-    \centering
-    \includegraphics[width=1\textwidth]{media/dataset/corr-mat-target.png}
-    \label{fig:figCorrMatTarget}
-\end{figure}
 
 
 
@@ -1949,6 +1940,112 @@ Pandas que contiene todas las características extraídas de los segmentos de da
 listo para ser utilizado en tareas de aprendizaje automático.
 
 
+\subsection{Exploración del conjunto de datos generado}
+
+Al conjunto de datos generados, se le hace una exploración similar a la realizada 
+a los parámetros calculados en las series de tiempo de los archivos. 
+Se hace este proceso puesto que hace el cálculo de nuevas características que 
+anteriormente no se calculaban, como \texttt{rms}, \texttt{skewness}, \texttt{kurtosis}, 
+\texttt{crest\_factor}, \texttt{form\_factor}, \texttt{thd} y \texttt{f0}. 
+
+
+\begin{table}[h]
+\caption{Estadísticas de las características calculadas a partir de los datos generados.}
+\centering
+\renewcommand{\arraystretch}{1.2}
+\scriptsize
+\begin{tabularx}{\textwidth}{|l|X|X|X|X|X|X|X|X|X|X|}
+    \hline
+    \textbf{} & 
+    \textbf{max} & 
+    \textbf{mean} & 
+    \textbf{std} & 
+    \textbf{rms} & 
+    \textbf{skewness} & 
+    \textbf{kurtosis} & 
+    \textbf{crest factor} & 
+    \textbf{form factor} & 
+    \textbf{thd} & 
+    \textbf{f0} \\
+    \hline
+    \textbf{count} & 16384 & 16384 & 16384 & 16384 & 16384 & 16384 & 16384 & 16384 & 16384 & 16384 \\
+    \hline
+    \textbf{mean} & 0.7920 & 0.0224 & 0.1729 & 0.1770 & -0.0020 & 1.5011 & 3.9428 & 1.3135 & 2.5405 & 302.20 \\
+    \hline
+    \textbf{std} & 1.1268 & 0.0306 & 0.2285 & 0.2285 & 0.1534 & 4.1071 & 1.2845 & 0.1498 & 1.0196 & 185.52 \\
+    \hline
+    \textbf{min} & 0.0378 & -0.0673 & 0.0576 & 0.0591 & -1.0804 & -1.5124 & 0.3618 & 1.0306 & 0.1762 & 2 \\
+    \hline
+    \textbf{25\%} & 0.2369 & 0.0099 & 0.0670 & 0.0725 & -0.0944 & -0.1641 & 3.1872 & 1.2433 & 1.6600 & 177 \\
+    \hline
+    \textbf{50\%} & 0.3082 & 0.0149 & 0.0810 & 0.0866 & 0.0020 & 0.0277 & 3.5014 & 1.2568 & 2.3863 & 239 \\
+    \hline
+    \textbf{75\%} & 0.8216 & 0.0317 & 0.1815 & 0.1852 & 0.0839 & 0.9938 & 4.1836 & 1.3071 & 3.1232 & 359 \\
+    \hline
+    \textbf{max} & 11.3639 & 0.4816 & 2.4411 & 2.4409 & 1.2906 & 56.4687 & 13.3335 & 2.3023 & 7.0017 & 1024 \\
+    \hline
+\end{tabularx}
+\label{tab:stats_features}
+\vspace{2mm}
+\parbox{\textwidth}{\scriptsize \textit{Nota:} Las filas contienen las estadísticas calculadas 
+y las columnas corresponden a las características extraídas de los datos procesados.}
+\end{table}
+
+
+
+La Tabla~\ref{tab:stats_features} muestra el cálculo de algunos estadísticos para cada
+una de las características del dataset generado. 
+Debido a que las características provienen de  subconjuntos seleccionados aleatoriamente 
+de las series de tiempo originales, la distribución de las variables de valor pico (maximun), 
+promedio (\texttt{mean}) y desviación estándar(\texttt{std}), 
+es similar  a las distribuciones en los series 
+de tiempo originales: sesgada a la izquiera. La Tabla~\ref{tab:stats_features} lo confirma
+con los valores de los quartiles. 
+
+
+La Figura~\ref{fig:figHistogramsGen} muestra los histogramas de cada característica. 
+Se observa que las características \texttt{maximun} (a), \texttt{std} (b), \texttt{rms} (d), 
+\texttt{kurtosis} (f), 
+factor de forma (h) y factor de cresta (g) están muy sesgadas a la izquierda. 
+Por otra parte, la distribución de las características  \texttt{skewness} (e) y \texttt{thd} (i), 
+tienen una forma más parecida a una distribución normal.
+La distribución de la frecuencia fundamental (\texttt{f0}) llama la atención por su forma escalonada. 
+
+
+\begin{figure}[h]
+    \caption{Matriz de correlación de los modelos calculada con los datos generados.}
+    \centering
+    \includegraphics[width=0.8\textwidth]{media/dataset-04/corr-mat.png}
+    \label{fig:figMatrixCorrelationDT4}
+\end{figure}
+
+
+La matriz de correlación se observa en la Figura~\ref{fig:figMatrixCorrelationDT4}. 
+Se calculó la matriz de correlación entre las características. Según la matriz de correlación. 
+maximum, std, rms, son variables con unas correlaciones muy altas. Esto indica que contienen
+información muy similar: La desviación estándar, el valor pico y el valor RMS están 
+estrechamente relacionados con la amplitud/energía de la señal. kurtosis, crest\_factor y
+form\_factor también tienen correlaciones muy altas entre sí, puesto que estas características
+están relacionadas con el \say{aspecto} de la señal. 
+
+
+\begin{figure}[h]
+    \caption{Correlación de cada caracteristicas con respecto a la variable objetivo.}
+    \centering
+    \includegraphics[width=0.9\textwidth]{media/dataset-04/corr-mat-target.png}
+    \label{fig:figMatrixCorrelationDT4TG}
+\end{figure}
+
+
+Para poder visualizar mejor la relación entre las características y la variable objetivo, se
+toma la correlación de todas las características entre la variable objetivo. El resultado se 
+observa en la Figura~\ref{fig:figMatrixCorrelationDT4TG}. Según esta gráfica, la distorsión
+armónica tiene la correlación más fuerte con la variable objetivo (0.62). 
+Esto sugiere que la distorsión armónica total (\texttt{thd}) es clave para detectar anomalías.
+El \texttt{rms}, \texttt{std} y \texttt{crest\_factor}, 
+también son buenos candidatos a ser características predictoras claves. 
+En cambio, métricas como \texttt{mean} y \texttt{skewness} no aportan valor significativo.
+
 
 \section{Métricas de evaluación utilizadas}
 
@@ -1984,7 +2081,7 @@ derivan la mayoría de las métricas que se utilizan para la evaluación de mode
 
 
 \begin{figure}[H]
-    \caption{Matriz de confusión de los modelos calculada con los datos de prueba.}
+    \caption{Matriz de confusión.}
     \centering
     \includegraphics[width=0.6\textwidth]{media/matrix-confusión.drawio.png}
     \label{fig:figMatrixConfusion}
@@ -2125,7 +2222,7 @@ puntaje F1, entre otras.
 
 Adicionalmente, se escogió el modelo de Naive Bayes debido a su simplicidad en la 
 construcción de clasificadores, su buen rendimiento en entrenamiento y predicción y su 
-fácil interpretabilidad de este tipo de modelos. Este algoritmo permite entender de 
+fácil interpretabilidad. Este algoritmo permite entender de 
 manera directa cómo cada variable contribuye a la predicción de la clase. Esto brinda 
 una visión intuitiva sobre las relaciones que existen entre las características de 
 entradas y las clases del problema.
@@ -2464,12 +2561,12 @@ Tabla~\ref{tab:modelosjsonp1}  y la Tabla~\ref{tab:modelosjsonp2}.
 
 
 Una vez obtenidos los modelos optimizados, se procede a evaluarlos utilizando el conjunto 
-de datos de prueba, con el propósito de estimar el desempeño de los modelos con datos 
+de datos de prueba. Se busca estimar el desempeño de los modelos con datos 
 no vistos durante el entrenamiento. Para esta evaluación se calcularon distintas 
 métricas que permiten analizar el rendimiento desde diferentes perspectivas. 
 
 
-En primer lugar, se calculan las matrices de confusión para cada modelo, 
+En primer lugar, se calculan las matrices de confusión para cada modelo 
 con el fin de analizar en detalle los aciertos y errores en la clasificación. 
 Estas matrices permiten observar de manera explícita la cantidad de verdaderos positivos, 
 verdaderos negativos, falsos positivos y falsos negativos, 
@@ -2516,7 +2613,7 @@ de anomalías. Los resultados de las métricas se observan en  la Tabla~\ref{tab
 
 
 Según la matriz de confusión, un modelo "bueno" es aquel donde los valores de Verdaderos Positivos
-y Falsos Negativos es alta, mientras que los valores de Verdaderos Negativos y Falsos Positivos es
+y Verdaderos Negativos es alta, mientras que los valores de Falsos Negativos y Falsos Positivos es
 baja. 
 Todos los modelos alcanzaron buenos resultados en sus matrices de confusión. En comparación con el
 total de observaciones del conjunto de prueba, las observaciones predichas érroneamente por los
@@ -2524,9 +2621,9 @@ modelos son mínimas. Esto es un buen indicio de que las métricas exactiud, pre
 y F1, son altas. 
 
 
-Adicinalmente, para esta evaluación se calcularon 
-distintas métricas que permiten analizar el rendimiento desde diferentes perspectivas. 
-Entre las métricas calculadas se incluyen la exactitud, que mide la proporción total de 
+Además de la matriz de confusión, para esta evaluación de los modelos se calcularon 
+distintas métricas que permiten analizar el rendimiento desde diferentes perspectivas,
+entre ellas se incluyen la exactitud, que mide la proporción total de 
 predicciones correctas; la precisión, que refleja la capacidad del modelo para 
 identificar correctamente las observaciones positivas evitando falsos positivos; 
 la sensibilidad (también llamada recall), que indica la capacidad para detectar la 
@@ -2536,9 +2633,9 @@ sensibilidad en un único valor armónico.
 
 Los resultados de las métricas se observan en  
 la Tabla~\ref{tab:metricas_modelos}. 
-Adicionalmente de las métricas anteriores, se calculó el área bajo la curva ROC (AUC-ROC), 
-una métrica 
-ampliamente utilizada en clasificación binaria que evalúa la capacidad del modelo para 
+Junto a las métricas anteriores, se calcula también el área bajo la curva ROC (AUC-ROC), 
+la cual es  
+ampliamente utilizada en clasificación binaria y evalúa la capacidad del modelo para 
 diferenciar entre clases positivas y negativas de manera independiente al umbral de 
 decisión. Con este conjunto de métricas fue posible obtener una visión integral del 
 rendimiento de los modelos y comparar su capacidad de generalización en la tarea de 
@@ -2585,11 +2682,25 @@ K-NN & 0.9951 & 1.0000 & 0.9901 & 0.9950 & 0.9951 \\
 \end{table}
 
 
+Los resultados de la Tabla~\ref{tab:metricas_modelos} muestran que
+los modelos son capaces de generalizar adecuadamente. 
+Las altas tasas de acierto alcanzadas demuestran que los algoritmos identifican 
+correctamente la mayoría de los casos y también mantienen un desempeño consistente 
+frente a distintos escenarios.
+
+
+Los buenos resultados obtenidos muestran que para alcanzar un desempeño 
+competitivo en la detección de anomalías no se necesita recurrir a modelos 
+más complejos, como arquitecturas profundas de redes neuronales. 
+Para este caso de uso, los algoritmos clásicos con que se realizan las 
+predicciones son lo suficientemente robustos y eficientes. 
+
 
 \subsection{Interpretación de los modelos}
 
 
-Además de modelar los datos, los modelos de aprendizaje automático altamente 
+Además de modelar los datos y realizar predicciones, 
+los modelos de aprendizaje automático altamente 
 interpretables permiten comprender mejor los datos y los fenómenos que representan. 
 Los modelos se comportan como codificadores de conocimiento, capaces de resumir la 
 información y los patrones ocultos en los datos. A través del proceso de entrenamiento, 
@@ -2890,7 +3001,8 @@ Si se requiere rapidez y bajo consumo de cómputo, se aplica el mismo principio,
 nuevamente modelos como regresión logística o los árboles de decisión suelen ser más 
 adecuados porque combinan unas muy buenas métricas con un bajo requerimiento de cómputo.
 En escenarios donde se requiera una máxima precisión, modelos más complejos como 
-XGBoost o LightGBM se perfilan como la mejor opción.
+XGBoost o LightGBM se perfilan como la mejor opción. Se obtienen muy buenos resultados
+sin la neecidade de recurrir a modelos de aprendizaje automático más complejos. 
 
 
 
@@ -3006,6 +3118,38 @@ mantenimiento predictivo más preciso y especializado.
 
 \appendix
 \chapter{Apendices}
+
+\begin{figure}[H]
+    \caption{Histograma de la distribución de cada uno de los parámetros calculados para cada serie. }
+    \centering
+    \includegraphics[width=1\textwidth]{media/dataset/histogram-01.png}
+    \label{fig:figHistogram01}
+    \parbox{\textwidth}{\footnotesize \textit{Nota:} 
+    Los histogramas de los parámetros máximo (b) y mínimo (a) son simétricos. 
+    La media esté concentrada en valores cercanos a cero.
+    Las distribuciones del promedio (d), el máximo (b), el mínimo (c) y la desviación 
+	estándar (e) presentan un marcado sesgo hacia cero.}
+
+\end{figure}
+
+\newpage
+
+
+\begin{figure}[H]
+    \caption{Histogramas de las características del conjunto de datos generado.}
+    \centering
+    \includegraphics[width=1\textwidth]{media/dataset-04/histogram.png}
+    \label{fig:figHistogramsGen}
+    \parbox{\textwidth}{\footnotesize \textit{Nota:} 
+    las características \texttt{maximun} (a), \texttt{std} (b), \texttt{rms} (d), 
+	\texttt{kurtosis} (f), factor de forma (h) y factor de cresta (g) 
+	están muy sesgadas a la izquierda. 
+	Por otra parte, la distribución de las características  
+	\texttt{skewness} (e) y \texttt{thd} (i), 
+	tienen una forma más parecida a una distribución normal.}
+\end{figure}
+
+\newpage
 
 
 \begin{table}[H]
@@ -3180,6 +3324,8 @@ objetiva. }
 
 
 \newpage
+
+
 
 
 \end{document}
