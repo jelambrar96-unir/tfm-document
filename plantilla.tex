@@ -55,7 +55,7 @@
 % citations
 \usepackage{natbib}
 \bibliographystyle{apalike}
-
+% \bibliographystyle{apacite}
 
 %---------------------------
 %título del trabajo y autor
@@ -773,19 +773,26 @@ aprendizaje estadístico, son usadas para resolver tareas de clasificación y re
 Según \cite{amat2017maquinas}, el principio fundamental en una SVM es encontrar un 
 hiperplano óptimo encargado de la clasificación de los datos, el cual maximiza el 
 margen entre las clases, es decir, la distancia entre los puntos de datos más cercanos 
-de cada clase (conocidos como vectores soporte) y el hiperplano. En la 
-Figura~\ref{fig:figSVM} se observa cómo una Máquina de Vectores de Soporte clasifica 
-datos en un hiperplano. 
+de cada clase (conocidos como vectores soporte) y el hiperplano. 
 
 
-\begin{figure}[h]
+En la Figura~\ref{fig:figSVM} se observa cómo una Máquina de Vectores de Soporte clasifica 
+datos en un hiperplano. En (a) se observan 
+los datos separados a través de un hiperplano óptimo, mientras que en (b) se muestra 
+los posibles hiperplanos que se pueden aplicar para la separación de los datos. Un hiperplano
+óptimo le da al modelo una mejor capacidad de generalizar, especialmente para aquellas
+observaciones con las que el modelo no ha sido entrenado.
+
+
+\begin{figure}[H]
     \caption{Clasificación de datos en un espacio bidimensional. \protect\cite{suarez2014svm}}
     \centering
     \includegraphics[width=1.0\textwidth]{media/svm-dm.png}
     \label{fig:figSVM}
-	\parbox{\textwidth}{\footnotesize \textit{Nota:} En (a) se observan 
-    los datos separados a través de un hiperplano óptimo, mientras que en (b) se muestra 
-    los posibles hiperplanos que se pueden aplicar para la separación de los datos.}
+	\parbox{\textwidth}{\footnotesize \textit{Nota:} Los datos a clasificar de gráficas son
+	los mismos, la direfencia radica en el hiperplano de separación, (a) tiene un hiperplano
+	óptimo, y (b) tiene el conjunto de hiperplano que a pesar de poder separar las clases 
+	no lo hacen de forma óptima.}
 \end{figure}
 
 
@@ -796,25 +803,32 @@ para generalizar. Este enfoque no solo mejora la capacidad de generalización de
 ante nuevos datos y lo hacen robusto frente al sobreajuste. Otra ventaja que tienen los 
 modelos SVM es el uso de funciones núcleo (kernel functions) que transforman el espacio 
 permitiendo manejar problemas no linealmente separables. 
-
-
-\begin{figure}[h]
-	\caption{Detección de anomalías en datos de vuelo utilizando One-Class SVM. \protect\cite{qin2022flight}}
-    \centering
-    \includegraphics[width=1.0\textwidth]{media/svm-kun.png}
-    \label{fig:figSVMflight}
-\end{figure}
-
-
 Originalmente este sistema fue creado para problemas de clasificación binaria, pero 
 puede ser aplicado en problemas de clasificación multiclase, y también en problemas de 
-detección de anomalías. En la Figura~\ref{fig:figSVMflight}, propuesta por 
+detección de anomalías. 
+
+
+
+En la Figura~\ref{fig:figSVMflight}, propuesta por 
 \cite{qin2022flight}, se presenta un estudio para identificar anomalías en datos reales 
 de vuelo, usando como base el principio One-Class SVM. Se construyó un sistema para 
 detectar eventos anómalos en tiempo real, en la aplicación de este estudio se logró que 
 es un método muy viable para este tipo de escenarios obteniendo una alta capacidad de 
 detección de anomalías y mantuvo una baja tasa de falsas alarmas lo cual es crítico para 
 monitoreo de aeronaves.
+
+
+\begin{figure}[H]
+	\caption{Detección de anomalías en datos de vuelo utilizando One-Class SVM. \protect\cite{qin2022flight}}
+    \centering
+    \includegraphics[width=1.0\textwidth]{media/svm-kun.png}
+    \label{fig:figSVMflight}
+    \parbox{\textwidth}{\footnotesize \textit{Nota:} Gráfico de dispersión de las 
+	características de vuelo extraídas, los clusters coincidan con los aeropuertos sugiere 
+	que hay patrones de aterrizaje distintos en ZPPP vs ZUUU que el modelo logra 
+	capturar.}
+\end{figure}
+
 
 
 \subsubsection{k-NN}
@@ -836,6 +850,16 @@ que lo que se desea obtener con todo esto es centralizar la construcción de fun
 distancia para medir la proximidad. Es esencial contar con una función a distancia que 
 permita elegir los puntos de vecinos más cercanos, la cual pueda operar de manera 
 efectiva con la gran parte de las muestras de entrenamiento. \cite{zhang2022influence}
+
+
+La Figura\ref{fig:figKnnZhou} muesrtra el uso de un clasificador PD-kNN con $k=3$ para 
+la detección de fallos (izquierda). 
+Estrategías como el Análisis de Compontentes Principales (\textit{PCA}) a pesar que ayudan a
+reducir la complejidad del procesos de comparación (derecha) 
+pueden entorpecer el proceso de clasificación. En Feature-Dependent, los datos normales 
+se agrupan y los fallos quedan fuera de ese patrón, 
+siendo detectados con facilidad en el espacio original.
+
 
 \begin{figure}[h]
     \caption{Detección de fallos usando FD‑kNN y PC‑kNN. \protect\cite{zhou2015faultdetection}}
@@ -904,16 +928,6 @@ supervisado que se basa en árboles de decisión \cite{chen2016xgboost}.
 Es una poderosa herramienta de aprendizaje automático que fusiona eficacia, 
 adaptabilidad y excelente desempeño para solucionar problemas complicados de 
 clasificación y regresión. 
-
-\begin{figure}[h]
-    \caption{Visualización del algoritmo XGBoost. Ensamble de árboles de decisión.
-    \protect\cite{salman2024rf}}
-    \centering
-    \includegraphics[width=1.0\textwidth]{media/xgboost-salman.png}
-    \label{fig:figXGBoostSalman}
-	\parbox{\textwidth}{\footnotesize \textit{Nota:} Los árboles 1, 2 y 3 se encuentran 
-	ensamblados. Donde \textit{Y} corresponde a la clase de salida.}
-\end{figure}
 
 
 Se basa principalmente en la implementación del algoritmo de boosting de árboles de 
@@ -1001,20 +1015,22 @@ puntuaciones constantes dando como resultado una mejora en la precisión de punt
 y detección de anomalías, sin sacrificar eficiencia computacional. 
 \cite{liu2021isoletionforest}.
 
-\begin{figure}[h]
-	\caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos 
-    normalmente distribuidos.  \protect\cite{liu2021isoletionforest} }
-    \centering
-    \includegraphics[width=1.0\textwidth]{media/liu-isolation-forest.png}
-    \label{fig:figIsolationForest}
-\end{figure}
-
-
 La Figura~\ref{fig:figIsolationForest} revela que, aunque hay dos grupos normales 
 claramente definidos, el Isolation Forest estándar introduce sesgos geométricos 
 (como triángulos y grupos falsos) en el mapa de anomalía. Esto es lo que impulsa la 
 propuesta del Extended Isolation Forest (EIF), que utiliza hiperplanos con pendientes 
 aleatorias. \cite{liu2021isoletionforest}.
+
+
+\begin{figure}[H]
+	\caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos 
+    normalmente distribuidos.  \protect\cite{liu2021isoletionforest} }
+    \centering
+    \includegraphics[width=0.8\textwidth]{media/liu-isolation-forest.png}
+    \label{fig:figIsolationForest}
+\end{figure}
+
+
 
 
 \subsection{Enfoques basados en Deep Learning}
@@ -1047,21 +1063,21 @@ Se han aplicado para problemas de clasificación, predicción en campos como la 
 artificial, el procesamiento digital de señales y la detección de fallos. 
 
 
-\begin{figure}[h]
-    \caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos 
-    normalmente distribuidos.  \protect\cite{fernandez2013redes} }
-    \centering
-    \includegraphics[width=1.0\textwidth]{media/neuona-artificial.png}
-    \label{fig:figNauronaArtificial}
-\end{figure}
-
-
 En la Figura~\ref{fig:figNauronaArtificial} se ilustra una comparación entre una neurona 
 biológica y una neurona artificial, en la cual resaltamos tres elementos funcionales: 
 el primero serían las conexiones (sinapsis) con pesos que seria el peso que tiene cada 
 conexión entre las neuronas, segundo el sumador que recibe las señales y calcula la suma 
 total y por ultimo funcion de activacion que limita la amplitud de la señal de salida de 
 la neurona. \cite{fernandez2013redes}.
+
+
+\begin{figure}[H]
+    \caption{Puntos de datos y mapas de puntuación de anomalías de dos grupos de puntos 
+    normalmente distribuidos.  \protect\cite{fernandez2013redes} }
+    \centering
+    \includegraphics[width=1.0\textwidth]{media/neuona-artificial.png}
+    \label{fig:figNauronaArtificial}
+\end{figure}
 
 
 Según \cite{rivera2007redes}, la gran ventaja de las redes neuronales frente a otros 
@@ -1088,13 +1104,19 @@ interno es difícil de interpretar. Pese a todo esto, las redes neuronales tiene
 relevancia como un modelo fundamental y eficaz. \cite{larranaga2021redes}
 
 
-\begin{figure}[h]
+En la Figura~\ref{fig:figSistemaNeuronal} muestra la estructura de un sistema basado en
+redes neuronales. \say{El elemento esencial será la neurona artificial, 
+la cual se organizará en capas. Varias capas constituirán una red neuronal. 
+Finalmente una red neuronal junto con los interfaces de entrada y salida constituirá 
+el sistema global de proceso} \citep{larranaga2021redes}.
+
+
+\begin{figure}[H]
     \caption{Sistema global de proceso de una red neuronal. \protect\cite{larranaga2021redes}}
     \centering
     \includegraphics[width=1.0\textwidth]{media/sistema-neuronal.png}
     \label{fig:figSistemaNeuronal}
 \end{figure}
-
 
 
 De forma general la jerarquía de procesamiento está definida de esa manera: Neurona, Capa, 
@@ -1151,20 +1173,20 @@ previniendo así limitaciones en el balanceo de clases y la necesidad de validar
 rigor para controlar falsos positivos. \cite{ameijeiras2021algoritmos}.
 
 
-\begin{figure}[h]
-    \caption{Architecture of LeNet-5  \protect\cite{Zhao2024review}}
-    \centering
-    \includegraphics[width=1.0\textwidth]{media/lenet-o5.png}
-    \label{fig:figLenet}
-\end{figure}
-
-
 En la Figura~\ref{fig:figLenet} se observa la arquitectura de una CNN. En este caso se 
 aplica una CNN clásica que procesa imágenes de entrada blanco y negro de 32×32 píxeles, 
 primero se aplican filtros que detectan bordes y lineas, posteriormente la siguiente 
 capa identifica características más complejas como formas y rasgos, despues toda esta 
 información se convierte en un vector y pasa por capas que integrsan todo lo aprendido. 
 \cite{Zhao2024review}
+
+
+\begin{figure}[H]
+    \caption{Architecture of LeNet-5  \protect\cite{Zhao2024review}}
+    \centering
+    \includegraphics[width=1.0\textwidth]{media/lenet-o5.png}
+    \label{fig:figLenet}
+\end{figure}
 
 
 \subsection{Aplicaciones en el contexto insdustrial} 
@@ -1178,7 +1200,8 @@ los cuales han demostrado mejorar la eficacia y eficiencia en muchas industrias 
 mejora la seguridad y confiabilidad de los procesos industriales y sus sistemas.
 
 
-Adicionalmente, \cite{worktrek2023predictive} estima que el mercado global de 
+La Figura~\ref{fig:figWorkTrek}, muestra el crecimiento del mercado de modelos predictivos.
+\cite{worktrek2023predictive} estima que el mercado global de 
 mantenimiento predictivo se valoró en 7.850 millones de dólares en 2022 y se proyecta 
 que alcance los 60.130 millones de dólares para 2030 (CAGR 29,5\%), lo que evidencia 
 una clara viabilidad y un notable incremento no solo evidencia el valor de este tipo de 
@@ -1361,89 +1384,82 @@ especializadas para facilitar su reproducibilidad.
 
 El presente trabajo se enmarca en un enfoque cuantitativo y de tipo aplicado, ya que se 
 busca diseñar, implementar y evaluar una solución basada en algoritmos de aprendizaje 
-automático para la detección de anomalías en datos industriales. La investigación se 
-centra en el procesamiento y análisis de datos numéricos provenientes de sistemas reales,
-con el objetivo de generar métricas que sean medibles y replicables, ejemplos de estas 
-métricas son precisión, sensibilidad, especificidad, F1-score y área bajo la curva ROC.
+automático para la detección de anomalías en datos industriales. 
 El estudio es descriptivo, en la medida en que se analizan características estadísticas 
 de los datos, se aplican técnicas de preprocesamiento, y es experimental, porque se 
 construyen modelos que son evaluados bajo métricas estándar de desempeño. 
 
 
+Se hace énfasis en el análisis y transformaciones de 
+los datos provienientes de conjunto de datos CWRU Bearning, para el desarrollo de la 
+solución. Se realiza una un entrenamiento y posterior evaluación de modelos de aprendizaje 
+automático, con el objetivo de generar métricas que sean medibles y replicables, 
+ejemplos de estas 
+métricas son precisión, sensibilidad, especificidad, F1-score y área bajo la curva ROC.
+Se comparan los modelos basándose en sus métricas, simplicidad e interpretabilidad. 
+
+
 \section{Metodología CRISP-DM}
+
+
 
 Con el fin de alcanzar los objetivos propuestos del presente proyecto, se ha decidido 
 basarse en los pasos de la metodología  CRISP-DM, llamada así por sus siglas en inglés 
-CRoss-Industry Standard Process for Data Mining. La ventaja de aplicar las fases de esta
+CRoss-Industry Standard Process for Data Mining. 
+La ventaja de aplicar las fases de esta
 metodología es su enfoque a proyectos de ciencia y minería de datos e inteligencia 
-artificial, y que además ofrece una guía para ajustar los procedimientos técnicos del 
-proyecto a los objetivos propuestos, lo que facilita la selección de actividades y 
-la ejecución del proyecto. La Figura~\ref{fig:figCrispdm} muestra cada una de las 
-fases de la metodología 
-CRISP-D.
+artificial. 
+
+
+La Figura~\ref{fig:figCrispdm} muestra cada una de las fases de la metodología CRISP-D.
+Esta metodología divide el problema en fases: Entendimiento del tema. Entendimiento de los datos,
+Preparación de los datos, Modelado, Evaluación, Evaluación y por último,  Despliegue. 
+Cada fase porta información relevante para las fases sigueintes. 
 
 
 \begin{figure}[h]
     \caption{Fases de la metodología {CRISP-DM}. \protect\cite{chapman2000crisp}}
     \centering
-    \includegraphics[width=0.6\textwidth]{media/crisp-dm.png}
+    \includegraphics[width=0.5\textwidth]{media/crisp-dm.png}
     \label{fig:figCrispdm}
 \end{figure}
 
 
-
 \subsection{Entendimiento del tema}
+
 
 Aquí es donde se hace un análisis del contexto, se desarrollan los objetivos generales 
 y específicos del proyecto. Esos objetivos deben girar en torno al desarrollo de una 
 solución capaz de identificar comportamientos atípicos de variables industriales con un 
-desempeño superior a los de métodos actuales. Acá se definen los criterios de éxito del
-sistema, las métricas que se van a utilizar para evaluar los modelos, las reglas a la 
-hora de realizar la comparación, y las condiciones que se espera que el modelo cumpla 
-para ser implementado en ambientes industriales reales. 
+desempeño superior a los de métodos actuales.
 
 
 \subsection{Entendimiento de los datos}
 
 
 Para la etapa de entendimiento de datos se realiza una selección de un conjunto de datos
-de variables industriales, los cuales pueden incluir mediciones de sensores, logs de 
-máquinas, registros y tendencia de producción, entre otros. A estos datos de entrada se 
+de variables industriales. A estos datos de entrada se 
 les realiza un análisis exploratorio con el propósito de identificar las variables 
 relevantes, correlaciones, valores atípicos, duplicados y faltantes y calcular 
 estadísticos descriptivos de las variables y su distribución.
 
-
-La fase de entendimiento de los datos permite conectar los objetivos del proyecto con 
-los conjuntos de datos disponibles. Aquí se define operativamente qué se considera una 
-anomalía, teniendo en cuenta el contexto de los procesos industriales y las posibles 
-causas de desviaciones. Es importante identificar en el conjunto de datos si se cuenta 
-con una etiqueta que identifique si los datos corresponden a una anomalía o no, esto es 
-importante para la fase de modelado porque esto determina si se cumplen las condiciones 
-para seleccionar un algoritmo supervisado o no supervisado. 
 
 \subsection{Preparación de los datos}
 
 
 Con base en el análisis exploratorio de los datos, se seleccionan los procedimientos 
 que harán parte de la fase de preprocesamiento de los datos, y también aquellos 
-algoritmos que realicen transformaciones sobre los datos. Durante esta fase se eligen 
-las estrategias para lidiar con datos faltantes, y las técnicas de reducción de ruido. 
-En esta fase también se estudia la posibilidad de aplicar técnicas como feature engineer 
-y análisis de componentes principales (PCA),  con el fin facilitar la inferencia de los 
-modelos de las fases siguientes.
+algoritmos que realicen transformaciones sobre los datos. Este proceso se realiza con el fin 
+que los datos estén en condiciones para que los modelos sean entrenados y evuados. 
 
 
 \subsection{Modelado}
 
 
-Tal como se plantea en el segundo objetivo específico, en esta fase se implementa un 
-modelo de machine learning basándose en los datos ya procesados. Se hace una selección 
-rigurosa de los algoritmos a utilizar. Una vez seleccionados, se implementan y se 
-comparan soluciones del estado del arte y finalmente, se hacen los respectivos ajustes 
-para optimizar su rendimiento.
-El conjunto de todos estos pasos hace posible la construcción de un modelo robusto que 
-cumpla con los requerimientos del proyecto. 
+Tal como se plantea en el tercer objetivo específico, en esta fase se entrenan una serie 
+de modelos de aprendizaje automático con los datos ya procesados. Durante el entrenamiento
+se aplican técnicas como optimización de hiperparámetros y validación cruzada. 
+Finalmente, se obtienen modelos robusto que cumplan con los requerimientos del proyecto. 
 
 
 \subsection{Evaluación}
@@ -1452,14 +1468,12 @@ Los modelos entrenados se evalúan mediante un conjunto homogéneo de datos y co
 experimentales, siguiendo el tercer objetivo específico. Se hace una interpretación de 
 los resultados de la evaluación, y se identifican con éstos, las ventajas y desventajas 
 que presentan unos modelos frente a otros. 
-Se hace un énfasis en el modelo propuesto en los resultados del modelo propuesto. 
-Los resultados determinan en qué grado el modelo cumple con los requerimientos propuestos. 
+
 
 \subsection{Despliegue}
 
 Se propone una estrategia de despliegue donde el modelo esté disponible y pueda ser 
 integrado fácilmente con otras herramientas que hacen parte del contexto industrial. 
-Se abordan temas de escalabilidad, mantenimiento y actualización continua del modelo. 
 Este paso garantiza el cumplimiento del objetivo general. 
 
 
@@ -1539,20 +1553,20 @@ asegura que el modelo seleccionado sea aquel que genere los mejores resultados, 
 tanto el sobreajuste como conclusiones sesgadas por un mal diseño experimental.
 
 
-\begin{figure}[h]
-    \caption{Arquitectura y componentes propuestos}
-    \centering
-    \includegraphics[width=1\textwidth]{media/arquitecura.png}
-    \label{fig:figArchitecture}
-\end{figure}
-
-
 En la Figura~\ref{fig:figArchitecture}, se observa la arquitectura diseñada para la 
 configuración de este experimento. Esta arquitectura permite implementar un flujo de 
 trabajo organizado, reproducible y escalable, donde cada componente cumple un rol 
 específico dentro del ciclo de vida del desarrollo de modelos de aprendizaje automático.
 La arquitectura se basa en un flujo de trabajo modular, apoyado en diferentes 
 herramientas de ciencia de datos y gestión de modelos:
+
+
+\begin{figure}[H]
+    \caption{Arquitectura y componentes propuestos}
+    \centering
+    \includegraphics[width=1\textwidth]{media/arquitecura.png}
+    \label{fig:figArchitecture}
+\end{figure}
 
 
 Para la generación del dataset de entrenamiento, se utilizan notebooks en \textbf{Jupyter} 
@@ -1608,10 +1622,8 @@ y su posterior publicación y registro en \textit{MLFlow}. Enlace:
 {https://github.com/jelambrar96-unir/tfm-deteccion-anomalias}.
 
 
-
-
-
 \section{Exploración del dataset}
+
 
 Como se ha mencionado anteriormente, se ha decidido trabajar con datos refinados del 
 conjunto de datos de CWRU Bearing Dataset. El primer paso en la exploración de los datos
@@ -1630,7 +1642,22 @@ balanceado para el entrenamiento de modelos, reduciendo así la necesidad de apl
 técnicas adicionales de re-muestreo para equilibrar las clases.
 
 
-\begin{figure}[h]
+Con el fin de obtener una aproximación visual de las diferencias entre los patrones de 
+vibración de entre los datos de condiciones normales y los datos de fallos en los 
+rodamientos, el siguiente paso en la exploración de los datos consiste en la exploración 
+de los datos consistió en visualizar gráficamente un segmento de las series de tiempo 
+para ambos conjuntos de datos. La Figura~\ref{fig:figNormalSeries} y 
+Figura~\ref{fig:figAnomalySeries}, muestran las señales en condiciones normales y en 
+presencia de defectos respectivamente. 
+
+
+La Figura~\ref{fig:figNormalSeries} muestra el comportamiento de las señales provenientes
+de archivos en condiciones normales. Los archivos contienen series de tiempo de las señales
+provientes de los acelerómetros \textit{Drive end} (DE) y \textit{Fan end} (FE), los cuales
+miden la amplitud de la vibración de las máquinas rotativas. 
+
+
+\begin{figure}[H]
 	\caption{Gráfica de una submuestra de las series de tiempo que corresponden a datos 
     en condiciones normales}    
     \centering
@@ -1645,16 +1672,15 @@ técnicas adicionales de re-muestreo para equilibrar las clases.
 \end{figure}
 
 
-Con el fin de obtener una aproximación visual de las diferencias entre los patrones de 
-vibración de entre los datos de condiciones normales y los datos de fallos en los 
-rodamientos, el siguiente paso en la exploración de los datos consiste en la exploración 
-de los datos consistió en visualizar gráficamente un segmento de las series de tiempo 
-para ambos conjuntos de datos. La Figura~\ref{fig:figNormalSeries} y 
-Figura~\ref{fig:figAnomalySeries}, muestran las señales en condiciones normales y en 
-presencia de defectos respectivamente. 
+Por otro lado, la Figura~\ref{fig:figAnomalySeries} muestra el comportamiento de las señales 
+provenientes de archivos que contienen anomalías en los rodamientos. Al igual que los archivos
+que contienen datos en condiciones normales, éstos también reflejan las mediciones de las 
+vibraciones en la máquina rotativa. 
+Los archivos pueden contener datos de uno, dos o tres acelerómetros: \textit{Base Engine} (BA), 
+\textit{Drive end} (DE) y \textit{Fan end} FE.
 
 
-\begin{figure}[h]
+\begin{figure}[H]
     \caption{Gráfica de una submuestra de la serie de tiempo que corresponden a datos en 
     condiciones anómalas}
     \centering
@@ -1670,15 +1696,23 @@ presencia de defectos respectivamente.
 \end{figure}
 
 
-Cada archivo contiene mediciones de tres acelerómetros, dependiendo de las claves DE, 
+Al revisar detalladamente el número de llaves en cada uno de los archivos de las series de tiempo 
+para condiciones normales y en presencia de fallas se obtiene como resultado la Tabla~\ref{tab:tab1keys}. 
+Se espera que archivo contenga mediciones de tres acelerómetros, dependiendo de las claves DE, 
 FE o BA. Pero el número de llaves puede variar de un archivo a otros, algunos pueden 
-contener sólo 1, mientras que otros pueden contener 3 \cite{rigas2024marine}. 
-Al revisar detalladamente las llaves de los archivos de las series de tiempo en 
-condiciones normales y en presencia de fallas  se obtiene el resultado de la 
-Tabla~\ref{tab:tab1keys}. 
+contener sólo 1, mientras que otros pueden contener 3 \cite{rigas2024marine}.
 
 
-\begin{table}[h]
+Según la Tabla~\ref{tab:tab1keys}, los archivos que contienen series de tiempo en 
+condiciones normales presentan datos de los acelerómetros DE y FE, sin embargo no 
+presentan datos de los acelerómetros de tipo BA. Esta información es de mucha 
+importancia a la hora de construir el dataset de entrenamiento de los modelos. 
+Por otra parte, todos los archivos de datos anómalos presentan datos de los 
+acelerómetros de tipo DE, pero datos faltantes en los acelerómetros de tipo FE, y 
+en mayor medida BA. 
+
+
+\begin{table}[H]
 \caption{\textit{Presencia de las mediciones de los acelerómetros DE, FE y BA, en cada tipo de archivo.}}
 \centering
 \footnotesize
@@ -1686,10 +1720,10 @@ Tabla~\ref{tab:tab1keys}.
 \begin{tabularx}{\textwidth}{|l|X|X|X|X|}
     \hline
     \textbf{} & 
-    \textbf{Número de archivos} & 
-    \textbf{Archivos con la llave DE} & 
-    \textbf{Archivos con la llave FE} & 
-    \textbf{Archivos con la llave BA} \\
+    \textbf{Archivos} & 
+    \textbf{Archivos con DE} & 
+    \textbf{Archivos con FE} & 
+    \textbf{Archivos con BA} \\
     \hline
     Archivo con datos en condiciones normales & 4 & 4 & 4 & 0 \\
     \hline
@@ -1704,13 +1738,13 @@ Tabla~\ref{tab:tab1keys}.
 
 
 
-Según la Tabla~\ref{tab:tab1keys}, los archivos que contienen series de tiempo en 
-condiciones normales presentan datos de los acelerómetros DE y FE, sin embargo no 
-presentan datos de los acelerómetros de tipo BA. Esta información es de mucha 
-importancia a la hora de construir el dataset de entrenamiento de los modelos. 
-Por otra parte, todos los archivos de datos anómalos presentan datos de los 
-acelerómetros de tipo DE, pero datos faltantes en los acelerómetros de tipo FE, y 
-en mayor medida BA. 
+A cada serie de tiempo se le calculan parámetros estadísticos básicos que permiten 
+caracterizar su comportamiento y servir como insumo para la construcción de los modelos. 
+Los parámetros a calcular son longitud de la serie, media, promedio, desviación estándar 
+y los valores máximos y mínimos. Y se calcularon los estadísticos de estos valores, y se 
+graficaron los histogramas de esos parámetros. La Tabla~\ref{tab:stats} muestra los 
+resultados de los estadísticos de los parámetros calculados, donde cada fila contiene 
+los estadísticos de los parámetros calculados. 
 
 
 \begin{table}[h]
@@ -1741,24 +1775,6 @@ en mayor medida BA.
 \end{table}
 
 
-
-A cada serie de tiempo se le calculan parámetros estadísticos básicos que permiten 
-caracterizar su comportamiento y servir como insumo para la construcción de los modelos. 
-Los parámetros a calcular son longitud de la serie, media, promedio, desviación estándar 
-y los valores máximos y mínimos. Y se calcularon los estadísticos de estos valores, y se 
-graficaron los histogramas de esos parámetros. La Tabla~\ref{tab:stats} muestra los 
-resultados de los estadísticos de los parámetros calculados, donde cada fila contiene 
-los estadísticos de los parámetros calculados. 
-
-
-\begin{figure}[h]
-    \caption{Histograma de la distribución de cada uno de los parámetros calculados para cada serie. }
-    \centering
-    \includegraphics[width=1\textwidth]{media/dataset/histogram-01.png}
-    \label{fig:figHistogram01}
-\end{figure}
-
-
 La Figura~\ref{fig:figHistogram01} muestra los histogramas de cada uno de los parámetro 
 de las series. Los histogramas de los parámetros máximo (b) y mínimo (a) son simétricos, 
 lo cual es un indicio de una alta correlación. Los datos corresponden a series de 
@@ -1769,6 +1785,14 @@ generar el dataset de entrenamiento porque es una característica propia de la m
 La distribución de rpm (f) muestra la cantidad de archivos por rpm medida.    
 
 
+\begin{figure}[h]
+    \caption{Histograma de la distribución de cada uno de los parámetros calculados para cada serie. }
+    \centering
+    \includegraphics[width=1\textwidth]{media/dataset/histogram-01.png}
+    \label{fig:figHistogram01}
+\end{figure}
+
+
 Las distribuciones del promedio (d), el máximo (b), el mínimo (c) y la desviación 
 estándar (e) presentan un marcado sesgo hacia cero. Para atenuar este efecto y 
 aproximarse a una distribución más similar a la normal, se aplica una transformación 
@@ -1777,14 +1801,16 @@ Figura~\ref{fig:figHistogram01}. En general, se puede apreciar una mejoría en l
 distribuciones de desviación estándar (b), máximos (a) y mínimos(d). 
 
 
-Para analizar las relaciones existentes entre los distintos parámetros numéricos, se 
-construyó la matriz de correlación entre las variables. Esta herramienta permite 
+La Figura~\ref{fig:figCorrMat} muestra la matriz de correlación. Se
+construyó la matriz de correlación entre las variables, con el fin de
+analizar las relaciones existentes entre los distintos parámetros numéricos. 
+Esta herramienta permite 
 identificar el grado de asociación lineal entre cada par de variables, facilitando la 
 detección de posibles dependencias o redundancias en los datos. La matriz resultante se 
 observa en la Figura~\ref{fig:figCorrMat}. 
 
 
-\begin{figure}[h]
+\begin{figure}[H]
     \caption{Matriz de correlación de los parámetros calculados en la exploración de los datos. }
     \centering
     \includegraphics[width=0.8\textwidth]{media/dataset/corr-mat.png}
@@ -1815,15 +1841,6 @@ de esta técnica se puede simplificar modelos eliminando variables muy correlaci
 produzcan redundancia en la información. \cite{Alvarez2023}
 
 
-\begin{figure}[h]
-    \caption{Correlación entre la variable objetivo y el resto de parámetros.}
-    \centering
-    \includegraphics[width=1\textwidth]{media/dataset/corr-mat-target.png}
-    \label{fig:figCorrMatTarget}
-\end{figure}
-
-
-
 Muchas variables tienen relaciones muy fuertes (positivas o negativas) entre sí. 
 Por ejemplo,  maximum y minimum tiene una correlación muy cercana a -1. 
 Debido a que las señales en el dataset corresponden a vibraciones, se espera que si se 
@@ -1833,8 +1850,7 @@ realizó una transformación logarítmica se obtienen correlaciones altas entre
 las variables y su respectiva correlación. 
 
 
-Finalmente se analiza la relación de correlación entre cada parámetro y la categoría si 
-pertenece o no a algún archivo de fallas. La Figura~\ref{fig:figCorrMatTarget} muestra 
+La Figura~\ref{fig:figCorrMatTarget} muestra 
 la correlación entre cada parámetro y esa variable objetivo. No hay correlaciones fuertes
 (mayores a 0.3) entre ninguna variable y anomaly. 
 Esto significa que ninguna variable por sí sola explica bien la aparición de anomalías. 
@@ -1843,14 +1859,25 @@ Las variables con mayor asociación, aunque débil, son: \lstinline|log_maximum|
 Variables como \lstinline|mean| y \lstinline|rpm| no aportan relación clara con la anomalía.
 
 
+\begin{figure}[H]
+    \caption{Correlación entre la variable objetivo y el resto de parámetros.}
+    \centering
+    \includegraphics[width=1\textwidth]{media/dataset/corr-mat-target.png}
+    \label{fig:figCorrMatTarget}
+\end{figure}
+
+
 
 \section{Preparación del dataset de entrenamiento}
 
-En esta etapa se estandarizan el conjunto de datos original con fin que los modelos sean 
+
+En la Figura~\ref{fig:figGenerationDataset}, se visualizan Los pasos para la construcción 
+del dataset de entrenamiento. 
+En esta etapa del proyecto se estandarizan el conjunto de datos original con fin que los 
+modelos sean 
 capaces de utilizar los datos para su entrenamiento y predicción. La salida de esta etapa
 son el conjunto de características y etiquetas que utilizarán los modelos de aprendizaje 
-supervisado para su entrenamiento y evaluación. Los pasos para la construcción del dataset 
-de entrenamiento se visualizan en la Figura~\ref{fig:figGenerationDataset}.
+supervisado para su entrenamiento y evaluación. 
 
 
 \begin{figure}[h]
@@ -1947,17 +1974,16 @@ dividen aún más en conjuntos de entrenamiento y validación, y durante el proc
 entrenamiento se utiliza la técnica de validación cruzada. 
 
 
+En la Figura~\ref{fig:figMatrixConfusion} se observa la matriz de confusión que se generará 
+de cada modelo entrenado. 
 La matriz de confusión constituye el punto de partida para el cálculo de las principales 
 métricas de rendimiento en clasificación. En problemas con clases desbalanceadas, la 
 matriz de confusión resulta especialmente útil para identificar sesgos hacia una clase 
 mayoritaria y analizar con mayor detalle los errores cometidos. A partir de ella se 
-derivan la mayoría de las métricas que se utilizan para la evaluación de modelos. En la 
-Figura~\ref{fig:figMatrixConfusion} se observa la matriz de confusión que se generará 
-de cada modelo entrenado. 
+derivan la mayoría de las métricas que se utilizan para la evaluación de modelos. 
 
 
-
-\begin{figure}[h]
+\begin{figure}[H]
     \caption{Matriz de confusión de los modelos calculada con los datos de prueba.}
     \centering
     \includegraphics[width=0.6\textwidth]{media/matrix-confusión.drawio.png}
@@ -2400,146 +2426,11 @@ knn_params = {
 \section{Desarrollo de la comparativa}
 
 
-\begin{table}[h]
-\caption{Modelos evaluados, parámetros óptimos  y desempeño en validación. Parte I.}
-\centering
-\renewcommand{\arraystretch}{1.2}
-\scriptsize % 🔹 Reduce el tamaño de fuente
-\resizebox{\textwidth}{!}{% 🔹 Ajusta la tabla al ancho de la página
-\begin{tabular}{|p{3.5cm}|p{9cm}|c|}
-    \hline
-    \textbf{Modelo} & \textbf{Parámetros óptimos encontrados} & \textbf{RoC-AUC} \\
-    \hline
-    Regresión logística & 
-    \ttfamily
-    \begin{minipage}[t]{9cm}
-    "dict\_vectorizer\_\_sparse": false,\\
-    "logistic\_regression\_\_C": 0.1,\\
-    "logistic\_regression\_\_fit\_intercept": false,\\
-    "logistic\_regression\_\_penalty": null,\\
-    "logistic\_regression\_\_solver": "lbfgs"
-    \end{minipage}
-    & 0.9980 \\
-    \hline
-    Naive Bayes &
-    \ttfamily
-    \begin{minipage}[t]{9cm}
-    "dict\_vectorizer\_\_sparse": false,\\
-    "naive\_bayes\_\_var\_smoothing": 1e-09
-    \end{minipage}
-    & 0.9953 \\
-    \hline
-    Perceptrón Multicapa (MLP) &
-    \ttfamily
-    \begin{minipage}[t]{9cm}
-    "mlp\_classifier\_\_validation\_fraction": 0.2,\\
-    "mlp\_classifier\_\_solver": "lbfgs",\\
-    "mlp\_classifier\_\_max\_iter": 1500,\\
-    "mlp\_classifier\_\_learning\_rate\_init": 0.1,\\
-    "mlp\_classifier\_\_learning\_rate": "adaptive",\\
-    "mlp\_classifier\_\_hidden\_layer\_sizes": [128],\\
-    "mlp\_classifier\_\_early\_stopping": false,\\
-    "mlp\_classifier\_\_batch\_size": 200,\\
-    "mlp\_classifier\_\_activation": "relu",\\
-    "dict\_vectorizer\_\_sparse": false
-    \end{minipage}
-    & 0.9994 \\
-    \hline
-    SVM &
-    \ttfamily
-    \begin{minipage}[t]{9cm}
-    "dict\_vectorizer\_\_sparse": false,\\
-    "svm\_\_C": 10,\\
-    "svm\_\_degree": 4,\\
-    "svm\_\_gamma": "auto",\\
-    "svm\_\_kernel": "poly",\\
-    "svm\_\_probability": true
-    \end{minipage}
-    & 0.9998 \\
-    \hline
-    K-NN &
-    \ttfamily
-    \begin{minipage}[t]{9cm}
-    "dict\_vectorizer\_\_sparse": false,\\
-    "knn\_\_metric": "manhattan",\\
-    "knn\_\_n\_neighbors": 11,\\
-    "knn\_\_p": 1,\\
-    "knn\_\_weights": "distance"
-    \end{minipage}
-    & 0.9991 \\
-    \hline
-\end{tabular}
-}
-\label{tab:modelosjsonp1}
-\end{table}
-
-
 Para poder comparar los modelos, primero se entrenan con el mismo conjunto de datos para 
 garantizar que las diferencias entre las métricas obtenidas al evaluar los modelos 
 dependan exclusivamente de los modelos. Adicionalmente, se aplica un proceso de búsqueda 
 de hiperparámetros con el fin de encontrar la configuración que ofreciera el mejor 
 rendimiento. 
-
-
-\begin{table}[h]
-\caption{Modelos evaluados, parámetros óptimos y desempeño en validación. Parte II.}
-\centering
-\renewcommand{\arraystretch}{1.2}
-\scriptsize % 🔹 Reduce el tamaño de fuente
-\resizebox{\textwidth}{!}{% 🔹 Ajusta la tabla al ancho de la página
-\begin{tabular}{|p{3.5cm}|p{9cm}|c|}
-    \hline
-    \textbf{Modelo} & \textbf{Parámetros óptimos encontrados} & \textbf{RoC-AUC} \\
-    \hline
-    CatBoost &
-    \ttfamily
-    \begin{minipage}[t]{9cm}
-    "catboost\_\_border\_count": 32,\\
-    "catboost\_\_depth": 6,\\
-    "catboost\_\_iterations": 200,\\
-    "catboost\_\_l2\_leaf\_reg": 3,\\
-    "catboost\_\_learning\_rate": 0.1,\\
-    "catboost\_\_verbose": false,\\
-    "dict\_vectorizer\_\_sparse": false
-    \end{minipage}
-    & \textbf{0.9999} \\
-    \hline
-    XGBoost &
-    \ttfamily
-    \begin{minipage}[t]{9cm}
-    "dict\_vectorizer\_\_sparse": false,\\
-    "xgboost\_\_colsample\_bytree": 0.8,\\
-    "xgboost\_\_learning\_rate": 0.1,\\
-    "xgboost\_\_max\_depth": 3,\\
-    "xgboost\_\_min\_child\_weight": 1,\\
-    "xgboost\_\_n\_estimators": 200,\\
-    "xgboost\_\_objective": "binary:logistic",\\
-    "xgboost\_\_subsample": 1.0
-    \end{minipage}
-    & \textbf{0.9999} \\
-    \hline
-    LightGBM &
-    \ttfamily
-    \begin{minipage}[t]{9cm}
-    "lightgbm\_\_verbose": -1,\\
-    "lightgbm\_\_subsample": 0.8,\\
-    "lightgbm\_\_reg\_lambda": 0.1,\\
-    "lightgbm\_\_reg\_alpha": 0.0,\\
-    "lightgbm\_\_num\_leaves": 15,\\
-    "lightgbm\_\_n\_estimators": 200,\\
-    "lightgbm\_\_min\_split\_gain": 0.1,\\
-    "lightgbm\_\_min\_child\_samples": 5,\\
-    "lightgbm\_\_max\_depth": 3,\\
-    "lightgbm\_\_learning\_rate": 0.1,\\
-    "lightgbm\_\_colsample\_bytree": 0.8,\\
-    "dict\_vectorizer\_\_sparse": false
-    \end{minipage}
-    & \textbf{0.9999} \\
-    \hline
-\end{tabular}
-}
-\label{tab:modelosjsonp2}
-\end{table}
 
 
 Como criterio de comparación para encontrar los parámetros óptimos, se utiliza el área 
@@ -2548,46 +2439,6 @@ entre clases positivas y negativas. Al optimizar los hiperparámetros con base e
 métrica, se garantiza que los modelos seleccionados ofrezcan un equilibrio adecuado 
 entre sensibilidad y especificidad, logrando así un desempeño más robusto en la 
 detección de anomalías.
-
-
-\begin{table}[h]
-\caption{Modelos evaluados, parámetros óptimos y desempeño en validación. Parte III.}
-\centering
-\renewcommand{\arraystretch}{1.2}
-\scriptsize % 🔹 Reduce el tamaño de fuente
-\resizebox{\textwidth}{!}{% 🔹 Ajusta la tabla al ancho de la página
-\begin{tabular}{|p{3.5cm}|p{9cm}|c|}
-    \hline
-    \textbf{Modelo} & \textbf{Parámetros óptimos encontrados} & \textbf{RoC-AUC} \\
-    \hline
-    Árbol de decisión &
-    \ttfamily
-    \begin{minipage}[t]{9cm}
-    "decision\_tree\_\_criterion": "entropy",\\
-    "decision\_tree\_\_max\_depth": 5,\\
-    "decision\_tree\_\_min\_samples\_leaf": 1,\\
-    "decision\_tree\_\_min\_samples\_split": 10,\\
-    "dict\_vectorizer\_\_sparse": false
-    \end{minipage}
-    & 0.9986 \\
-    \hline
-    Bosque Aleatorio (Random Forest) &
-    \ttfamily
-    \begin{minipage}[t]{9cm}
-    "random\_forest\_\_n\_estimators": 500,\\
-    "random\_forest\_\_min\_samples\_split": 5,\\
-    "random\_forest\_\_min\_samples\_leaf": 2,\\
-    "random\_forest\_\_max\_depth": 20,\\
-    "random\_forest\_\_criterion": "log\_loss",\\
-    "random\_forest\_\_bootstrap": false,\\
-    "dict\_vectorizer\_\_sparse": false
-    \end{minipage}
-    & \textbf{0.9999} \\
-    \hline
-\end{tabular}
-}
-\label{tab:modelosjsonp3}
-\end{table}
 
 
 Para la mayoría de los modelos se emplea el método Grid Search, que explora de manera 
@@ -2608,71 +2459,22 @@ proporciona una estimación más confiable del rendimiento del modelo y una redu
 del riesgo de sesgos y sobreajustes asociados a una única división de entrenamiento y 
 prueba. Los resultados de la búsqueda de hiperparámetros: parámetros óptimos para cada 
 modelo y valor del área bajo la curva RoC, se observan en la 
-Tabla~\ref{tab:modelosjsonp1}, la Tabla~\ref{tab:modelosjsonp2} y la 
-Tabla~\ref{tab:modelosjsonp3}.  
+Tabla~\ref{tab:modelosjsonp1}  y la Tabla~\ref{tab:modelosjsonp2}.  
 
 
-Una vez obtenidos los modelos optimizados, se procede a evaluarlos utilizando el 
-conjunto de datos de prueba, con el propósito de estimar el desempeño de los modelos 
-con datos no vistos durante el entrenamiento. Para esta evaluación se calcularon 
-distintas métricas que permiten analizar el rendimiento desde diferentes perspectivas. 
+
+Una vez obtenidos los modelos optimizados, se procede a evaluarlos utilizando el conjunto 
+de datos de prueba, con el propósito de estimar el desempeño de los modelos con datos 
+no vistos durante el entrenamiento. Para esta evaluación se calcularon distintas 
+métricas que permiten analizar el rendimiento desde diferentes perspectivas. 
 
 
-\begin{table}[h]
-\caption{Métricas de rendimiento para los diferentes modelos de clasificación.}
-\centering
-\renewcommand{\arraystretch}{1.2}
-\footnotesize
-\begin{tabularx}{\textwidth}{|l|X|X|X|X|X|}
-\hline
-\textbf{Modelo} & 
-\centering \textbf{Exactitud \\ (Accuracy)} & 
-\centering \textbf{Precisión \\ (Precision)} & 
-\centering \textbf{Sensibilidad \\ (Recall)} & 
-\centering \textbf{F1} & 
-\centering \textbf{Área bajo la \\ curva RoC} \tabularnewline
-\hline
-Regresión Logística & 0.9893 & 0.9919 & 0.9864 & 0.9892 & 0.9893 \\
-\hline
-Naive Bayes & 0.9512 & 0.9980 & 0.9031 & 0.9482 & 0.9507 \\
-\hline
-Árbol de Decisión & 0.9924 & 0.9988 & 0.9858 & 0.9922 & 0.9923 \\
-\hline
-Bosque Aleatorio & 0.9966 & 0.9994 & 0.9938 & 0.9966 & 0.9966 \\
-\hline
-CatBoost & 0.9985 & 0.9994 & 0.9975 & 0.9985 & 0.9985 \\
-\hline
-XGBoost & 0.9988 & 0.9994 & 0.9981 & 0.9988 & 0.9988 \\
-\hline
-LightGBM & 0.9988 & 1.0000 & 0.9975 & 0.9988 & 0.9988 \\
-\hline
-Perceptrón Multicapa & 0.9954 & 0.9969 & 0.9938 & 0.9954 & 0.9954 \\
-\hline
-Support Vector Machine & 0.9960 & 0.9988 & 0.9932 & 0.9960 & 0.9960 \\
-\hline
-K-NN & 0.9951 & 1.0000 & 0.9901 & 0.9950 & 0.9951 \\
-\hline
-\end{tabularx}
-\label{tab:metricas_modelos}
-\end{table}
-
-
-Entre las métricas calculadas se incluyen la exactitud, que mide la proporción total de 
-predicciones correctas; la precisión, que refleja la capacidad del modelo para 
-identificar correctamente las observaciones positivas evitando falsos positivos; 
-la sensibilidad (también llamada recall), que indica la capacidad para detectar la 
-mayor cantidad de anomalías reales; y la métrica F1, que combina precisión y 
-sensibilidad en un único valor armónico.
-
-
-Adicionalmente, se calculó el área bajo la curva ROC (AUC-ROC), una métrica 
-ampliamente utilizada en clasificación binaria que evalúa la capacidad del modelo para 
-diferenciar entre clases positivas y negativas de manera independiente al umbral de 
-decisión. Con este conjunto de métricas fue posible obtener una visión integral del 
-rendimiento de los modelos y comparar su capacidad de generalización en la tarea de 
-detección de anomalías. Los resultados de las métricas se observan en  
-la Tabla~\ref{tab:metricas_modelos}. 
-
+En primer lugar, se calculan las matrices de confusión para cada modelo, 
+con el fin de analizar en detalle los aciertos y errores en la clasificación. 
+Estas matrices permiten observar de manera explícita la cantidad de verdaderos positivos, 
+verdaderos negativos, falsos positivos y falsos negativos, 
+proporcionando así una visión más clara de cómo se comporta cada modelo en la detección 
+de anomalías. Los resultados de las métricas se observan en  la Tabla~\ref{tab:matrixconff}. 
 
 
 \begin{table}[H]
@@ -2713,26 +2515,75 @@ la Tabla~\ref{tab:metricas_modelos}.
 \end{table}
 
 
-Una vez obtenidos los modelos optimizados, se procede a evaluarlos utilizando el 
-conjunto de datos de prueba, con el propósito de estimar el desempeño de los modelos 
-con datos no vistos durante el entrenamiento. Para esta evaluación se calcularon 
+Según la matriz de confusión, un modelo "bueno" es aquel donde los valores de Verdaderos Positivos
+y Falsos Negativos es alta, mientras que los valores de Verdaderos Negativos y Falsos Positivos es
+baja. 
+Todos los modelos alcanzaron buenos resultados en sus matrices de confusión. En comparación con el
+total de observaciones del conjunto de prueba, las observaciones predichas érroneamente por los
+modelos son mínimas. Esto es un buen indicio de que las métricas exactiud, precisión, sensibilidad
+y F1, son altas. 
+
+
+Adicinalmente, para esta evaluación se calcularon 
 distintas métricas que permiten analizar el rendimiento desde diferentes perspectivas. 
+Entre las métricas calculadas se incluyen la exactitud, que mide la proporción total de 
+predicciones correctas; la precisión, que refleja la capacidad del modelo para 
+identificar correctamente las observaciones positivas evitando falsos positivos; 
+la sensibilidad (también llamada recall), que indica la capacidad para detectar la 
+mayor cantidad de anomalías reales; y la métrica F1, que combina precisión y 
+sensibilidad en un único valor armónico.
 
 
-Entre las métricas calculadas se incluyen la exactitud, que mide la proporción total 
-de predicciones correctas; la precisión, que refleja la capacidad del modelo para 
-identificar correctamente las observaciones positivas evitando falsos positivos; la 
-sensibilidad (también llamada recall), que indica la capacidad para detectar la mayor 
-cantidad de anomalías reales; y la métrica F1, que combina precisión y sensibilidad en 
-un único valor armónico.
+Los resultados de las métricas se observan en  
+la Tabla~\ref{tab:metricas_modelos}. 
+Adicionalmente de las métricas anteriores, se calculó el área bajo la curva ROC (AUC-ROC), 
+una métrica 
+ampliamente utilizada en clasificación binaria que evalúa la capacidad del modelo para 
+diferenciar entre clases positivas y negativas de manera independiente al umbral de 
+decisión. Con este conjunto de métricas fue posible obtener una visión integral del 
+rendimiento de los modelos y comparar su capacidad de generalización en la tarea de 
+detección de anomalías. 
 
 
-Adicionalmente, se calculó el área bajo la curva ROC (AUC-ROC), una métrica ampliamente 
-utilizada en clasificación binaria que evalúa la capacidad del modelo para diferenciar 
-entre clases positivas y negativas de manera independiente al umbral de decisión. 
-Con este conjunto de métricas fue posible obtener una visión integral del rendimiento 
-de los modelos y comparar su capacidad de generalización en la tarea de detección de 
-anomalías. Los resultados de las métricas se observan en  la Tabla~\ref{tab:matrixconff}. 
+
+\begin{table}[H]
+\caption{Métricas de rendimiento para los diferentes modelos de clasificación.}
+\centering
+\renewcommand{\arraystretch}{1.2}
+\footnotesize
+\begin{tabularx}{\textwidth}{|l|X|X|X|X|X|}
+\hline
+\textbf{Modelo} & 
+\centering \textbf{Exactitud \\ (Accuracy)} & 
+\centering \textbf{Precisión \\ (Precision)} & 
+\centering \textbf{Sensibilidad \\ (Recall)} & 
+\centering \textbf{F1} & 
+\centering \textbf{Área bajo la \\ curva RoC} \tabularnewline
+\hline
+Regresión Logística & 0.9893 & 0.9919 & 0.9864 & 0.9892 & 0.9893 \\
+\hline
+Naive Bayes & 0.9512 & 0.9980 & 0.9031 & 0.9482 & 0.9507 \\
+\hline
+Árbol de Decisión & 0.9924 & 0.9988 & 0.9858 & 0.9922 & 0.9923 \\
+\hline
+Bosque Aleatorio & 0.9966 & 0.9994 & 0.9938 & 0.9966 & 0.9966 \\
+\hline
+CatBoost & 0.9985 & 0.9994 & 0.9975 & 0.9985 & 0.9985 \\
+\hline
+XGBoost & 0.9988 & 0.9994 & 0.9981 & 0.9988 & 0.9988 \\
+\hline
+LightGBM & 0.9988 & 1.0000 & 0.9975 & 0.9988 & 0.9988 \\
+\hline
+Perceptrón Multicapa & 0.9954 & 0.9969 & 0.9938 & 0.9954 & 0.9954 \\
+\hline
+Support Vector Machine & 0.9960 & 0.9988 & 0.9932 & 0.9960 & 0.9960 \\
+\hline
+K-NN & 0.9951 & 1.0000 & 0.9901 & 0.9950 & 0.9951 \\
+\hline
+\end{tabularx}
+\label{tab:metricas_modelos}
+\end{table}
+
 
 
 \subsection{Interpretación de los modelos}
@@ -3000,7 +2851,7 @@ Con respecto al desempeño específico de los modelos, aquellos basados en técn
 gradient boosting, particularmente XGBoost y LightGBM, alcanzaron las métricas más altas, 
 mostrando un equilibrio casi perfecto entre precisión y sensibilidad y obtuvieron las 
 métricas más altas entre todos los modelos seleccionados. Sin embargo, incluso modelos 
-más simples, como la regresión logística, Naive Bayes o KNN, lograron resultados 
+mucho más simples, como la regresión logística, Naive Bayes o KNN, lograron resultados 
 sobresalientes, con métricas por encima del 95\%, lo que indica que los datos están muy 
 bien representados y que diferentes enfoques de modelado pueden ser útiles en este 
 contexto.
@@ -3029,7 +2880,12 @@ interpretabilidad del modelo.
 En este sentido,  si se busca un modelo con alta interpretabilidad, se aplica el 
 principio de parsimonia para seleccionar modelos como Regresión Logística, Naive Bayes,
 o Árboles de Decisión, ya que con éstos es  más fácil de explicar el aporte de cada 
-variable al  resultado final.  
+variable al  resultado final. A pesar de su gran desempeño, no se recomienda aplicar 
+k-NN porque el computo requerido para obtener una predicción depende del tamaño del 
+dataset debido a la gran cantidad de observaciones de entrenamiento utilizadas, en cambio,
+los otros modelos no dependen del número de observaciones del dataset de entrenamiento. 
+
+
 Si se requiere rapidez y bajo consumo de cómputo, se aplica el mismo principio, y 
 nuevamente modelos como regresión logística o los árboles de decisión suelen ser más 
 adecuados porque combinan unas muy buenas métricas con un bajo requerimiento de cómputo.
@@ -3049,6 +2905,14 @@ permitió que los modelos pudieran generalizar mejor y mostraran robustez frente
 sobreajuste. Estos resultados confirman la efectividad del pipeline desarrollado para 
 transformar datos crudos en características discriminativas útiles para los modelos 
 de predicción.
+
+
+El alto desempeño obtenido en las métricas exactitud, sensibilidad, precisión y F1, 
+constituye una evidencia sólida de que se ha alcanzado el objetivo general del proyecto. 
+En efecto, se ha logrado el desarrollo de una solución basada en algoritmos de aprendizaje 
+automático para la detección de anomalías en datos provenientes de entornos industriales.
+Se ha superado ampliamente la meta establecida de alcanzar métricas mayores a 0.85 y se
+utilizó el conjunto de datos CWRU Bearing, que simula fallo en máquinaria rotativa industrial. 
 
 
 Debido al alto rendimiento alcanzado, todos los modelos evaluados podrían aplicarse en 
@@ -3134,9 +2998,188 @@ mantenimiento predictivo más preciso y especializado.
 \newpage
 
 
-\bibliographystyle{apacite}
 \bibliography{bibliografia}
 
+
+\newpage
+
+
+\appendix
+\chapter{Apendices}
+
+
+\begin{table}[H]
+\caption{Modelos evaluados, parámetros óptimos  y desempeño en validación. Parte I.}
+\centering
+\renewcommand{\arraystretch}{1.2}
+\scriptsize % 🔹 Reduce el tamaño de fuente
+\resizebox{\textwidth}{!}{% 🔹 Ajusta la tabla al ancho de la página
+\begin{tabular}{|p{3.5cm}|p{9cm}|c|}
+    \hline
+    \textbf{Modelo} & \textbf{Parámetros óptimos encontrados} & \textbf{RoC-AUC} \\
+    \hline
+    Regresión logística & 
+    \ttfamily
+    \begin{minipage}[t]{9cm}
+    "dict\_vectorizer\_\_sparse": false,\\
+    "logistic\_regression\_\_C": 0.1,\\
+    "logistic\_regression\_\_fit\_intercept": false,\\
+    "logistic\_regression\_\_penalty": null,\\
+    "logistic\_regression\_\_solver": "lbfgs"
+    \end{minipage}
+    & 0.9980 \\
+    \hline
+    Naive Bayes &
+    \ttfamily
+    \begin{minipage}[t]{9cm}
+    "dict\_vectorizer\_\_sparse": false,\\
+    "naive\_bayes\_\_var\_smoothing": 1e-09
+    \end{minipage}
+    & 0.9953 \\
+    \hline
+    Perceptrón Multicapa (MLP) &
+    \ttfamily
+    \begin{minipage}[t]{9cm}
+    "mlp\_classifier\_\_validation\_fraction": 0.2,\\
+    "mlp\_classifier\_\_solver": "lbfgs",\\
+    "mlp\_classifier\_\_max\_iter": 1500,\\
+    "mlp\_classifier\_\_learning\_rate\_init": 0.1,\\
+    "mlp\_classifier\_\_learning\_rate": "adaptive",\\
+    "mlp\_classifier\_\_hidden\_layer\_sizes": [128],\\
+    "mlp\_classifier\_\_early\_stopping": false,\\
+    "mlp\_classifier\_\_batch\_size": 200,\\
+    "mlp\_classifier\_\_activation": "relu",\\
+    "dict\_vectorizer\_\_sparse": false
+    \end{minipage}
+    & 0.9994 \\
+    \hline
+    SVM &
+    \ttfamily
+    \begin{minipage}[t]{9cm}
+    "dict\_vectorizer\_\_sparse": false,\\
+    "svm\_\_C": 10,\\
+    "svm\_\_degree": 4,\\
+    "svm\_\_gamma": "auto",\\
+    "svm\_\_kernel": "poly",\\
+    "svm\_\_probability": true
+    \end{minipage}
+    & 0.9998 \\
+    \hline
+    K-NN &
+    \ttfamily
+    \begin{minipage}[t]{9cm}
+    "dict\_vectorizer\_\_sparse": false,\\
+    "knn\_\_metric": "manhattan",\\
+    "knn\_\_n\_neighbors": 11,\\
+    "knn\_\_p": 1,\\
+    "knn\_\_weights": "distance"
+    \end{minipage}
+    & 0.9991 \\
+    \hline
+\end{tabular}
+}
+\label{tab:modelosjsonp1}
+\vspace{3mm}
+\parbox{\textwidth}{\footnotesize \textit{Nota:} Mejores parámetros obtenidos para cada modelo
+después del proceso de entramiento. El entrenamiento de realizó con el mismo dataset y con las
+mismas características para cada modelo, con el propósito de garantizar una evaluación más
+objetiva. }
+\end{table}
+
+\newpage
+
+
+\begin{table}[H]
+\caption{Modelos evaluados, parámetros óptimos y desempeño en validación. Parte II.}
+\centering
+\renewcommand{\arraystretch}{1.2}
+\scriptsize % 🔹 Reduce el tamaño de fuente
+\resizebox{\textwidth}{!}{% 🔹 Ajusta la tabla al ancho de la página
+\begin{tabular}{|p{3.5cm}|p{9cm}|c|}
+    \hline
+    \textbf{Modelo} & \textbf{Parámetros óptimos encontrados} & \textbf{RoC-AUC} \\
+    \hline
+    Árbol de decisión &
+    \ttfamily
+    \begin{minipage}[t]{9cm}
+    "decision\_tree\_\_criterion": "entropy",\\
+    "decision\_tree\_\_max\_depth": 5,\\
+    "decision\_tree\_\_min\_samples\_leaf": 1,\\
+    "decision\_tree\_\_min\_samples\_split": 10,\\
+    "dict\_vectorizer\_\_sparse": false
+    \end{minipage}
+    & 0.9986 \\
+    \hline
+    Bosque Aleatorio (Random Forest) &
+    \ttfamily
+    \begin{minipage}[t]{9cm}
+    "random\_forest\_\_n\_estimators": 500,\\
+    "random\_forest\_\_min\_samples\_split": 5,\\
+    "random\_forest\_\_min\_samples\_leaf": 2,\\
+    "random\_forest\_\_max\_depth": 20,\\
+    "random\_forest\_\_criterion": "log\_loss",\\
+    "random\_forest\_\_bootstrap": false,\\
+    "dict\_vectorizer\_\_sparse": false
+    \end{minipage}
+    & \textbf{0.9999} \\
+    \hline
+    CatBoost &
+    \ttfamily
+    \begin{minipage}[t]{9cm}
+    "catboost\_\_border\_count": 32,\\
+    "catboost\_\_depth": 6,\\
+    "catboost\_\_iterations": 200,\\
+    "catboost\_\_l2\_leaf\_reg": 3,\\
+    "catboost\_\_learning\_rate": 0.1,\\
+    "catboost\_\_verbose": false,\\
+    "dict\_vectorizer\_\_sparse": false
+    \end{minipage}
+    & \textbf{0.9999} \\
+    \hline
+    XGBoost &
+    \ttfamily
+    \begin{minipage}[t]{9cm}
+    "dict\_vectorizer\_\_sparse": false,\\
+    "xgboost\_\_colsample\_bytree": 0.8,\\
+    "xgboost\_\_learning\_rate": 0.1,\\
+    "xgboost\_\_max\_depth": 3,\\
+    "xgboost\_\_min\_child\_weight": 1,\\
+    "xgboost\_\_n\_estimators": 200,\\
+    "xgboost\_\_objective": "binary:logistic",\\
+    "xgboost\_\_subsample": 1.0
+    \end{minipage}
+    & \textbf{0.9999} \\
+    \hline
+    LightGBM &
+    \ttfamily
+    \begin{minipage}[t]{9cm}
+    "lightgbm\_\_verbose": -1,\\
+    "lightgbm\_\_subsample": 0.8,\\
+    "lightgbm\_\_reg\_lambda": 0.1,\\
+    "lightgbm\_\_reg\_alpha": 0.0,\\
+    "lightgbm\_\_num\_leaves": 15,\\
+    "lightgbm\_\_n\_estimators": 200,\\
+    "lightgbm\_\_min\_split\_gain": 0.1,\\
+    "lightgbm\_\_min\_child\_samples": 5,\\
+    "lightgbm\_\_max\_depth": 3,\\
+    "lightgbm\_\_learning\_rate": 0.1,\\
+    "lightgbm\_\_colsample\_bytree": 0.8,\\
+    "dict\_vectorizer\_\_sparse": false
+    \end{minipage}
+    & \textbf{0.9999} \\
+    \hline
+\end{tabular}
+}
+\label{tab:modelosjsonp2}
+\vspace{3mm}
+\parbox{\textwidth}{\footnotesize \textit{Nota:} Mejores parámetros obtenidos para cada modelo
+después del proceso de entramiento. El entrenamiento de realizó con el mismo dataset y con las
+mismas características para cada modelo, con el propósito de garantizar una evaluación más
+objetiva. }
+\end{table}
+
+
+\newpage
 
 
 \end{document}
