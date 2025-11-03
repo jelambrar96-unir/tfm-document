@@ -2803,9 +2803,15 @@ estar asociados a comportamientos irregulares o inestables en la dinámica del s
 |   |   |   |--- class: 1
 |   |   |--- mean >  0.01
 |   |   |   |--- std <= 0.08
-|   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |--- rms <= 0.08
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- rms >  0.08
+|   |   |   |   |   |--- class: 0
 |   |   |   |--- std >  0.08
-|   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |--- skewness <= 0.04
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- skewness >  0.04
+|   |   |   |   |   |--- class: 0
 |   |--- f0 >  418.50
 |   |   |--- class: 1
 |--- std >  0.08
@@ -2817,7 +2823,10 @@ estar asociados a comportamientos irregulares o inestables en la dinámica del s
 |   |   |   |   |--- class: 1
 |   |   |--- skewness >  0.05
 |   |   |   |--- thd <= 2.04
-|   |   |   |   |--- truncated branch of depth 2
+|   |   |   |   |--- f0 <= 208.00
+|   |   |   |   |   |--- class: 0
+|   |   |   |   |--- f0 >  208.00
+|   |   |   |   |   |--- class: 1
 |   |   |   |--- thd >  2.04
 |   |   |   |   |--- class: 1
 |   |--- std >  0.09
